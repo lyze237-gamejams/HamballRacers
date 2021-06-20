@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import de.eskalon.commons.screen.transition.impl.BlendingTransition;
+import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
 import lombok.var;
 
@@ -27,6 +28,8 @@ public class SplashScreen extends ManagedScreenAdapter {
 	}
 
 	private void setupStage() {
+		stage.setDebugAll(Constants.DEBUG);
+
 		var root = new Table();
 		root.setFillParent(true);
 		root.add(new Image(new Texture(Gdx.files.internal("logo.png")))).width(500).height(500);

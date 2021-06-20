@@ -5,10 +5,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
 
-public class MainMenuScreen extends ManagedScreenAdapter {
+public class GameScreen extends ManagedScreenAdapter {
 	private final Stage stage;
 
-	public MainMenuScreen() {
+	public GameScreen() {
 		stage = new Stage(new FitViewport(1920, 1080));
 		stage.setDebugAll(Constants.DEBUG);
 	}
