@@ -8,6 +8,8 @@
 	<inherits name="com.dongbat.jbump" />
 	<inherits name="dev.lyze.hamballracers.HamballRacers" />
 	<inherits name="space.earlygrey.shapedrawer" />
+	<inherits name="libgdx_screenmanager" />
+	<inherits name="libgdx_screenmanager_gwt" />
 	<entry-point class="dev.lyze.hamballracers.gwt.GwtLauncher" />
 	<set-configuration-property name="gdx.assetpath" value="../assets" />
 	<set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>

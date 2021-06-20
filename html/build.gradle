@@ -41,6 +41,10 @@ dependencies {
 	implementation "com.github.tommyettinger:jbump:$jbumpVersion:sources"
 	implementation "space.earlygrey:shapedrawer:$shapeDrawerVersion:sources"
 
+	api "com.github.crykn:libgdx-screenmanager:$screenManagerVersion:sources"
+	api "com.github.crykn:libgdx-screenmanager-gwt:$screenManagerVersion"
+	api "com.github.crykn:libgdx-screenmanager-gwt:$screenManagerVersion:sources"
+
 	lom "org.projectlombok:lombok:$lombok"
 	implementation configurations.lom.dependencies
 	annotationProcessor "org.projectlombok:lombok:$lombok"

@@ -7,6 +7,8 @@ dependencies {
 	api "com.github.tommyettinger:jbump:$jbumpVersion"
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
 
+	api "com.github.crykn:libgdx-screenmanager:$screenManagerVersion"
+
 	implementation "org.projectlombok:lombok:$lombok"
 	annotationProcessor "org.projectlombok:lombok:$lombok"
 }
