@@ -26,8 +26,10 @@ gwt {
 	compiler.strict = true
 	compiler.disableCastChecking = true
 	//// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
-//	compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
+	compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
 }
+
+configurations { lom }
 
 dependencies {
 	implementation project(':core')
@@ -39,6 +41,9 @@ dependencies {
 	implementation "com.github.tommyettinger:jbump:$jbumpVersion:sources"
 	implementation "space.earlygrey:shapedrawer:$shapeDrawerVersion:sources"
 
+	lom "org.projectlombok:lombok:$lombok"
+	implementation configurations.lom.dependencies
+	annotationProcessor "org.projectlombok:lombok:$lombok"
 }
 
 import org.akhikhl.gretty.AppBeforeIntegrationTestTask
@@ -128,6 +133,24 @@ task distZip(type: Zip, dependsOn: dist){
 	archiveBaseName.set("${appName}-dist")
 	//// The result will be in html/build/ with a name containing "-dist".
 	destinationDir(file("build"))
+}
+
+draftCompileGwt {
+	doFirst {
+		jvmArgs "-javaagent:${configurations.lom.asPath}=ECJ"
+	}
+}
+
+compileGwt {
+	doFirst {
+		jvmArgs "-javaagent:${configurations.lom.asPath}=ECJ"
+	}
+}
+
+superDev {
+	doFirst {
+		jvmArgs "-javaagent:${configurations.lom.asPath}=ECJ"
+	}
 }
 
 tasks.compileGwt.dependsOn(addSource)

@@ -6,4 +6,7 @@ dependencies {
 	api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
 	api "com.github.tommyettinger:jbump:$jbumpVersion"
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
+
+	implementation "org.projectlombok:lombok:$lombok"
+	annotationProcessor "org.projectlombok:lombok:$lombok"
 }
