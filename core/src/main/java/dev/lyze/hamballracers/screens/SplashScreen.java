@@ -16,18 +16,23 @@ public class SplashScreen extends ManagedScreenAdapter {
 	private final Stage stage;
 
 	public SplashScreen() {
-		new Timer().scheduleTask(new Timer.Task() {
-			@Override
-			public void run() {
-				game.getScreenManager().pushScreen(MainMenuScreen.class.getName(), BlendingTransition.class.getName());
-			}
-		}, 3f);
-
 		stage = new Stage(new FitViewport(1920, 1080));
 		setupStage();
 	}
 
-	private void setupStage() {
+	 @Override public void show () {
+		  super.show();
+
+		  new Timer().scheduleTask(new Timer.Task() {
+				@Override
+				public void run() {
+					 game.getScreenManager().pushScreen(MainMenuScreen.class.getName(), BlendingTransition.class.getName());
+				}
+		  }, 3f);
+
+	 }
+
+	 private void setupStage() {
 		stage.setDebugAll(Constants.DEBUG);
 
 		var root = new Table();
