@@ -2,27 +2,35 @@ package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import de.eskalon.commons.screen.transition.impl.BlendingTransition;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
 
 public class MainMenuScreen extends ManagedScreenAdapter {
-	private final Stage stage;
+    private final Stage stage;
 
-	public MainMenuScreen() {
-		stage = new Stage(new FitViewport(1920, 1080));
-		stage.setDebugAll(Constants.DEBUG);
-	}
+    public MainMenuScreen() {
+        stage = new Stage(new FitViewport(1920, 1080));
+        stage.setDebugAll(Constants.DEBUG);
+    }
 
-	@Override
-	public void render(float delta) {
-	    stage.getViewport().apply();
+    @Override
+    public void show() {
+        super.show();
 
-	    stage.act();
-	    stage.draw();
-	}
+        game.getScreenManager().pushScreen(GameScreen.class.getName(), BlendingTransition.class.getName());
+    }
 
-	@Override
-	public void resize(int width, int height) {
-	    stage.getViewport().update(width, height);
-	}
+    @Override
+    public void render(float delta) {
+        stage.getViewport().apply();
+
+        stage.act();
+        stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height);
+    }
 }

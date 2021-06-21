@@ -9,7 +9,7 @@ public class Logger<TClass> {
     public Logger(Class<TClass> clazz) {
         prefix = clazz.getSimpleName();
     }
-    
+
     public void logFatal(String message, Exception exception) {
         log(Level.Fatal, message, exception);
     }
@@ -17,7 +17,7 @@ public class Logger<TClass> {
     public void logFatal(String message) {
         log(Level.Fatal, message);
     }
-    
+
     public void logError(String message, Exception exception) {
         log(Level.Error, message, exception);
     }
@@ -25,7 +25,7 @@ public class Logger<TClass> {
     public void logError(String message) {
         log(Level.Error, message);
     }
-    
+
     public void logWarn(String message, Exception exception) {
         log(Level.Warn, message, exception);
     }

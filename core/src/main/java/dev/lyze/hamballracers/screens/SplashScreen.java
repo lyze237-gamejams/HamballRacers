@@ -13,45 +13,46 @@ import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
 import lombok.var;
 
 public class SplashScreen extends ManagedScreenAdapter {
-	private final Stage stage;
+    private final Stage stage;
 
-	public SplashScreen() {
-		stage = new Stage(new FitViewport(1920, 1080));
-		setupStage();
-	}
+    public SplashScreen() {
+        stage = new Stage(new FitViewport(1920, 1080));
+        setupStage();
+    }
 
-	 @Override public void show () {
-		  super.show();
+    @Override
+    public void show() {
+        super.show();
 
-		  new Timer().scheduleTask(new Timer.Task() {
-				@Override
-				public void run() {
-					 game.getScreenManager().pushScreen(MainMenuScreen.class.getName(), BlendingTransition.class.getName());
-				}
-		  }, 3f);
+        new Timer().scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                game.getScreenManager().pushScreen(MainMenuScreen.class.getName(), BlendingTransition.class.getName());
+            }
+        }, 3f);
 
-	 }
+    }
 
-	 private void setupStage() {
-		stage.setDebugAll(Constants.DEBUG);
+    private void setupStage() {
+        stage.setDebugAll(Constants.DEBUG);
 
-		var root = new Table();
-		root.setFillParent(true);
-		root.add(new Image(new Texture(Gdx.files.internal("logo.png")))).width(500).height(500);
+        var root = new Table();
+        root.setFillParent(true);
+        root.add(new Image(new Texture(Gdx.files.internal("logo.png")))).width(500).height(500);
 
-		stage.addActor(root);
-	}
+        stage.addActor(root);
+    }
 
-	@Override
-	public void render(float delta) {
-	    stage.getViewport().apply();
+    @Override
+    public void render(float delta) {
+        stage.getViewport().apply();
 
-	    stage.act();
-	    stage.draw();
-	}
+        stage.act();
+        stage.draw();
+    }
 
-	@Override
-	public void resize(int width, int height) {
-	    stage.getViewport().update(width, height);
-	}
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height);
+    }
 }
