@@ -1,0 +1,119 @@
+name: Build HamballRacers and upload it to itch.io
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 15
+        uses: actions/setup-java@v1
+        with:
+          java-version: 15
+
+      - name: Download butler
+        run: wget https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default -O butler.zip
+
+      - name: Unzip buttler
+        run: unzip butler.zip
+
+      - name: Fix permissions
+        run: chmod +x butler && chmod +x gradlew
+
+      - name: Build jar
+        run: ./gradlew lwjgl3:jar
+
+      - name: Build package image
+        run: ./gradlew lwjgl3:jpackageImage
+
+      - name: Build deb/rpm
+        run: ./gradlew lwjgl3:jpackage
+
+      - name: Fix file names
+        run: mv lwjgl3/build/lib/*.jar HamballRacers_linux.jar && mv lwjgl3/build/jpackage/*.deb HamballRacers.deb && mv lwjgl3/build/jpackage/*.rpm HamballRacers.rpm
+
+
+      - run: ./butler push HamballRacers_linux.jar lyze237/super-hamsterball-racers:linux-jar
+
+      - run: ./butler push lwjgl3/build/jpackage/HamballRacers lyze237/super-hamsterball-racers:linux-image
+
+      - run: ./butler push HamballRacers.deb lyze237/super-hamsterball-racers:linux-deb
+      - run: ./butler push HamballRacers.rpm lyze237/super-hamsterball-racers:linux-rpm
+
+
+
+  linux-gwt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 15
+        uses: actions/setup-java@v1
+        with:
+          java-version: 15
+
+      - name: Download butler
+        run: wget https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default -O butler.zip
+
+      - name: Unzip buttler
+        run: unzip butler.zip
+
+
+      - name: Fix permissions
+        run: chmod +x butler && chmod +x gradlew
+
+
+      - name: Build gwt
+        run: ./gradlew html:dist
+
+
+      - run: ./butler push html/build/dist lyze237/super-hamsterball-racers:html
+
+
+
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 15
+        uses: actions/setup-java@v1
+        with:
+          java-version: 15
+
+
+      - name: Download Butler
+        run: Invoke-WebRequest -Uri https://broth.itch.ovh/butler/windows-amd64/LATEST/archive/default -OutFile butler.zip
+
+      - name: Extract butler
+        run: Expand-Archive -DestinationPath . butler.zip
+
+
+      - name: Build jar
+        run: ./gradlew.bat lwjgl3:jar
+
+      - name: Build package image
+        run: ./gradlew.bat lwjgl3:jpackageImage
+
+      - name: Build exe/msi
+        run: ./gradlew.bat lwjgl3:jpackage
+
+      - name: Fix file names
+        run: mv lwjgl3/build/lib/*.jar HamballRacers_windows.jar && mv lwjgl3/build/jpackage/*.exe HamballRacers.exe && mv lwjgl3/build/jpackage/*.msi HamballRacers.msi
+
+
+      - run: ./butler push HamballRacers_windows.jar lyze237/super-hamsterball-racers:windows-jar
+
+      - run: ./butler push lwjgl3/build/jpackage/HamballRacers lyze237/super-hamsterball-racers:windows-image
+
+      - run: ./butler push HamballRacers.exe lyze237/super-hamsterball-racers:windows-exe
+      - run: ./butler push HamballRacers.msi lyze237/super-hamsterball-racers:windows-msi
