@@ -72,4 +72,8 @@ public class Map {
     public Block getBlock(float x, float y) {
         return blocks[(int) (x / 8f)][(int) (y / 8f)];
     }
+
+    public TiledMapTileLayer getLayer() {
+        return (TiledMapTileLayer) map.getLayers().get(0);
+    }
 }

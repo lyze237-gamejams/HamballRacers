@@ -3,12 +3,20 @@ package dev.lyze.hamballracers.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.gempukku.libgdx.lib.camera2d.FocusCameraController;
+import com.gempukku.libgdx.lib.camera2d.constraint.LerpToWindowCameraConstraint;
+import com.gempukku.libgdx.lib.camera2d.constraint.LockedToCameraConstraint;
+import com.gempukku.libgdx.lib.camera2d.constraint.SceneCameraConstraint;
+import com.gempukku.libgdx.lib.camera2d.constraint.SnapToWindowCameraConstraint;
+import com.gempukku.libgdx.lib.camera2d.focus.EntityFocus;
+import com.gempukku.libgdx.lib.camera2d.focus.PositionProvider;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.entities.Player;
 import dev.lyze.hamballracers.screens.map.Map;
@@ -25,21 +33,26 @@ public class GameScreen extends ManagedScreenAdapter {
 
     private final Map map;
 
+    private final FocusCameraController camera;
+
     public GameScreen() {
         batch = new SpriteBatch();
         drawer = new ShapeDrawer(batch, new TextureRegion(new Texture(Gdx.files.internal("pixel.png"))));
         drawer.setDefaultLineWidth(0.5f);
 
-        viewport = new ExtendViewport(240, 135);
-
         map = new Map("map/map.tmx");
         player = new Player(map, 16, 16, 16, 16);
+
+        viewport = new ExtendViewport(240, 135);
+        camera = new FocusCameraController(viewport.getCamera(),
+                new EntityFocus(position -> new Vector2(player.getX(), player.getY())),
+                new SnapToWindowCameraConstraint(new Rectangle(0.45f, 0.45f, 0.125f, 0.125f), new Vector2(1f, 1f)));
     }
 
     private void update(float delta) {
         player.update(delta);
 
-        viewport.getCamera().position.set(player.getX() + player.getWidth() / 2f, player.getY() + player.getHeight() / 2f, 0);
+        camera.update(delta);
         viewport.apply();
     }
 

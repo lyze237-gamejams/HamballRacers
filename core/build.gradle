@@ -9,6 +9,8 @@ dependencies {
 
     api "com.github.crykn:libgdx-screenmanager:$screenManagerVersion"
 
+    api "com.gempukku.libgdx.lib:libgdx-gemp-lib:$gdxGempLibVersion"
+
     implementation "org.projectlombok:lombok:$lombok"
     annotationProcessor "org.projectlombok:lombok:$lombok"
 }

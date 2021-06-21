@@ -45,6 +45,8 @@ dependencies {
     api "com.github.crykn:libgdx-screenmanager-gwt:$screenManagerVersion"
     api "com.github.crykn:libgdx-screenmanager-gwt:$screenManagerVersion:sources"
 
+    api "com.gempukku.libgdx.lib:libgdx-gemp-lib:$gdxGempLibVersion:sources"
+
     lom "org.projectlombok:lombok:$lombok"
     implementation configurations.lom.dependencies
     annotationProcessor "org.projectlombok:lombok:$lombok"

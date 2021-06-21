@@ -1,6 +1,7 @@
 package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -15,6 +16,8 @@ import lombok.var;
 public class SplashScreen extends ManagedScreenAdapter {
     private final Stage stage;
 
+    private Timer.Task timerTask;
+
     public SplashScreen() {
         stage = new Stage(new FitViewport(1920, 1080));
         setupStage();
@@ -24,13 +27,12 @@ public class SplashScreen extends ManagedScreenAdapter {
     public void show() {
         super.show();
 
-        new Timer().scheduleTask(new Timer.Task() {
+        timerTask = new Timer().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
                 game.getScreenManager().pushScreen(MainMenuScreen.class.getName(), BlendingTransition.class.getName());
             }
         }, 3f);
-
     }
 
     private void setupStage() {
@@ -46,6 +48,11 @@ public class SplashScreen extends ManagedScreenAdapter {
     @Override
     public void render(float delta) {
         stage.getViewport().apply();
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) && timerTask.isScheduled()) {
+            timerTask.cancel();
+            game.getScreenManager().pushScreen(MainMenuScreen.class.getName(), null);
+        }
 
         stage.act();
         stage.draw();
