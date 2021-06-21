@@ -13,6 +13,7 @@ import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.entities.Player;
 import dev.lyze.hamballracers.screens.map.Map;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
+import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class GameScreen extends ManagedScreenAdapter {
@@ -35,13 +36,14 @@ public class GameScreen extends ManagedScreenAdapter {
         player = new Player(map, 16, 16, 16, 16);
     }
 
-    @Override
-    public void render(float delta) {
+    private void update(float delta) {
         player.update(delta);
 
         viewport.getCamera().position.set(player.getX() + player.getWidth() / 2f, player.getY() + player.getHeight() / 2f, 0);
         viewport.apply();
+    }
 
+    private void render() {
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
         map.render(((OrthographicCamera) viewport.getCamera()));
@@ -63,6 +65,28 @@ public class GameScreen extends ManagedScreenAdapter {
         }
 
         batch.end();
+    }
+
+    private float actualDeltaTime = 0.0f;
+    private final float targetDeltaTime = 0.01f;
+    private double currentTime = System.currentTimeMillis();
+    private float accumulator = 0f;
+
+    @Override
+    public void render(float delta) {
+        var newTime = System.currentTimeMillis();
+        var frameTime = (newTime - currentTime) / 1000f;
+        accumulator += frameTime;
+        currentTime = newTime;
+
+        while (accumulator >= targetDeltaTime) {
+            update(actualDeltaTime);
+
+            accumulator -= targetDeltaTime;
+            actualDeltaTime = targetDeltaTime;
+        }
+
+        render();
     }
 
     @Override
