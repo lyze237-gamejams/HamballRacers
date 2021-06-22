@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -24,6 +25,8 @@ public class Player extends Entity {
     private float animationDelta;
 
     private final Hitbox hitbox;
+
+    private boolean facingRight;
 
     public Player(Map map, float x, float y) {
         super(map, x, y);
@@ -52,9 +55,13 @@ public class Player extends Entity {
     }
 
     private void updateAnimation(float delta) {
-        if (velocity.x != 0 || velocity.y != 0) {
+        if (velocity.x > 0)
+            facingRight = true;
+        else if (velocity.x < 0)
+            facingRight = false;
+
+        if (velocity.x != 0 || velocity.y != 0)
             animationDelta += delta * Math.max(Math.abs(velocity.x), Math.abs(velocity.y)) / vehicleMaxMoveSpeed;
-        }
     }
 
     private Vector2 readInputVelocity() {
@@ -145,7 +152,14 @@ public class Player extends Entity {
     @Override
     public void render(SpriteBatch batch) {
         var keyFrame = runAnimation.getKeyFrame(animationDelta);
-        batch.draw(keyFrame, x - hitbox.getDrawWidth() / 2f, y - hitbox.getDrawHeight() / 2f, hitbox.getDrawWidth(), hitbox.getDrawHeight());
+
+        var drawX = this.x - hitbox.getDrawWidth() / 2f;
+        var drawY = this.y - hitbox.getDrawHeight() / 2f;
+
+        if (facingRight)
+            batch.draw(keyFrame, drawX, drawY, hitbox.getDrawWidth(), hitbox.getDrawHeight());
+        else
+            batch.draw(keyFrame, drawX + hitbox.getDrawWidth(), drawY, -hitbox.getDrawWidth(), hitbox.getDrawHeight());
     }
 
     @Override
