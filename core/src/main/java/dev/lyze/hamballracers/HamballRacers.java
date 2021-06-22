@@ -13,6 +13,8 @@ import dev.lyze.hamballracers.screens.MainMenuScreen;
 import dev.lyze.hamballracers.screens.SplashScreen;
 import dev.lyze.hamballracers.utils.Logger;
 
+import java.util.Arrays;
+
 public class HamballRacers extends ManagedGame<ManagedScreen, ScreenTransition> {
     private static final Logger<HamballRacers> logger = new Logger<>(HamballRacers.class);
 
@@ -23,11 +25,17 @@ public class HamballRacers extends ManagedGame<ManagedScreen, ScreenTransition> 
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
         logger.logInfo("Welcome!");
 
+        logger.logInfo("Catching keys");
+        Arrays.asList(Input.Keys.SPACE, Input.Keys.UP, Input.Keys.DOWN, Input.Keys.LEFT, Input.Keys.RIGHT).forEach(key -> Gdx.input.setCatchKey(key, true));
+
+        logger.logInfo("Setting up everything");
         super.create();
 
         this.batch = new SpriteBatch();
 
+        logger.logInfo("Setting up screens");
         setupScreens();
+        logger.logInfo("Setting up transitions");
         setupTransitions();
 
         if (Constants.DEBUG)
