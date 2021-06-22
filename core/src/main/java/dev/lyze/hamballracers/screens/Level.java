@@ -13,7 +13,7 @@ import com.gempukku.libgdx.lib.camera2d.constraint.MinimumViewportCameraConstrai
 import com.gempukku.libgdx.lib.camera2d.focus.EntityFocus;
 import com.gempukku.libgdx.lib.camera2d.focus.FitAllCameraFocus;
 import dev.lyze.hamballracers.Constants;
-import dev.lyze.hamballracers.screens.entities.Player;
+import dev.lyze.hamballracers.screens.entities.HamsterBall;
 import dev.lyze.hamballracers.screens.map.Map;
 import dev.lyze.hamballracers.utils.camera.EntityPositionProvider;
 import lombok.var;
@@ -25,7 +25,7 @@ public class Level {
     private final GameScreen screen;
 
     private final Viewport viewport;
-    private final Player[] players;
+    private final HamsterBall[] hamsterBalls;
 
     private final Map map;
 
@@ -35,14 +35,14 @@ public class Level {
         this.screen = screen;
 
         map = new Map(mapPath);
-        players = new Player[] {
-            new Player(map, 16, 16, 0),
-            new Player(map, 16, 16, 1)
+        hamsterBalls = new HamsterBall[] {
+            new HamsterBall(map, 16, 16, 0),
+            new HamsterBall(map, 16, 16, 1)
         };
 
         viewport = new ExtendViewport(240, 135);
 
-        var cameraFoci = Arrays.stream(players).map(player -> new EntityFocus(new EntityPositionProvider(player))).toArray(EntityFocus[]::new);
+        var cameraFoci = Arrays.stream(hamsterBalls).map(hamsterBall -> new EntityFocus(new EntityPositionProvider(hamsterBall))).toArray(EntityFocus[]::new);
         camera = new FocusCameraController(viewport.getCamera(),
                 new FitAllCameraFocus(cameraFoci),
                 new LockedToCameraConstraint(new Vector2(0.5f, 0.5f)),
@@ -51,7 +51,7 @@ public class Level {
     }
 
     public void update(float delta) {
-        Arrays.stream(players).forEach(player -> player.update(delta));
+        Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.update(delta));
 
         viewport.apply();
         camera.update(delta);
@@ -62,11 +62,11 @@ public class Level {
         batch.begin();
 
         map.render(((OrthographicCamera) viewport.getCamera()));
-        Arrays.stream(players).forEach(player -> player.render(batch));
+        Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.render(batch));
 
         if (Constants.DEBUG) {
             map.debugRender(drawer);
-            Arrays.stream(players).forEach(player -> player.debugRender(drawer));
+            Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.debugRender(drawer));
         }
 
         batch.end();

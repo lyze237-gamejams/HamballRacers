@@ -15,7 +15,7 @@ import dev.lyze.hamballracers.utils.MathUtils2;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-public class Player extends Entity {
+public class HamsterBall extends Entity {
     private final Vector2 velocity = new Vector2();
 
     private static final float vehicleAcceleration = 120f;
@@ -34,7 +34,7 @@ public class Player extends Entity {
 
     private boolean facingRight;
 
-    public Player(Map map, float x, float y, int playerIndex) {
+    public HamsterBall(Map map, float x, float y, int playerIndex) {
         super(map, x, y);
 
         this.playerIndex = playerIndex;
@@ -99,7 +99,7 @@ public class Player extends Entity {
 
         var pythagorasVelocity = ((velocity.x * velocity.x) + (velocity.y * velocity.y));
 
-        float vehicleMaxMoveSpeed = Player.vehicleMaxMoveSpeed * speedMultiplier;
+        float vehicleMaxMoveSpeed = HamsterBall.vehicleMaxMoveSpeed * speedMultiplier;
         if (pythagorasVelocity > (vehicleMaxMoveSpeed * vehicleMaxMoveSpeed)) {
             float magnitude = (float) Math.sqrt(pythagorasVelocity);
             float multiplier = vehicleMaxMoveSpeed / magnitude;
@@ -117,7 +117,7 @@ public class Player extends Entity {
         else
             velocity = MathUtils2.moveTowards(velocity, 0, icy ? decelerationDeltaIce : accelerationDelta);
 
-        var vehicleMaxMoveSpeed = Player.vehicleMaxMoveSpeed * speedMultiplier;
+        var vehicleMaxMoveSpeed = HamsterBall.vehicleMaxMoveSpeed * speedMultiplier;
         return MathUtils.clamp(velocity, -vehicleMaxMoveSpeed, vehicleMaxMoveSpeed);
     }
 
