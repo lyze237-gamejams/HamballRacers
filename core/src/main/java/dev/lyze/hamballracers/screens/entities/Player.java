@@ -52,7 +52,6 @@ public class Player extends Entity {
     }
 
     private void updateAnimation(float delta) {
-        System.out.println(velocity);
         if (velocity.x != 0 || velocity.y != 0) {
             animationDelta += delta * Math.max(Math.abs(velocity.x), Math.abs(velocity.y)) / vehicleMaxMoveSpeed;
         }
