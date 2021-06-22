@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import dev.lyze.hamballracers.screens.map.Block;
 import dev.lyze.hamballracers.screens.map.Map;
 import dev.lyze.hamballracers.utils.MathUtils2;
 import lombok.var;
@@ -45,9 +46,8 @@ public class Player extends Entity {
     @Override
     public void update(float delta) {
         var inputVelocity = readInputVelocity();
-        var isOnIce = map.getBlock(x, y).isSlippery();
 
-        calculateVelocity(inputVelocity, isOnIce, delta);
+        calculateVelocity(inputVelocity, delta);
         calculateMovement(delta);
 
         updateAnimation(delta);
@@ -79,7 +79,11 @@ public class Player extends Entity {
         return inputVelocity;
     }
 
-    private void calculateVelocity(Vector2 inputVelocity, boolean isOnIce, float delta) {
+    private void calculateVelocity(Vector2 inputVelocity, float delta) {
+        var block = map.getBlock(x, y);
+        var isOnIce = block.isIcy();
+        var speedMultiplier = block.getSpeedMultiplier();
+
         var accelerationDelta = vehicleAcceleration * delta;
         var decelerationDeltaIce = 6.5f * 5f * delta;
 
@@ -88,6 +92,7 @@ public class Player extends Entity {
 
         var pythagorasVelocity = ((velocity.x * velocity.x) + (velocity.y * velocity.y));
 
+        float vehicleMaxMoveSpeed = Player.vehicleMaxMoveSpeed * speedMultiplier;
         if (pythagorasVelocity > (vehicleMaxMoveSpeed * vehicleMaxMoveSpeed)) {
             float magnitude = (float) Math.sqrt(pythagorasVelocity);
             float multiplier = vehicleMaxMoveSpeed / magnitude;
@@ -97,11 +102,15 @@ public class Player extends Entity {
     }
 
     private float calculateAxisVelocity(float velocity, float inputVelocity, boolean isOnIce, float accelerationDelta, float decelerationDeltaIce) {
+        var block = map.getBlock(x, y);
+        var speedMultiplier = block.getSpeedMultiplier();
+
         if (inputVelocity != 0.0f)
             velocity += inputVelocity * accelerationDelta;
         else
             velocity = MathUtils2.moveTowards(velocity, 0, isOnIce ? decelerationDeltaIce : accelerationDelta);
 
+        var vehicleMaxMoveSpeed = Player.vehicleMaxMoveSpeed * speedMultiplier;
         return MathUtils.clamp(velocity, -vehicleMaxMoveSpeed, vehicleMaxMoveSpeed);
     }
 

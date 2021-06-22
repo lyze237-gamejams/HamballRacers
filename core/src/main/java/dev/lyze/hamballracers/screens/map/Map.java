@@ -50,8 +50,10 @@ public class Map {
                         blocks[x][y].setCollision(true);
                     }
 
-                    if (cell.getTile().getProperties().get("slippery", false, Boolean.class))
-                        blocks[x][y].setSlippery(true);
+                    if (cell.getTile().getProperties().get("icy", false, Boolean.class))
+                        blocks[x][y].setIcy(true);
+
+                    blocks[x][y].setSpeedMultiplier(cell.getTile().getProperties().get("speed", 0f, Float.class));
                 }
             }
         }
