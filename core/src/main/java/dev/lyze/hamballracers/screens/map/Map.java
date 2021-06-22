@@ -16,15 +16,17 @@ public class Map {
     private final TiledMap map;
     private final OrthogonalTiledMapRendererBleeding renderer;
 
-    private Block[][] blocks;
+    private final Block[][] blocks;
 
     public Map(String file) {
+        logger.logInfo("Loading map " + file);
         map = new TmxMapLoader().load(file);
         var layer = (TiledMapTileLayer) map.getLayers().get(0);
 
         renderer = new OrthogonalTiledMapRendererBleeding(map, 0.5f);
 
         blocks = new Block[layer.getWidth()][layer.getHeight()];
+        logger.logInfo("Map size is " + layer.getWidth() + " / " + layer.getHeight());
 
         setupCollisions();
     }
@@ -36,26 +38,12 @@ public class Map {
 
             var layer = (TiledMapTileLayer) genericLayer;
 
-            for (int x = 0; x < layer.getWidth(); x++) {
-                for (int y = 0; y < layer.getHeight(); y++) {
-                    var cell = layer.getCell(x, y);
+            logger.logInfo("Parsing tilemap layer " + layer.getName());
 
+            for (int x = 0; x < layer.getWidth(); x++)
+                for (int y = 0; y < layer.getHeight(); y++)
                     if (blocks[x][y] == null)
-                        blocks[x][y] = new Block(x, y);
-
-                    if (cell == null)
-                        continue;
-
-                    if (cell.getTile().getObjects().getCount() == 1) {
-                        blocks[x][y].setCollision(true);
-                    }
-
-                    if (cell.getTile().getProperties().get("icy", false, Boolean.class))
-                        blocks[x][y].setIcy(true);
-
-                    blocks[x][y].setSpeedMultiplier(cell.getTile().getProperties().get("speed", 0f, Float.class));
-                }
-            }
+                        blocks[x][y] = new Block(x, y, layer.getCell(x, y));
         }
     }
 
@@ -65,11 +53,9 @@ public class Map {
     }
 
     public void debugRender(ShapeDrawer drawer) {
-        for (int x = 0; x < blocks.length; x++) {
-            for (int y = 0; y < blocks[x].length; y++) {
-                blocks[x][y].debugRender(drawer);
-            }
-        }
+        for (Block[] block : blocks)
+            for (Block value : block)
+                value.debugRender(drawer);
     }
 
     public Block getBlock(float x, float y) {
@@ -83,12 +69,10 @@ public class Map {
         var bottomRightX = (int) ((x + hitbox.getHalfHitboxWidth() / 2f + hitbox.getHitboxOffsetX()) / 8f);
         var bottomRightY = (int) ((y + hitbox.getHalfHitboxHeight() / 2f + hitbox.getHitboxOffsetY()) / 8f);
 
-        for (int xCheck = topLeftX; xCheck <= bottomRightX; xCheck++) {
-            for (int yCheck = topLeftY; yCheck <= bottomRightY; yCheck++) {
+        for (int xCheck = topLeftX; xCheck <= bottomRightX; xCheck++)
+            for (int yCheck = topLeftY; yCheck <= bottomRightY; yCheck++)
                 if (blocks[xCheck][yCheck].isCollision())
                     return true;
-            }
-        }
 
         return false;
     }

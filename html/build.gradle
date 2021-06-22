@@ -38,7 +38,6 @@ dependencies {
     implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
     implementation "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion:sources"
     implementation "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:$gdxControllersVersion:sources"
-    implementation "com.github.tommyettinger:jbump:$jbumpVersion:sources"
     implementation "space.earlygrey:shapedrawer:$shapeDrawerVersion:sources"
 
     api "com.github.crykn:libgdx-screenmanager:$screenManagerVersion:sources"

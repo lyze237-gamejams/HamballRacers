@@ -4,7 +4,6 @@ eclipse.project.name = appName + '-core'
 dependencies {
     api "com.badlogicgames.gdx:gdx:$gdxVersion"
     api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
-    api "com.github.tommyettinger:jbump:$jbumpVersion"
     api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
 
     api "com.github.crykn:libgdx-screenmanager:$screenManagerVersion"

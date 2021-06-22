@@ -81,14 +81,13 @@ public class Player extends Entity {
 
     private void calculateVelocity(Vector2 inputVelocity, float delta) {
         var block = map.getBlock(x, y);
-        var isOnIce = block.isIcy();
         var speedMultiplier = block.getSpeedMultiplier();
 
         var accelerationDelta = vehicleAcceleration * delta;
         var decelerationDeltaIce = 6.5f * 5f * delta;
 
-        velocity.x = calculateAxisVelocity(velocity.x, inputVelocity.x, isOnIce, accelerationDelta, decelerationDeltaIce);
-        velocity.y = calculateAxisVelocity(velocity.y, inputVelocity.y, isOnIce, accelerationDelta, decelerationDeltaIce);
+        velocity.x = calculateAxisVelocity(velocity.x, inputVelocity.x, block, accelerationDelta, decelerationDeltaIce);
+        velocity.y = calculateAxisVelocity(velocity.y, inputVelocity.y, block, accelerationDelta, decelerationDeltaIce);
 
         var pythagorasVelocity = ((velocity.x * velocity.x) + (velocity.y * velocity.y));
 
@@ -101,14 +100,14 @@ public class Player extends Entity {
         }
     }
 
-    private float calculateAxisVelocity(float velocity, float inputVelocity, boolean isOnIce, float accelerationDelta, float decelerationDeltaIce) {
-        var block = map.getBlock(x, y);
+    private float calculateAxisVelocity(float velocity, float inputVelocity, Block block, float accelerationDelta, float decelerationDeltaIce) {
+        var icy = block.isIcy();
         var speedMultiplier = block.getSpeedMultiplier();
 
         if (inputVelocity != 0.0f)
             velocity += inputVelocity * accelerationDelta;
         else
-            velocity = MathUtils2.moveTowards(velocity, 0, isOnIce ? decelerationDeltaIce : accelerationDelta);
+            velocity = MathUtils2.moveTowards(velocity, 0, icy ? decelerationDeltaIce : accelerationDelta);
 
         var vehicleMaxMoveSpeed = Player.vehicleMaxMoveSpeed * speedMultiplier;
         return MathUtils.clamp(velocity, -vehicleMaxMoveSpeed, vehicleMaxMoveSpeed);
@@ -118,20 +117,18 @@ public class Player extends Entity {
         var moveAmountX = velocity.x * delta;
         var moveAmountY = velocity.y * delta;
 
-        float newPositionX = x + moveAmountX;
-        boolean canMoveX = !map.isBlockCollision(newPositionX, y, hitbox); //currentLevel.CheckPlayerPositionIsValidWalkSpace(new PointFloat2D(newPositionX, startingPositionY));
+        float potentialNewPositionX = x + moveAmountX;
+        boolean canMoveX = !map.isBlockCollision(potentialNewPositionX, y, hitbox);
 
-        float newPositionY = y + moveAmountY;
-        boolean canMoveY = !map.isBlockCollision(x, newPositionY, hitbox); //currentLevel.CheckPlayerPositionIsValidWalkSpace(new PointFloat2D(startingPositionX, newPositionY));
-
-        var newPosition = new Vector2(x, y);
+        float potentialNewPositionY = y + moveAmountY;
+        boolean canMoveY = !map.isBlockCollision(x, potentialNewPositionY, hitbox);
 
         if (canMoveX)
-            newPosition.x = newPositionX;
+            x = potentialNewPositionX;
 
-        var canMoveXAndY = !map.isBlockCollision(newPosition.x, newPositionY, hitbox); //currentLevel.CheckPlayerPositionIsValidWalkSpace(new PointFloat2D(newPosition.x, newPositionY));
+        var canMoveXAndY = !map.isBlockCollision(x, potentialNewPositionY, hitbox);
         if (canMoveXAndY)
-            newPosition.y = newPositionY;
+            y = potentialNewPositionY;
 
         var collidedFromHighSpeed = false;
         if (!canMoveX || !canMoveY) {
@@ -151,9 +148,6 @@ public class Player extends Entity {
                 this.velocity.y *= 0.7f;
             }
         }
-
-        x = newPosition.x;
-        y = newPosition.y;
     }
 
     @Override

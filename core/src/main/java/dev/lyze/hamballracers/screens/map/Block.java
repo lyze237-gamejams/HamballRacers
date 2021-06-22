@@ -1,7 +1,7 @@
 package dev.lyze.hamballracers.screens.map;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import lombok.Data;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -11,18 +11,22 @@ public class Block {
     private boolean icy;
     private float speedMultiplier;
 
-    private static BitmapFont font;
-
     private int x, y;
 
-    public Block(int x, int y) {
+    public Block(int x, int y, TiledMapTileLayer.Cell cell) {
         this.x = x;
         this.y = y;
 
-        if (font == null) {
-            font = new BitmapFont();
-            font.getData().setScale(0.2f);
-        }
+        if (cell == null)
+            return;
+
+        if (cell.getTile().getObjects().getCount() == 1)
+            setCollision(true);
+
+        if (cell.getTile().getProperties().get("icy", false, Boolean.class))
+            setIcy(true);
+
+        setSpeedMultiplier(cell.getTile().getProperties().get("speed", 0f, Float.class));
     }
 
     public void debugRender(ShapeDrawer drawer) {
@@ -35,8 +39,5 @@ public class Block {
             drawer.setColor(Color.TEAL);
             drawer.rectangle(x * 8f + 1, y * 8f + 1, 6, 6);
         }
-
-        if (speedMultiplier != 1.0f)
-            font.draw(drawer.getBatch(), String.valueOf(speedMultiplier), x * 8 + 2f, y * 8 + 4f);
     }
 }
