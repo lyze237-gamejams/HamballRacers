@@ -20,6 +20,12 @@ public class Player extends Entity {
 
     private static final float vehicleAcceleration = 120f;
     private static final float vehicleMaxMoveSpeed = 81f; // 61 default
+    private final int playerIndex;
+
+    private final int[][] playerControls = new int[][] {
+            new int[] { Input.Keys.W, Input.Keys.S, Input.Keys.A, Input.Keys.D },
+            new int[] { Input.Keys.UP, Input.Keys.DOWN, Input.Keys.LEFT, Input.Keys.RIGHT }
+    };
 
     private Animation<Texture> runAnimation;
     private float animationDelta;
@@ -28,8 +34,10 @@ public class Player extends Entity {
 
     private boolean facingRight;
 
-    public Player(Map map, float x, float y) {
+    public Player(Map map, float x, float y, int playerIndex) {
         super(map, x, y);
+
+        this.playerIndex = playerIndex;
 
         hitbox = new Hitbox(16, 16, 6, 3.8f, 0, -2f);
 
@@ -66,14 +74,14 @@ public class Player extends Entity {
     private Vector2 readInputVelocity() {
         var inputVelocity = new Vector2();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.W))
+        if (Gdx.input.isKeyPressed(playerControls[playerIndex][0]))
             inputVelocity.y = 1;
-        if (Gdx.input.isKeyPressed(Input.Keys.S))
+        if (Gdx.input.isKeyPressed(playerControls[playerIndex][1]))
             inputVelocity.y = -1;
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A))
+        if (Gdx.input.isKeyPressed(playerControls[playerIndex][2]))
             inputVelocity.x = -1;
-        if (Gdx.input.isKeyPressed(Input.Keys.D))
+        if (Gdx.input.isKeyPressed(playerControls[playerIndex][3]))
             inputVelocity.x = 1;
 
         return inputVelocity;
