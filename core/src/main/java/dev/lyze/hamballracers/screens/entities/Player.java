@@ -23,8 +23,12 @@ public class Player extends Entity {
     private Animation<Texture> runAnimation;
     private float animationDelta;
 
-    public Player(Map map, float x, float y, float width, float height) {
-        super(map, x, y, width, height);
+    private final Hitbox hitbox;
+
+    public Player(Map map, float x, float y) {
+        super(map, x, y);
+
+        hitbox = new Hitbox(16, 16, 6, 3.8f, 0, -2f);
 
         setupAnimation();
     }
@@ -102,17 +106,17 @@ public class Player extends Entity {
         var moveAmountY = velocity.y * delta;
 
         float newPositionX = x + moveAmountX;
-        boolean canMoveX = !map.getBlock(newPositionX, y).isCollision(); //currentLevel.CheckPlayerPositionIsValidWalkSpace(new PointFloat2D(newPositionX, startingPositionY));
+        boolean canMoveX = !map.isBlockCollision(newPositionX, y, hitbox); //currentLevel.CheckPlayerPositionIsValidWalkSpace(new PointFloat2D(newPositionX, startingPositionY));
 
         float newPositionY = y + moveAmountY;
-        boolean canMoveY = !map.getBlock(x, newPositionY).isCollision(); //currentLevel.CheckPlayerPositionIsValidWalkSpace(new PointFloat2D(startingPositionX, newPositionY));
+        boolean canMoveY = !map.isBlockCollision(x, newPositionY, hitbox); //currentLevel.CheckPlayerPositionIsValidWalkSpace(new PointFloat2D(startingPositionX, newPositionY));
 
         var newPosition = new Vector2(x, y);
 
         if (canMoveX)
             newPosition.x = newPositionX;
 
-        var canMoveXAndY = !map.getBlock(newPosition.x, newPositionY).isCollision(); //currentLevel.CheckPlayerPositionIsValidWalkSpace(new PointFloat2D(newPosition.x, newPositionY));
+        var canMoveXAndY = !map.isBlockCollision(newPosition.x, newPositionY, hitbox); //currentLevel.CheckPlayerPositionIsValidWalkSpace(new PointFloat2D(newPosition.x, newPositionY));
         if (canMoveXAndY)
             newPosition.y = newPositionY;
 
@@ -142,14 +146,14 @@ public class Player extends Entity {
     @Override
     public void render(SpriteBatch batch) {
         var keyFrame = runAnimation.getKeyFrame(animationDelta);
-        batch.draw(keyFrame, x - width / 2f, y - height / 2f, width, height);
+        batch.draw(keyFrame, x - hitbox.getDrawWidth() / 2f, y - hitbox.getDrawHeight() / 2f, hitbox.getDrawWidth(), hitbox.getDrawHeight());
     }
 
     @Override
     public void debugRender(ShapeDrawer drawer) {
         drawer.setColor(Color.CYAN);
-        drawer.rectangle(x - width / 2f, y - width / 2f, width, height);
-        drawer.circle(x, y, width / 2f);
+        hitbox.debugDraw(drawer, x, y);
+        drawer.circle(x, y, hitbox.getDrawWidth() / 2f);
 
         drawer.circle(x, y, 1f);
     }

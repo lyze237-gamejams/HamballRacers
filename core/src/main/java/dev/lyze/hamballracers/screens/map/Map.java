@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import dev.lyze.hamballracers.screens.entities.Hitbox;
 import dev.lyze.hamballracers.utils.Logger;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -71,5 +72,22 @@ public class Map {
 
     public Block getBlock(float x, float y) {
         return blocks[(int) (x / 8f)][(int) (y / 8f)];
+    }
+
+    public boolean isBlockCollision(float x, float y, Hitbox hitbox) {
+        var topLeftX = (int) ((x - hitbox.getHalfHitboxWidth() / 2f + hitbox.getHitboxOffsetX()) / 8f);
+        var topLeftY = (int) ((y - hitbox.getHalfHitboxHeight() / 2f + hitbox.getHitboxOffsetX()) / 8f);
+
+        var bottomRightX = (int) ((x + hitbox.getHalfHitboxWidth() / 2f + hitbox.getHitboxOffsetX()) / 8f);
+        var bottomRightY = (int) ((y + hitbox.getHalfHitboxHeight() / 2f + hitbox.getHitboxOffsetY()) / 8f);
+
+        for (int xCheck = topLeftX; xCheck <= bottomRightX; xCheck++) {
+            for (int yCheck = topLeftY; yCheck <= bottomRightY; yCheck++) {
+                if (blocks[xCheck][yCheck].isCollision())
+                    return true;
+            }
+        }
+
+        return false;
     }
 }

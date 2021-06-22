@@ -36,7 +36,7 @@ public class GameScreen extends ManagedScreenAdapter {
         drawer.setDefaultLineWidth(0.5f);
 
         map = new Map("map/map.tmx");
-        player = new Player(map, 16, 16, 16, 16);
+        player = new Player(map, 16, 16);
 
         viewport = new ExtendViewport(240, 135);
         camera = new FocusCameraController(viewport.getCamera(),

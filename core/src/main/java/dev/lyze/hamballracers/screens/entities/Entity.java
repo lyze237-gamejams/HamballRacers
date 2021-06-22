@@ -7,14 +7,11 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 public abstract class Entity {
     protected final Map map;
     protected float x, y;
-    protected float width, height;
 
-    public Entity(Map map, float x, float y, float width, float height) {
+    public Entity(Map map, float x, float y) {
         this.map = map;
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
     }
 
     public abstract void update(float delta);
@@ -29,13 +26,5 @@ public abstract class Entity {
 
     public float getY() {
         return y;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public float getHeight() {
-        return height;
     }
 }
