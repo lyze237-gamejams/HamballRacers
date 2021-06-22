@@ -46,7 +46,7 @@ public class Level {
         camera = new FocusCameraController(viewport.getCamera(),
                 new FitAllCameraFocus(cameraFoci),
                 new LockedToCameraConstraint(new Vector2(0.5f, 0.5f)),
-                new FitAllCameraConstraint(new Rectangle(0.1f, 0.1f, 0.8f, 0.8f), cameraFoci),
+                new FitAllCameraConstraint(new Rectangle(0.2f, 0.2f, 0.6f, 0.6f), cameraFoci),
                 new MinimumViewportCameraConstraint(240, 135));
     }
 

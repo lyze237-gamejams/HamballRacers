@@ -42,6 +42,6 @@ public class Block {
         if (cell.getTile().getProperties().get("icy", false, Boolean.class))
             setIcy(true);
 
-        setSpeedMultiplier(cell.getTile().getProperties().get("speed", 0f, Float.class));
+        setSpeedMultiplier(cell.getTile().getProperties().get("speed", 1f, Float.class));
     }
 }
