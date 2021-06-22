@@ -44,6 +44,8 @@ public class Map {
                 for (int y = 0; y < layer.getHeight(); y++)
                     if (blocks[x][y] == null)
                         blocks[x][y] = new Block(x, y, layer.getCell(x, y));
+                    else
+                        blocks[x][y].update(layer.getCell(x, y));
         }
     }
 

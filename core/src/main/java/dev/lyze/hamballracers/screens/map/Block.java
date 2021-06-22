@@ -17,16 +17,7 @@ public class Block {
         this.x = x;
         this.y = y;
 
-        if (cell == null)
-            return;
-
-        if (cell.getTile().getObjects().getCount() == 1)
-            setCollision(true);
-
-        if (cell.getTile().getProperties().get("icy", false, Boolean.class))
-            setIcy(true);
-
-        setSpeedMultiplier(cell.getTile().getProperties().get("speed", 0f, Float.class));
+        update(cell);
     }
 
     public void debugRender(ShapeDrawer drawer) {
@@ -39,5 +30,18 @@ public class Block {
             drawer.setColor(Color.TEAL);
             drawer.rectangle(x * 8f + 1, y * 8f + 1, 6, 6);
         }
+    }
+
+    public void update(TiledMapTileLayer.Cell cell) {
+        if (cell == null)
+            return;
+
+        if (cell.getTile().getObjects().getCount() == 1)
+            setCollision(true);
+
+        if (cell.getTile().getProperties().get("icy", false, Boolean.class))
+            setIcy(true);
+
+        setSpeedMultiplier(cell.getTile().getProperties().get("speed", 0f, Float.class));
     }
 }
