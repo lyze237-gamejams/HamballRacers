@@ -1,7 +1,6 @@
 package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,12 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gempukku.libgdx.lib.camera2d.FocusCameraController;
-import com.gempukku.libgdx.lib.camera2d.constraint.LerpToWindowCameraConstraint;
-import com.gempukku.libgdx.lib.camera2d.constraint.LockedToCameraConstraint;
-import com.gempukku.libgdx.lib.camera2d.constraint.SceneCameraConstraint;
 import com.gempukku.libgdx.lib.camera2d.constraint.SnapToWindowCameraConstraint;
 import com.gempukku.libgdx.lib.camera2d.focus.EntityFocus;
-import com.gempukku.libgdx.lib.camera2d.focus.PositionProvider;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.entities.Player;
 import dev.lyze.hamballracers.screens.map.Map;
@@ -63,16 +58,6 @@ public class GameScreen extends ManagedScreenAdapter {
         player.render(batch);
 
         if (Constants.DEBUG) {
-            float gridSize = 8f;
-
-            drawer.setColor(Color.DARK_GRAY);
-
-            for (int x = -100; x < 100; x++)
-                drawer.line(x * gridSize, -100 * gridSize, x * gridSize, 100 * gridSize);
-
-            for (int y = -100; y < 100; y++)
-                drawer.line(-100 * gridSize, y * gridSize, 100 * gridSize, y * gridSize);
-
             map.debugRender(drawer);
             player.debugRender(drawer);
         }

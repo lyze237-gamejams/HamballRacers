@@ -3,9 +3,12 @@ package dev.lyze.hamballracers.screens.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import dev.lyze.hamballracers.screens.map.Map;
 import dev.lyze.hamballracers.utils.MathUtils2;
 import lombok.var;
@@ -15,22 +18,40 @@ public class Player extends Entity {
     private final Vector2 velocity = new Vector2();
 
     private static final float vehicleAcceleration = 120f;
-    private static final float vehicleMaxMoveSpeed = 61f;
+    private static final float vehicleMaxMoveSpeed = 81f; // 61 default
+
+    private Animation<Texture> runAnimation;
+    private float animationDelta;
 
     public Player(Map map, float x, float y, float width, float height) {
         super(map, x, y, width, height);
+
+        setupAnimation();
     }
 
-    private boolean isOnIce;
+    private void setupAnimation() {
+        var runAnimationTextures = new Array<Texture>();
+        for (int i = 1; i <= 8; i++)
+            runAnimationTextures.add(new Texture(Gdx.files.internal("player/ball/lyzeball" + i + ".png")));
+        runAnimation = new Animation<>(0.08f, runAnimationTextures, Animation.PlayMode.LOOP);
+    }
 
     @Override
     public void update(float delta) {
-        this.isOnIce = map.getBlock(x, y).isSlippery();
-
         var inputVelocity = readInputVelocity();
+        var isOnIce = map.getBlock(x, y).isSlippery();
 
         calculateVelocity(inputVelocity, isOnIce, delta);
         calculateMovement(delta);
+
+        updateAnimation(delta);
+    }
+
+    private void updateAnimation(float delta) {
+        System.out.println(velocity);
+        if (velocity.x != 0 || velocity.y != 0) {
+            animationDelta += delta * Math.max(Math.abs(velocity.x), Math.abs(velocity.y)) / vehicleMaxMoveSpeed;
+        }
     }
 
     private Vector2 readInputVelocity() {
@@ -63,16 +84,14 @@ public class Player extends Entity {
         else
             velocity.y = MathUtils2.moveTowards(velocity.y, 0, isOnIce ? decelerationDeltaIce : accelerationDelta);
 
-        var maxVehicleMoveSpeed = 61f; // todo ???
-
-        velocity.x = MathUtils.clamp(velocity.x, -maxVehicleMoveSpeed, maxVehicleMoveSpeed);
-        velocity.y = MathUtils.clamp(velocity.y, -maxVehicleMoveSpeed, maxVehicleMoveSpeed);
+        velocity.x = MathUtils.clamp(velocity.x, -vehicleMaxMoveSpeed, vehicleMaxMoveSpeed);
+        velocity.y = MathUtils.clamp(velocity.y, -vehicleMaxMoveSpeed, vehicleMaxMoveSpeed);
 
         var pythagorasVelocity = ((velocity.x * velocity.x) + (velocity.y * velocity.y));
 
-        if (pythagorasVelocity > (maxVehicleMoveSpeed * maxVehicleMoveSpeed)) {
+        if (pythagorasVelocity > (vehicleMaxMoveSpeed * vehicleMaxMoveSpeed)) {
             float magnitude = (float) Math.sqrt(pythagorasVelocity);
-            float multiplier = maxVehicleMoveSpeed / magnitude;
+            float multiplier = vehicleMaxMoveSpeed / magnitude;
 
             velocity.scl(multiplier);
         }
@@ -122,11 +141,13 @@ public class Player extends Entity {
 
     @Override
     public void render(SpriteBatch batch) {
+        var keyFrame = runAnimation.getKeyFrame(animationDelta);
+        batch.draw(keyFrame, x - width / 2f, y - height / 2f, width, height);
     }
 
     @Override
     public void debugRender(ShapeDrawer drawer) {
-        drawer.setColor(isOnIce ? Color.BLUE : Color.CYAN);
+        drawer.setColor(Color.CYAN);
         drawer.rectangle(x - width / 2f, y - width / 2f, width, height);
         drawer.circle(x, y, width / 2f);
 
