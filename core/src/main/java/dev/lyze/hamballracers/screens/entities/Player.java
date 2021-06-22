@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -84,18 +83,8 @@ public class Player extends Entity {
         var accelerationDelta = vehicleAcceleration * delta;
         var decelerationDeltaIce = 6.5f * 5f * delta;
 
-        if (inputVelocity.x != 0.0f)
-            velocity.x += inputVelocity.x * accelerationDelta;
-        else
-            velocity.x = MathUtils2.moveTowards(velocity.x, 0, isOnIce ? decelerationDeltaIce : accelerationDelta);
-
-        if (inputVelocity.y != 0)
-            velocity.y += inputVelocity.y * accelerationDelta;
-        else
-            velocity.y = MathUtils2.moveTowards(velocity.y, 0, isOnIce ? decelerationDeltaIce : accelerationDelta);
-
-        velocity.x = MathUtils.clamp(velocity.x, -vehicleMaxMoveSpeed, vehicleMaxMoveSpeed);
-        velocity.y = MathUtils.clamp(velocity.y, -vehicleMaxMoveSpeed, vehicleMaxMoveSpeed);
+        velocity.x = calculateAxisVelocity(velocity.x, inputVelocity.x, isOnIce, accelerationDelta, decelerationDeltaIce);
+        velocity.y = calculateAxisVelocity(velocity.y, inputVelocity.y, isOnIce, accelerationDelta, decelerationDeltaIce);
 
         var pythagorasVelocity = ((velocity.x * velocity.x) + (velocity.y * velocity.y));
 
@@ -105,6 +94,15 @@ public class Player extends Entity {
 
             velocity.scl(multiplier);
         }
+    }
+
+    private float calculateAxisVelocity(float velocity, float inputVelocity, boolean isOnIce, float accelerationDelta, float decelerationDeltaIce) {
+        if (inputVelocity != 0.0f)
+            velocity += inputVelocity * accelerationDelta;
+        else
+            velocity = MathUtils2.moveTowards(velocity, 0, isOnIce ? decelerationDeltaIce : accelerationDelta);
+
+        return MathUtils.clamp(velocity, -vehicleMaxMoveSpeed, vehicleMaxMoveSpeed);
     }
 
     private void calculateMovement(float delta) {
