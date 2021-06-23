@@ -5,6 +5,21 @@
     <inherits name="dev.lyze.hamballracers.GdxDefinition"/>
     <collapse-all-properties/>
     <add-linker name="xsiframe"/>
+
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.MainAssets" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.MainTextureAtlas" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.LoadAssetFromFile" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.LoadFromTextureAtlas" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.DynamicTextureAtlas" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.DynamicAssets" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.DynamicTextureAtlasAssetLoader" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.Flip" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.LoadAssetFromTextureAtlas" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.graphics.g2d.TextureAtlas" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.maps.tiled.TiledMap" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.audio.Music" />
+    <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.audio.Sound" />
+
     <set-configuration-property name="devModeRedirectEnabled" value="true"/>
     <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
 </module>
