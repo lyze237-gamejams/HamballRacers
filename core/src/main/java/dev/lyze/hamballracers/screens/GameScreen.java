@@ -1,9 +1,7 @@
 package dev.lyze.hamballracers.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -16,7 +14,7 @@ public class GameScreen extends ManagedScreenAdapter {
 
     public GameScreen() {
         batch = new SpriteBatch();
-        drawer = new ShapeDrawer(batch, new TextureRegion(new Texture(Gdx.files.internal("pixel.png"))));
+        drawer = new ShapeDrawer(batch, Constants.Assets.getMainTextureAtlas().getPixel());
         drawer.setDefaultLineWidth(0.5f);
 
         level = new Level(this, "map/map.tmx");

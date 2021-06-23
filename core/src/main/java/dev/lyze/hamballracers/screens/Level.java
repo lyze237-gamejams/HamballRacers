@@ -34,7 +34,7 @@ public class Level {
     public Level(GameScreen screen, String mapPath) {
         this.screen = screen;
 
-        map = new Map(mapPath);
+        map = new Map(Constants.Assets.getMap());
         hamsterBalls = new HamsterBall[] {
             new HamsterBall(map, 16, 16, 0),
             new HamsterBall(map, 16, 16, 1)
@@ -64,7 +64,7 @@ public class Level {
         map.render(((OrthographicCamera) viewport.getCamera()));
         Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.render(batch));
 
-        if (Constants.DEBUG) {
+        if (Constants.Debug) {
             map.debugRender(drawer);
             Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.debugRender(drawer));
         }

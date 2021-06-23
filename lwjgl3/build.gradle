@@ -14,7 +14,6 @@ apply plugin: 'org.beryx.runtime'
 
 sourceSets.main.resources.srcDirs += [rootProject.file('assets').path]
 mainClassName = 'dev.lyze.hamballracers.lwjgl3.Lwjgl3Launcher'
-eclipse.project.name = appName + '-lwjgl3'
 sourceCompatibility = 8.0
 
 dependencies {

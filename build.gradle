@@ -8,11 +8,27 @@ buildscript {
     }
     dependencies {
         classpath "org.wisepersist:gwt-gradle-plugin:$gwtPluginVersion"
+        classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+    }
+}
+
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-list', '--count', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+task texturePacker {
+    doLast {
+        TexturePacker.process("${project.rootDir}/sources/atlases", "${project.rootDir}/assets/atlases", "main")
     }
 }
 
 allprojects {
-    apply plugin: 'eclipse'
     apply plugin: 'idea'
 }
 
@@ -22,10 +38,12 @@ configure(subprojects) {
     compileJava {
         options.incremental = true
     }
+
+    compileJava.dependsOn texturePacker
 }
 
 subprojects {
-    version = '0.0.1'
+    version = '0.0.' + getGitHash()
     ext.appName = 'HamballRacers'
     repositories {
         mavenLocal()
@@ -35,5 +53,3 @@ subprojects {
         maven { url 'https://jitpack.io' }
     }
 }
-
-eclipse.project.name = 'HamballRacers' + '-parent'

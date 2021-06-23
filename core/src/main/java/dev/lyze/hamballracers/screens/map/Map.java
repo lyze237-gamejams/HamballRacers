@@ -19,8 +19,11 @@ public class Map {
     private final Block[][] blocks;
 
     public Map(String file) {
-        logger.logInfo("Loading map " + file);
-        map = new TmxMapLoader().load(file);
+        this(new TmxMapLoader().load(file));
+    }
+
+    public Map(TiledMap map) {
+        this.map = map;
         var layer = (TiledMapTileLayer) map.getLayers().get(0);
 
         renderer = new OrthogonalTiledMapRendererBleeding(map, 0.5f);
