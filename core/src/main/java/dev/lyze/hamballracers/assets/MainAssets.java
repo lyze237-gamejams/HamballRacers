@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import dev.lyze.hamballracers.assets.utils.DynamicAssets;
 import dev.lyze.hamballracers.assets.utils.DynamicTextureAtlasAssetLoader;
 import dev.lyze.hamballracers.assets.utils.InternalOrExternalFileHandleResolver;
@@ -20,6 +21,9 @@ public class MainAssets extends DynamicAssets {
 
     @Getter @LoadAssetFromFile("map/map.tmx")
     private TiledMap map;
+
+    @Getter @LoadAssetFromFile("skins/skin.json")
+    private Skin skin;
 
     @Override
     protected AssetManager generateAssMan() {

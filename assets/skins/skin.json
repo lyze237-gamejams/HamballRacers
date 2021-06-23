@@ -1,0 +1,28 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	button: {
+		file: button.fnt
+	}
+	title: {
+		file: title.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	RGBA_255_255_255_255: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	title: {
+		font: title
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: button
+	}
+}
+}
