@@ -7,8 +7,14 @@ import dev.lyze.hamballracers.assets.utils.LoadFromTextureAtlas;
 import lombok.Getter;
 
 public class MainTextureAtlas extends DynamicTextureAtlas {
-    @Getter @LoadFromTextureAtlas("hamsterballs/balls")
-    private Array<TextureAtlas.AtlasRegion> hamsterball;
+    @Getter @LoadFromTextureAtlas("players/ball")
+    private Array<TextureAtlas.AtlasRegion> hamsterBall;
+
+    @Getter @LoadFromTextureAtlas("players/lyze/normal")
+    private Array<TextureAtlas.AtlasRegion> lyzeNormal;
+
+    @Getter @LoadFromTextureAtlas("players/lyze/blink")
+    private Array<TextureAtlas.AtlasRegion> lyzeBlink;
 
     @Getter @LoadFromTextureAtlas("other/logo")
     private TextureAtlas.AtlasRegion logo;

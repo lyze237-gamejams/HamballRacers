@@ -3,26 +3,33 @@ package dev.lyze.hamballracers.screens.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
+import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.Level;
 import dev.lyze.hamballracers.screens.map.Block;
+import dev.lyze.hamballracers.utils.Logger;
 import dev.lyze.hamballracers.utils.MathUtils2;
 import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+import java.util.Random;
+
 public class HamsterBall extends Entity {
-    private final Vector2 velocity = new Vector2();
+    private static final Logger<HamsterBall> logger = new Logger<>(HamsterBall.class);
+
+    private static final Random random = new Random();
 
     private static final float vehicleAcceleration = 120f;
     private static final float vehicleMaxMoveSpeed = 81f; // 61 default
 
-    private final int[][] playerControls = new int[][] {
+    private static final float blinkPercentage = 0.9f;
+
+    private static final int[][] playerControls = new int[][] {
             new int[] { Input.Keys.W, Input.Keys.S, Input.Keys.A, Input.Keys.D },
             new int[] { Input.Keys.UP, Input.Keys.DOWN, Input.Keys.LEFT, Input.Keys.RIGHT }
     };
@@ -30,7 +37,11 @@ public class HamsterBall extends Entity {
     private final int playerIndex;
     private final Level level;
 
-    private Animation<Texture> runAnimation;
+    private final Vector2 velocity = new Vector2();
+
+    private Animation<TextureAtlas.AtlasRegion> playerNormalAnimation, playerBlinkAnimation;
+    private Animation<TextureAtlas.AtlasRegion> currentPlayerAnimation;
+    private Animation<TextureAtlas.AtlasRegion> ballAnimation;
     private float animationDelta;
 
     @Getter
@@ -50,10 +61,10 @@ public class HamsterBall extends Entity {
     }
 
     private void setupAnimation() {
-        var runAnimationTextures = new Array<Texture>();
-        for (int i = 1; i <= 8; i++)
-            runAnimationTextures.add(new Texture(Gdx.files.internal("player/ball/lyzeball" + i + ".png")));
-        runAnimation = new Animation<>(0.08f, runAnimationTextures, Animation.PlayMode.LOOP);
+        ballAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getHamsterBall(), Animation.PlayMode.NORMAL);
+
+        currentPlayerAnimation = playerNormalAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getLyzeNormal(), Animation.PlayMode.NORMAL);
+        playerBlinkAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getLyzeBlink(), Animation.PlayMode.NORMAL);
     }
 
     @Override
@@ -165,15 +176,28 @@ public class HamsterBall extends Entity {
 
     @Override
     public void render(SpriteBatch batch) {
-        var keyFrame = runAnimation.getKeyFrame(animationDelta);
+        var ballKeyFrame = ballAnimation.getKeyFrame(animationDelta);
+        var playerKeyFrame = currentPlayerAnimation.getKeyFrame(animationDelta);
+
+        if (ballAnimation.isAnimationFinished(animationDelta)) {
+            animationDelta = 0;
+
+            currentPlayerAnimation = random.nextFloat() > blinkPercentage ? playerBlinkAnimation : playerNormalAnimation;
+
+            ballKeyFrame = ballAnimation.getKeyFrame(animationDelta);
+            playerKeyFrame = currentPlayerAnimation.getKeyFrame(animationDelta);
+        }
 
         var drawX = this.x - hitbox.getDrawWidth() / 2f;
         var drawY = this.y - hitbox.getDrawHeight() / 2f;
 
-        if (facingRight)
-            batch.draw(keyFrame, drawX, drawY, hitbox.getDrawWidth(), hitbox.getDrawHeight());
-        else
-            batch.draw(keyFrame, drawX + hitbox.getDrawWidth(), drawY, -hitbox.getDrawWidth(), hitbox.getDrawHeight());
+        if (facingRight) {
+            batch.draw(playerKeyFrame, drawX, drawY, hitbox.getDrawWidth(), hitbox.getDrawHeight());
+            batch.draw(ballKeyFrame, drawX, drawY, hitbox.getDrawWidth(), hitbox.getDrawHeight());
+        } else {
+            batch.draw(playerKeyFrame, drawX + hitbox.getDrawWidth(), drawY, -hitbox.getDrawWidth(), hitbox.getDrawHeight());
+            batch.draw(ballKeyFrame, drawX + hitbox.getDrawWidth(), drawY, -hitbox.getDrawWidth(), hitbox.getDrawHeight());
+        }
     }
 
     @Override
