@@ -1,10 +1,13 @@
 package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -31,6 +34,7 @@ public class MainMenuScreen extends ManagedScreenAdapter {
 
     private final ArrayList<MusicActionMap.MusicActionEntry> musicActionMapEntries = new ArrayList<>();
     private final MusicActionMap musicActionMap;
+    private boolean finishable, wantsToFinish;
 
     public MainMenuScreen() {
         setupBackground();
@@ -87,7 +91,8 @@ public class MainMenuScreen extends ManagedScreenAdapter {
         menuTable.addAction(Actions.sequence(
                 Actions.moveBy(1000, 0, 0),
                 Actions.delay(1f),
-                Actions.moveBy(-1000, 0, 0)));
+                Actions.moveBy(-1000, 0, 0),
+                Actions.run(() -> finishable = true)));
     }
 
     private TextButton addButton(Table table, String name, float delay, Runnable onClick) {
@@ -96,6 +101,17 @@ public class MainMenuScreen extends ManagedScreenAdapter {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 onClick.run();
+            }
+        });
+        button.addListener(new InputListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                button.addAction(Actions.moveBy(20, 0, 0.2f));
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                button.addAction(Actions.moveBy(-20, 0, 0.2f));
             }
         });
         table.add(button).right().row();
@@ -118,6 +134,12 @@ public class MainMenuScreen extends ManagedScreenAdapter {
     @Override
     public void render(float delta) {
         musicActionMap.update();
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT))
+            wantsToFinish = true;
+
+        if (finishable && wantsToFinish)
+            musicActionMap.finish();
 
         sky.getViewport().apply();
         sky.act();

@@ -48,7 +48,7 @@ public class SplashScreen extends ManagedScreenAdapter {
     public void render(float delta) {
         stage.getViewport().apply();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) && timerTask.isScheduled()) {
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) && timerTask.isScheduled()) {
             timerTask.cancel();
             game.getScreenManager().pushScreen(MainMenuScreen.class.getName(), null);
         }

@@ -42,6 +42,10 @@ public class MusicActionMap {
         }
     }
 
+    public void finish() {
+        while (currentIndex < entries.size())
+            entries.get(currentIndex++).getAction().run();
+    }
 
     @Data
     @AllArgsConstructor
