@@ -33,6 +33,9 @@ public class Level {
 
     private final FocusCameraController camera;
 
+    @Getter
+    private boolean started;
+
     public Level(GameScreen screen, GameType type) {
         this.screen = screen;
 
@@ -52,8 +55,13 @@ public class Level {
                 new MinimumViewportCameraConstraint(240, 135));
     }
 
+    public void start() {
+        started = true;
+    }
+
     public void update(float delta) {
-        Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.update(delta));
+        if (started)
+            Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.update(delta));
 
         viewport.apply();
         camera.update(delta);

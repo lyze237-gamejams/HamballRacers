@@ -32,6 +32,9 @@ public class GameScreen extends ManagedScreenAdapter {
 
     @Override
     public void render(float delta) {
+        if (!game.getScreenManager().inTransition() && !level.isStarted())
+            level.start();
+
         var newTime = System.currentTimeMillis();
         var frameTime = (newTime - currentTime) / 1000f;
         accumulator += frameTime;
