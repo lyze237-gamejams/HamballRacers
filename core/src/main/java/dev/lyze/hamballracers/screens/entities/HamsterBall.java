@@ -1,14 +1,9 @@
 package dev.lyze.hamballracers.screens.entities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.Level;
 import dev.lyze.hamballracers.screens.map.Block;
 import dev.lyze.hamballracers.utils.Logger;
@@ -17,37 +12,26 @@ import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-import java.util.Random;
-
 public class HamsterBall extends Entity {
     private static final Logger<HamsterBall> logger = new Logger<>(HamsterBall.class);
 
-    private static final Random random = new Random();
-
+    @Getter
     private static final float vehicleAcceleration = 120f;
+    @Getter
     private static final float vehicleMaxMoveSpeed = 81f; // 61 default
 
-    private static final float blinkPercentage = 0.9f;
-
-    private static final int[][] playerControls = new int[][] {
-            new int[] { Input.Keys.W, Input.Keys.S, Input.Keys.A, Input.Keys.D },
-            new int[] { Input.Keys.UP, Input.Keys.DOWN, Input.Keys.LEFT, Input.Keys.RIGHT }
-    };
-
-    private final int playerIndex;
     private final Level level;
 
-    private final Vector2 velocity = new Vector2();
+    @Getter
+    private final int playerIndex;
 
-    private Animation<TextureAtlas.AtlasRegion> playerNormalAnimation, playerBlinkAnimation;
-    private Animation<TextureAtlas.AtlasRegion> currentPlayerAnimation;
-    private Animation<TextureAtlas.AtlasRegion> ballAnimation;
-    private float animationDelta;
+    @Getter
+    private final Vector2 velocity = new Vector2();
 
     @Getter
     private final Hitbox hitbox;
-
-    private boolean facingRight;
+    private final HamsterBallInput input;
+    private final HamsterBallAnimations animations;
 
     public HamsterBall(Level level, float x, float y, int playerIndex) {
         super(level.getMap(), x, y);
@@ -56,59 +40,18 @@ public class HamsterBall extends Entity {
         this.playerIndex = playerIndex;
 
         hitbox = new Hitbox(16, 16, 6, 3.8f, 0, -2f);
-
-        setupAnimation();
-    }
-
-    private void setupAnimation() {
-        ballAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getHamsterBall(), Animation.PlayMode.NORMAL);
-
-        if (playerIndex == 0) {
-            playerNormalAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getLyzeNormal(), Animation.PlayMode.NORMAL);
-            playerBlinkAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getLyzeBlink(), Animation.PlayMode.NORMAL);
-        }
-        else {
-            playerNormalAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getRenbyNormal(), Animation.PlayMode.NORMAL);
-            playerBlinkAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getRenbyBlink(), Animation.PlayMode.NORMAL);
-        }
-
-        currentPlayerAnimation = playerNormalAnimation;
+        input = new HamsterBallInput(this);
+        animations = new HamsterBallAnimations(this);
     }
 
     @Override
     public void update(float delta) {
-        var inputVelocity = readInputVelocity();
+        var inputVelocity = input.readInputVelocity();
 
         calculateVelocity(inputVelocity, delta);
         calculateMovement(delta);
 
-        updateAnimation(delta);
-    }
-
-    private void updateAnimation(float delta) {
-        if (velocity.x > 0)
-            facingRight = true;
-        else if (velocity.x < 0)
-            facingRight = false;
-
-        if (velocity.x != 0 || velocity.y != 0)
-            animationDelta += delta * Math.max(Math.abs(velocity.x), Math.abs(velocity.y)) / vehicleMaxMoveSpeed;
-    }
-
-    private Vector2 readInputVelocity() {
-        var inputVelocity = new Vector2();
-
-        if (Gdx.input.isKeyPressed(playerControls[playerIndex][0]))
-            inputVelocity.y = 1;
-        if (Gdx.input.isKeyPressed(playerControls[playerIndex][1]))
-            inputVelocity.y = -1;
-
-        if (Gdx.input.isKeyPressed(playerControls[playerIndex][2]))
-            inputVelocity.x = -1;
-        if (Gdx.input.isKeyPressed(playerControls[playerIndex][3]))
-            inputVelocity.x = 1;
-
-        return inputVelocity;
+        animations.update(delta);
     }
 
     private void calculateVelocity(Vector2 inputVelocity, float delta) {
@@ -184,28 +127,7 @@ public class HamsterBall extends Entity {
 
     @Override
     public void render(SpriteBatch batch) {
-        var ballKeyFrame = ballAnimation.getKeyFrame(animationDelta);
-        var playerKeyFrame = currentPlayerAnimation.getKeyFrame(animationDelta);
-
-        if (ballAnimation.isAnimationFinished(animationDelta)) {
-            animationDelta = 0;
-
-            currentPlayerAnimation = random.nextFloat() > blinkPercentage ? playerBlinkAnimation : playerNormalAnimation;
-
-            ballKeyFrame = ballAnimation.getKeyFrame(animationDelta);
-            playerKeyFrame = currentPlayerAnimation.getKeyFrame(animationDelta);
-        }
-
-        var drawX = this.x - hitbox.getDrawWidth() / 2f;
-        var drawY = this.y - hitbox.getDrawHeight() / 2f;
-
-        if (facingRight) {
-            batch.draw(playerKeyFrame, drawX, drawY, hitbox.getDrawWidth(), hitbox.getDrawHeight());
-            batch.draw(ballKeyFrame, drawX, drawY, hitbox.getDrawWidth(), hitbox.getDrawHeight());
-        } else {
-            batch.draw(playerKeyFrame, drawX + hitbox.getDrawWidth(), drawY, -hitbox.getDrawWidth(), hitbox.getDrawHeight());
-            batch.draw(ballKeyFrame, drawX + hitbox.getDrawWidth(), drawY, -hitbox.getDrawWidth(), hitbox.getDrawHeight());
-        }
+        animations.render(batch);
     }
 
     @Override

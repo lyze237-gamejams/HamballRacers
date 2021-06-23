@@ -27,11 +27,6 @@
    <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
- <tile id="5">
-  <properties>
-   <property name="speed" type="float" value="1.5"/>
-  </properties>
- </tile>
  <tile id="6">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="16"/>
@@ -39,7 +34,22 @@
  </tile>
  <tile id="8">
   <properties>
-   <property name="speed" type="float" value="1.5"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="9">
+  <properties>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="10">
+  <properties>
+   <property name="speed" type="float" value="0.5"/>
+  </properties>
+ </tile>
+ <tile id="11">
+  <properties>
+   <property name="speed" type="float" value="0.5"/>
   </properties>
  </tile>
 </tileset>
