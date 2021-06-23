@@ -16,6 +16,12 @@ public class MainTextureAtlas extends DynamicTextureAtlas {
     @Getter @LoadFromTextureAtlas("players/lyze/blink")
     private Array<TextureAtlas.AtlasRegion> lyzeBlink;
 
+    @Getter @LoadFromTextureAtlas("players/renby/normal")
+    private Array<TextureAtlas.AtlasRegion> renbyNormal;
+
+    @Getter @LoadFromTextureAtlas("players/renby/blink")
+    private Array<TextureAtlas.AtlasRegion> renbyBlink;
+
     @Getter @LoadFromTextureAtlas("other/logo")
     private TextureAtlas.AtlasRegion logo;
 

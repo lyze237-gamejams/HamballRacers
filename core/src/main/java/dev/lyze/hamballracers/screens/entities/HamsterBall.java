@@ -63,8 +63,16 @@ public class HamsterBall extends Entity {
     private void setupAnimation() {
         ballAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getHamsterBall(), Animation.PlayMode.NORMAL);
 
-        currentPlayerAnimation = playerNormalAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getLyzeNormal(), Animation.PlayMode.NORMAL);
-        playerBlinkAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getLyzeBlink(), Animation.PlayMode.NORMAL);
+        if (playerIndex == 0) {
+            playerNormalAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getLyzeNormal(), Animation.PlayMode.NORMAL);
+            playerBlinkAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getLyzeBlink(), Animation.PlayMode.NORMAL);
+        }
+        else {
+            playerNormalAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getRenbyNormal(), Animation.PlayMode.NORMAL);
+            playerBlinkAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getRenbyBlink(), Animation.PlayMode.NORMAL);
+        }
+
+        currentPlayerAnimation = playerNormalAnimation;
     }
 
     @Override
