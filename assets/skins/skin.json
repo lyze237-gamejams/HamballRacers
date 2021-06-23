@@ -14,15 +14,23 @@ com.badlogic.gdx.graphics.Color: {
 		b: 1
 		a: 1
 	}
+	RGBA_255_86_0_255: {
+		r: 1
+		g: 0.33905554
+		b: 0
+		a: 1
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	title: {
 		font: title
+		fontColor: RGBA_255_255_255_255
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: button
+		fontColor: RGBA_255_86_0_255
 	}
 }
 }

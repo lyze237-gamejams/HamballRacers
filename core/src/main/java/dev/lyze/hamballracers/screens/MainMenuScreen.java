@@ -66,14 +66,13 @@ public class MainMenuScreen extends ManagedScreenAdapter {
         var titleTable = new Table();
         titleTable.setFillParent(true);
 
-        titleTable.add(new Label("Super Animal Racers", Constants.Assets.getSkin(), "title"))
+        titleTable.add(new Label("SUPER HAMSTERBALL RACERS", Constants.Assets.getSkin(), "title"))
                 .padTop(140).padLeft(140).left().top().expand();
         text.addActor(titleTable);
 
         titleTable.addAction(Actions.moveBy(-2000, 0, 0));
         musicActionMapEntries.add(new MusicActionMap.MusicActionEntry(3.5f, () -> titleTable.addAction(Actions.moveBy(2000, 0, 0.75f, Interpolation.exp5))));
     }
-
 
     private void setupButtons() {
         var menuTable = new Table();
