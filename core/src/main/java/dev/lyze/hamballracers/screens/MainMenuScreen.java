@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import de.eskalon.commons.screen.transition.impl.BlendingTransition;
 import de.eskalon.commons.screen.transition.impl.HorizontalSlicingTransition;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.utils.Logger;
@@ -80,8 +81,8 @@ public class MainMenuScreen extends ManagedScreenAdapter {
 
         var menuSubTable = new Table();
 
-        addButton(menuSubTable, "Time trial", 5.3f, () -> game.getScreenManager().pushScreen(GameScreen.class.getName(), HorizontalSlicingTransition.class.getName()));
-        addButton(menuSubTable, "2 Players", 6.3f, () -> game.getScreenManager().pushScreen(GameScreen.class.getName(), HorizontalSlicingTransition.class.getName()));
+        addButton(menuSubTable, "Time trial", 5.3f, () -> game.getScreenManager().pushScreen(TransitionScreen.class.getName(), BlendingTransition.class.getName(), GameType.TIME_TRIAL));
+        addButton(menuSubTable, "2 Players", 6.3f, () -> game.getScreenManager().pushScreen(TransitionScreen.class.getName(), HorizontalSlicingTransition.class.getName(), GameType.PVP));
         addButton(menuSubTable, "Exit", 6.6f, () -> Gdx.app.exit());
 
         menuTable.add(menuSubTable).right().padRight(100).padBottom(100).expand();

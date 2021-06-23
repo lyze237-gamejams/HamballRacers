@@ -10,14 +10,19 @@ public class GameScreen extends ManagedScreenAdapter {
     private final SpriteBatch batch;
     private final ShapeDrawer drawer;
 
-    private final Level level;
+    private Level level;
 
     public GameScreen() {
         batch = new SpriteBatch();
         drawer = new ShapeDrawer(batch, Constants.Assets.getMainTextureAtlas().getPixel());
         drawer.setDefaultLineWidth(0.5f);
+    }
 
-        level = new Level(this, "map/map.tmx");
+    @Override
+    public void show() {
+        level = new Level(this, (GameType) pushParams[0]);
+
+        super.show();
     }
 
     private float actualDeltaTime = 0.0f;

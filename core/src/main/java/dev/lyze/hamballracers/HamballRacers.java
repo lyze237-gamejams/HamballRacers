@@ -12,6 +12,7 @@ import de.eskalon.commons.screen.transition.impl.HorizontalSlicingTransition;
 import dev.lyze.hamballracers.screens.GameScreen;
 import dev.lyze.hamballracers.screens.MainMenuScreen;
 import dev.lyze.hamballracers.screens.SplashScreen;
+import dev.lyze.hamballracers.screens.TransitionScreen;
 import dev.lyze.hamballracers.utils.Logger;
 
 import java.util.Arrays;
@@ -53,11 +54,12 @@ public class HamballRacers extends ManagedGame<ManagedScreen, ScreenTransition> 
         this.screenManager.addScreen(SplashScreen.class.getName(), new SplashScreen());
         this.screenManager.addScreen(MainMenuScreen.class.getName(), new MainMenuScreen());
         this.screenManager.addScreen(GameScreen.class.getName(), new GameScreen());
+        this.screenManager.addScreen(TransitionScreen.class.getName(), new TransitionScreen());
     }
 
     private void setupTransitions() {
         this.screenManager.addScreenTransition(BlendingTransition.class.getName(), new BlendingTransition(batch, 1f));
-        this.screenManager.addScreenTransition(HorizontalSlicingTransition.class.getName(), new HorizontalSlicingTransition(batch, 3, 1f));
+        this.screenManager.addScreenTransition(HorizontalSlicingTransition.class.getName(), new HorizontalSlicingTransition(batch, 11, 0.75f));
     }
 
     @Override

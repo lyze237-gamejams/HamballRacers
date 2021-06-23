@@ -31,14 +31,14 @@ public class Level {
 
     private final FocusCameraController camera;
 
-    public Level(GameScreen screen, String mapPath) {
+    public Level(GameScreen screen, GameType type) {
         this.screen = screen;
 
         map = new Map(Constants.Assets.getMap());
-        hamsterBalls = new HamsterBall[] {
-            new HamsterBall(map, 16, 16, 0),
-            new HamsterBall(map, 16, 16, 1)
-        };
+
+        hamsterBalls = new HamsterBall[type.getPlayerCount()];
+        for (int i = 0; i < hamsterBalls.length; i++)
+            hamsterBalls[i] = new HamsterBall(map, 32 + 32 * i, 32 + 32 * i, i);
 
         viewport = new ExtendViewport(240, 135);
 
