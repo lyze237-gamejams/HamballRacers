@@ -153,7 +153,7 @@ public class MainMenuScreen extends ManagedScreenAdapter {
     @Override
     public void resize(int width, int height) {
         sky.getViewport().update(width, height);
-        text.getViewport().update(width, height);
+        text.getViewport().update(width, height, true);
     }
 
     private final Color clearColor = Color.valueOf("#0BA5DD");
