@@ -16,6 +16,7 @@ import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.entities.HamsterBall;
 import dev.lyze.hamballracers.screens.map.Map;
 import dev.lyze.hamballracers.utils.camera.EntityPositionProvider;
+import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -27,6 +28,7 @@ public class Level {
     private final Viewport viewport;
     private final HamsterBall[] hamsterBalls;
 
+    @Getter
     private final Map map;
 
     private final FocusCameraController camera;
@@ -38,7 +40,7 @@ public class Level {
 
         hamsterBalls = new HamsterBall[type.getPlayerCount()];
         for (int i = 0; i < hamsterBalls.length; i++)
-            hamsterBalls[i] = new HamsterBall(map, 32 + 32 * i, 32 + 32 * i, i);
+            hamsterBalls[i] = new HamsterBall(this, 32 + 32 * i, 32 + 32 * i, i);
 
         viewport = new ExtendViewport(240, 135);
 
@@ -74,5 +76,22 @@ public class Level {
 
     public void resize(int width, int height) {
         viewport.update(width, height);
+    }
+
+    public boolean isHamsterBallCollision(int currentPlayerIndex, float x, float y) {
+        var currentPlayerRectangle = hamsterBalls[currentPlayerIndex].getHitbox().generateRectangle(x, y);
+
+        for (int i = 0; i < hamsterBalls.length; i++) {
+            if (i == currentPlayerIndex)
+                continue;
+
+            HamsterBall otherPlayer = hamsterBalls[i];
+            var otherPlayerRectangle = otherPlayer.getHitbox().generateRectangle(otherPlayer.getX(), otherPlayer.getY());
+
+            if (currentPlayerRectangle.overlaps(otherPlayerRectangle))
+                return true;
+        }
+
+        return false;
     }
 }

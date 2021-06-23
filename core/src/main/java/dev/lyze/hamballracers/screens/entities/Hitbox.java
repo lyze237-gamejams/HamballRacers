@@ -1,5 +1,6 @@
 package dev.lyze.hamballracers.screens.entities;
 
+import com.badlogic.gdx.math.Rectangle;
 import lombok.Data;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -23,6 +24,10 @@ public class Hitbox {
         this.halfHitboxHeight = halfHitboxHeight;
         this.hitboxOffsetX = hitboxOffsetX;
         this.hitboxOffsetY = hitboxOffsetY;
+    }
+
+    public Rectangle generateRectangle(float x, float y) {
+        return new Rectangle(x - halfHitboxWidth / 2f + hitboxOffsetX, y - halfHitboxHeight / 2f + hitboxOffsetY, halfHitboxWidth, halfHitboxHeight);
     }
 
     public void debugDraw(ShapeDrawer drawer, float x, float y) {
