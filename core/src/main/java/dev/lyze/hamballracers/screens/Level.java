@@ -38,6 +38,7 @@ public class Level {
 
     private FocusCameraController camera;
 
+    @Getter
     private LevelHud hud;
 
     public Level(GameScreen screen, GameType type) {

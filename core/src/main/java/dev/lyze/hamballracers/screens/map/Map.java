@@ -63,7 +63,7 @@ public class Map {
             for (int x = 0; x < layer.getWidth(); x++)
                 for (int y = 0; y < layer.getHeight(); y++)
                     if (blocks[x][y] == null)
-                        blocks[x][y] = new Block(x, y, layer.getCell(x, y));
+                        blocks[x][y] = new Block(level, x, y, layer.getCell(x, y));
                     else
                         blocks[x][y].update(layer.getCell(x, y));
         }

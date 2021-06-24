@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.reflect.ReflectionException;
 import dev.lyze.hamballracers.screens.Level;
 import dev.lyze.hamballracers.screens.map.spawners.MapSpawner;
 import dev.lyze.hamballracers.screens.map.spawners.PlayerSpawner;
-import dev.lyze.hamballracers.screens.map.spawners.SpawnRegionSpawner;
 import dev.lyze.hamballracers.utils.Logger;
 import lombok.var;
 
@@ -33,7 +32,6 @@ public class MapEntitiesCreation {
         this.map = map;
 
         mapSpawners.add(new PlayerSpawner(level, map));
-        mapSpawners.add(new SpawnRegionSpawner(level, map));
     }
 
     public void initialize() {

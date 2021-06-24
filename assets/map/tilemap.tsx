@@ -32,6 +32,11 @@
    <object id="1" x="0" y="0" width="16" height="16"/>
   </objectgroup>
  </tile>
+ <tile id="7">
+  <properties>
+   <property name="disappearAfterStart" type="bool" value="true"/>
+  </properties>
+ </tile>
  <tile id="8">
   <properties>
    <property name="speed" type="float" value="2"/>
