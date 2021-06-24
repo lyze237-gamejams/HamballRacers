@@ -3,21 +3,26 @@ package dev.lyze.hamballracers.screens.entities;
 import com.badlogic.gdx.math.MathUtils;
 import dev.lyze.hamballracers.screens.map.Block;
 import dev.lyze.hamballracers.utils.Logger;
+import lombok.Getter;
 import lombok.var;
 
 public class HamsterBallMaxSpeed {
     private static final Logger<HamsterBallMaxSpeed> logger = new Logger<>(HamsterBallMaxSpeed.class);
     private static final float vehicleMaxMoveSpeed = 81f; // 61 default
+    @Getter
+    private static final float vehicleMaxSpeedMultiplier = 3f;
     private static final float maxNitroTime = 2f;
     private static final float nitroSpeedBoost = 3f;
 
     private final HamsterBall hamsterBall;
 
-    private float maxSpeedMultiplier = 1f;
-    private float maxSpeedMultiplierTime = 0f;
+    @Getter
+    private float speedMultiplier = 1f;
+    private float speedMultiplierTime = 0f;
     private boolean forceSpeedPenalty = false;
 
     private float nitroTimeLeft = maxNitroTime;
+    @Getter
     private boolean usingNitro;
 
     public HamsterBallMaxSpeed(HamsterBall hamsterBall) {
@@ -25,7 +30,7 @@ public class HamsterBallMaxSpeed {
     }
 
     public float getMaxMoveSpeed() {
-        return vehicleMaxMoveSpeed * maxSpeedMultiplier * (usingNitro ? nitroSpeedBoost : 1);
+        return vehicleMaxMoveSpeed * speedMultiplier * (usingNitro ? nitroSpeedBoost : 1);
     }
 
     public float getDefaultMaxMoveSpeed() {
@@ -36,16 +41,16 @@ public class HamsterBallMaxSpeed {
         var block = hamsterBall.getLevel().getMap().getBlock(hamsterBall.getX(), hamsterBall.getY());
         var newSpeedMultiplier = block.getSpeedMultiplier();
 
-        maxSpeedMultiplierTime -= delta;
+        speedMultiplierTime -= delta;
 
         if (forceSpeedPenalty) {
-            if (maxSpeedMultiplier != newSpeedMultiplier && maxSpeedMultiplierTime < 0) {
+            if (speedMultiplier != newSpeedMultiplier && speedMultiplierTime < 0) {
                 setNewSpeedMulitplier(block);
             }
         } else {
-            if (newSpeedMultiplier > maxSpeedMultiplier) {
+            if (newSpeedMultiplier > speedMultiplier) {
                 setNewSpeedMulitplier(block);
-            } else if (newSpeedMultiplier < maxSpeedMultiplier && maxSpeedMultiplierTime < 0) {
+            } else if (newSpeedMultiplier < speedMultiplier && speedMultiplierTime < 0) {
                 setNewSpeedMulitplier(block);
             }
         }
@@ -61,10 +66,10 @@ public class HamsterBallMaxSpeed {
     }
 
     private void setNewSpeedMulitplier(Block block) {
-        maxSpeedMultiplierTime = block.getSpeedMultiplierTime();
-        maxSpeedMultiplier = block.getSpeedMultiplier();
+        speedMultiplierTime = block.getSpeedMultiplierTime();
+        speedMultiplier = block.getSpeedMultiplier();
 
-        logger.logInfo("Changing speed to " + maxSpeedMultiplier);
+        logger.logInfo("Changing speed to " + speedMultiplier);
 
         if (block.isForceSpeedMultiplierPenalty())
             forceSpeedPenalty = true;
