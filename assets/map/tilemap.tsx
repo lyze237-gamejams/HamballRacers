@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.4" tiledversion="1.4.3" name="tilemap" tilewidth="16" tileheight="16" tilecount="12" columns="6">
- <image source="tilemap.png" width="96" height="32"/>
+<tileset version="1.4" tiledversion="1.4.3" name="tilemap" tilewidth="16" tileheight="16" tilecount="18" columns="6">
+ <image source="tilemap.png" width="96" height="48"/>
  <tile id="0">
   <properties>
    <property name="speed" type="float" value="1"/>
@@ -25,6 +25,12 @@
  <tile id="4">
   <properties>
    <property name="speed" type="float" value="1.5"/>
+  </properties>
+ </tile>
+ <tile id="5">
+  <properties>
+   <property name="speed" type="float" value="2"/>
+   <property name="speedMultiplierTime" type="float" value="5"/>
   </properties>
  </tile>
  <tile id="6">
@@ -58,6 +64,13 @@
  <tile id="11">
   <properties>
    <property name="speed" type="float" value="0.5"/>
+  </properties>
+ </tile>
+ <tile id="17">
+  <properties>
+   <property name="forceSpeedMultiplierPenalty" type="bool" value="true"/>
+   <property name="speed" type="float" value="0.5"/>
+   <property name="speedMultiplierTime" type="float" value="5"/>
   </properties>
  </tile>
 </tileset>

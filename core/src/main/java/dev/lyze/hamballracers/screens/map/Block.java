@@ -16,7 +16,9 @@ public class Block {
     private boolean collision;
     private boolean icy;
     private float speedMultiplier;
+    private float speedMultiplierTime;
     private boolean disappearAfterStart;
+    private boolean forceSpeedMultiplierPenalty;
 
     private int x, y;
 
@@ -60,7 +62,10 @@ public class Block {
             });
         }
 
-
         setSpeedMultiplier(cell.getTile().getProperties().get("speed", 1f, Float.class));
+        setSpeedMultiplierTime(cell.getTile().getProperties().get("speedMultiplierTime", 0f, Float.class));
+
+        if (cell.getTile().getProperties().get("forceSpeedMultiplierPenalty", false, Boolean.class))
+            setForceSpeedMultiplierPenalty(true);
     }
 }

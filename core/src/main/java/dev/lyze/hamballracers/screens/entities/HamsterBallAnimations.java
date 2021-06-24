@@ -52,7 +52,7 @@ public class HamsterBallAnimations {
             currentPlayerAnimation = playerIdleAnimation;
             playerAnimationDelta = 0f;
         } else {
-            float calculatedDelta = delta * Math.max(Math.abs(hamsterBall.getVelocity().x), Math.abs(hamsterBall.getVelocity().y)) / HamsterBall.getVehicleMaxMoveSpeed();
+            float calculatedDelta = delta * Math.max(Math.abs(hamsterBall.getVelocity().x), Math.abs(hamsterBall.getVelocity().y)) / hamsterBall.getMaxSpeed().getDefaultMaxMoveSpeed();
 
             if (currentPlayerAnimation == playerIdleAnimation)
                 currentPlayerAnimation = playerNormalAnimation;

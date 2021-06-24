@@ -17,9 +17,8 @@ public class HamsterBall extends Entity {
 
     @Getter
     private static final float vehicleAcceleration = 120f;
-    @Getter
-    private static final float vehicleMaxMoveSpeed = 81f; // 61 default
 
+    @Getter
     private final Level level;
 
     @Getter
@@ -32,6 +31,8 @@ public class HamsterBall extends Entity {
     private final Hitbox hitbox;
     private final HamsterBallInput input;
     private final HamsterBallAnimations animations;
+    @Getter
+    private final HamsterBallMaxSpeed maxSpeed;
 
     public HamsterBall(Level level, int playerIndex) {
         this.level = level;
@@ -40,11 +41,14 @@ public class HamsterBall extends Entity {
         hitbox = new Hitbox(16, 16, 6, 3.8f, 0, -2f);
         input = new HamsterBallInput(this);
         animations = new HamsterBallAnimations(this);
+        maxSpeed = new HamsterBallMaxSpeed(this);
     }
 
     @Override
     public void update(float delta) {
         var inputVelocity = input.readInputVelocity();
+
+        maxSpeed.update(delta);
 
         calculateVelocity(inputVelocity, delta);
         calculateMovement(delta);
@@ -54,7 +58,6 @@ public class HamsterBall extends Entity {
 
     private void calculateVelocity(Vector2 inputVelocity, float delta) {
         var block = level.getMap().getBlock(x, y);
-        var speedMultiplier = block.getSpeedMultiplier();
 
         var accelerationDelta = vehicleAcceleration * delta;
         var decelerationDeltaIce = 6.5f * 5f * delta;
@@ -64,7 +67,7 @@ public class HamsterBall extends Entity {
 
         var pythagorasVelocity = ((velocity.x * velocity.x) + (velocity.y * velocity.y));
 
-        float vehicleMaxMoveSpeed = HamsterBall.vehicleMaxMoveSpeed * speedMultiplier;
+        float vehicleMaxMoveSpeed = maxSpeed.getMaxMoveSpeed();
         if (pythagorasVelocity > (vehicleMaxMoveSpeed * vehicleMaxMoveSpeed)) {
             float magnitude = (float) Math.sqrt(pythagorasVelocity);
             float multiplier = vehicleMaxMoveSpeed / magnitude;
@@ -82,7 +85,7 @@ public class HamsterBall extends Entity {
         else
             velocity = MathUtils2.moveTowards(velocity, 0, icy ? decelerationDeltaIce : accelerationDelta);
 
-        var vehicleMaxMoveSpeed = HamsterBall.vehicleMaxMoveSpeed * speedMultiplier;
+        var vehicleMaxMoveSpeed = maxSpeed.getMaxMoveSpeed() * speedMultiplier;
         return MathUtils.clamp(velocity, -vehicleMaxMoveSpeed, vehicleMaxMoveSpeed);
     }
 
@@ -107,7 +110,7 @@ public class HamsterBall extends Entity {
         if (!canMoveX || !canMoveY) {
             var currVehicleSpeed = velocity.len();
 
-            if (currVehicleSpeed >= vehicleMaxMoveSpeed * 0.75f)
+            if (currVehicleSpeed >= maxSpeed.getDefaultMaxMoveSpeed() * 0.75f)
                 collidedFromHighSpeed = true;
         }
 
