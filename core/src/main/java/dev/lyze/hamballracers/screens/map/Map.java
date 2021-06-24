@@ -5,24 +5,40 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import dev.lyze.hamballracers.screens.Level;
 import dev.lyze.hamballracers.screens.entities.Hitbox;
 import dev.lyze.hamballracers.utils.Logger;
+import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
+
+import java.util.ArrayList;
 
 public class Map {
     private static final Logger<Map> logger = new Logger<>(Map.class);
 
+    @Getter
+    private final Level level;
+
+    @Getter
     private final TiledMap map;
     private final OrthogonalTiledMapRendererBleeding renderer;
 
     private final Block[][] blocks;
 
-    public Map(String file) {
-        this(new TmxMapLoader().load(file));
+    @Getter
+    private Rectangle spawn;
+    @Getter
+    private ArrayList<Vector2> playerSpawns = new ArrayList<>();
+
+    public Map(Level level, String file) {
+        this(level, new TmxMapLoader().load(file));
     }
 
-    public Map(TiledMap map) {
+    public Map(Level level, TiledMap map) {
+        this.level = level;
         this.map = map;
         var layer = (TiledMapTileLayer) map.getLayers().get(0);
 
@@ -31,6 +47,7 @@ public class Map {
         blocks = new Block[layer.getWidth()][layer.getHeight()];
         logger.logInfo("Map size is " + layer.getWidth() + " / " + layer.getHeight());
 
+        new MapEntitiesCreation(level, this).initialize();
         setupCollisions();
     }
 

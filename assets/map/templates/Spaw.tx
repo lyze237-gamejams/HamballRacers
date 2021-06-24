@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="SpawnRegionSpawner" type="SpawnRegionSpawner" width="240" height="96">
+  <properties>
+   <property name="type" value="SpawnRegionSpawner"/>
+  </properties>
+ </object>
+</template>

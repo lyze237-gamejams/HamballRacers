@@ -33,9 +33,7 @@ public class HamsterBall extends Entity {
     private final HamsterBallInput input;
     private final HamsterBallAnimations animations;
 
-    public HamsterBall(Level level, float x, float y, int playerIndex) {
-        super(level.getMap(), x, y);
-
+    public HamsterBall(Level level, int playerIndex) {
         this.level = level;
         this.playerIndex = playerIndex;
 
@@ -55,7 +53,7 @@ public class HamsterBall extends Entity {
     }
 
     private void calculateVelocity(Vector2 inputVelocity, float delta) {
-        var block = map.getBlock(x, y);
+        var block = level.getMap().getBlock(x, y);
         var speedMultiplier = block.getSpeedMultiplier();
 
         var accelerationDelta = vehicleAcceleration * delta;
@@ -93,15 +91,15 @@ public class HamsterBall extends Entity {
         var moveAmountY = velocity.y * delta;
 
         float potentialNewPositionX = x + moveAmountX;
-        boolean canMoveX = !(map.isBlockCollision(potentialNewPositionX, y, hitbox) || level.isHamsterBallCollision(playerIndex, potentialNewPositionX, y));
+        boolean canMoveX = !(level.getMap().isBlockCollision(potentialNewPositionX, y, hitbox) || level.isHamsterBallCollision(playerIndex, potentialNewPositionX, y));
 
         float potentialNewPositionY = y + moveAmountY;
-        boolean canMoveY = !(map.isBlockCollision(x, potentialNewPositionY, hitbox) || level.isHamsterBallCollision(playerIndex, x, potentialNewPositionY));
+        boolean canMoveY = !(level.getMap().isBlockCollision(x, potentialNewPositionY, hitbox) || level.isHamsterBallCollision(playerIndex, x, potentialNewPositionY));
 
         if (canMoveX)
             x = potentialNewPositionX;
 
-        var canMoveXAndY = !(map.isBlockCollision(x, potentialNewPositionY, hitbox) || level.isHamsterBallCollision(playerIndex, x, potentialNewPositionY));
+        var canMoveXAndY = !(level.getMap().isBlockCollision(x, potentialNewPositionY, hitbox) || level.isHamsterBallCollision(playerIndex, x, potentialNewPositionY));
         if (canMoveXAndY)
             y = potentialNewPositionY;
 

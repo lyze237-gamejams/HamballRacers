@@ -14,17 +14,15 @@
 
     <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.MainAssets" />
     <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.MainTextureAtlas" />
-    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.LoadAssetFromFile" />
-    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.LoadFromTextureAtlas" />
-    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.DynamicTextureAtlas" />
-    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.DynamicAssets" />
-    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.DynamicTextureAtlasAssetLoader" />
-    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.Flip" />
-    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils.LoadAssetFromTextureAtlas" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils" />
     <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.graphics.g2d.TextureAtlas" />
     <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.maps.tiled.TiledMap" />
     <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.audio.Music" />
     <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.audio.Sound" />
+
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.screens.map.MapEntitiesCreation" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.screens.map.spawners" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.screens.map.spawners.properties" />
 
     <entry-point class="dev.lyze.hamballracers.gwt.GwtLauncher"/>
     <set-configuration-property name="gdx.assetpath" value="../assets"/>

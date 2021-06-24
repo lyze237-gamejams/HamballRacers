@@ -15,6 +15,7 @@ import com.gempukku.libgdx.lib.camera2d.focus.FitAllCameraFocus;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.entities.HamsterBall;
 import dev.lyze.hamballracers.screens.map.Map;
+import dev.lyze.hamballracers.utils.Logger;
 import dev.lyze.hamballracers.utils.camera.EntityPositionProvider;
 import lombok.Getter;
 import lombok.var;
@@ -23,37 +24,31 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 import java.util.Arrays;
 
 public class Level {
+    private static final Logger<Level> logger = new Logger<>(Level.class);
     @Getter
     private final GameScreen screen;
 
     private final Viewport viewport;
+
+    @Getter
     private final HamsterBall[] hamsterBalls;
 
     @Getter
     private final Map map;
 
-    private final FocusCameraController camera;
+    private FocusCameraController camera;
 
     private LevelHud hud;
 
     public Level(GameScreen screen, GameType type) {
         this.screen = screen;
 
-        map = new Map(Constants.Assets.getMap());
-        hud = new LevelHud(this);
-
         hamsterBalls = new HamsterBall[type.getPlayerCount()];
-        for (int i = 0; i < hamsterBalls.length; i++)
-            hamsterBalls[i] = new HamsterBall(this, 32 + 32 * i, 32 + 32 * i, i);
 
         viewport = new ExtendViewport(240, 135);
+        hud = new LevelHud(this);
 
-        var cameraFoci = Arrays.stream(hamsterBalls).map(hamsterBall -> new EntityFocus(new EntityPositionProvider(hamsterBall))).toArray(EntityFocus[]::new);
-        camera = new FocusCameraController(viewport.getCamera(),
-                new FitAllCameraFocus(cameraFoci),
-                new LockedToCameraConstraint(new Vector2(0.5f, 0.5f)),
-                new FitAllCameraConstraint(new Rectangle(0.2f, 0.2f, 0.6f, 0.6f), cameraFoci),
-                new MinimumViewportCameraConstraint(240, 135));
+        map = new Map(this, Constants.Assets.getMap());
     }
 
     public void update(float delta) {
@@ -104,5 +99,21 @@ public class Level {
         }
 
         return false;
+    }
+
+    public void spawnPlayer(float x, float y, int index) {
+        if (index < hamsterBalls.length) {
+            logger.logInfo("Spawning player " + index + " at " + x + "/" + y);
+            hamsterBalls[index] = new HamsterBall(this, index);
+            hamsterBalls[index].setX(x);
+            hamsterBalls[index].setY(y);
+        }
+
+        var cameraFoci = Arrays.stream(hamsterBalls).map(hamsterBall -> new EntityFocus(new EntityPositionProvider(hamsterBall))).toArray(EntityFocus[]::new);
+        camera = new FocusCameraController(viewport.getCamera(),
+                new FitAllCameraFocus(cameraFoci),
+                new LockedToCameraConstraint(new Vector2(0.5f, 0.5f)),
+                new FitAllCameraConstraint(new Rectangle(0.2f, 0.2f, 0.6f, 0.6f), cameraFoci),
+                new MinimumViewportCameraConstraint(240, 135));
     }
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="PlayerSpawner 1" type="PlayerSpawner" width="16" height="16">
+  <properties>
+   <property name="index" type="int" value="1"/>
+   <property name="type" value="PlayerSpawner"/>
+  </properties>
+ </object>
+</template>

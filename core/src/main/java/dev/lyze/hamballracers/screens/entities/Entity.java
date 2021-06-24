@@ -1,20 +1,13 @@
 package dev.lyze.hamballracers.screens.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import dev.lyze.hamballracers.screens.map.Map;
 import lombok.Getter;
+import lombok.Setter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public abstract class Entity {
-    protected final Map map;
-    @Getter
+    @Getter @Setter
     protected float x, y;
-
-    public Entity(Map map, float x, float y) {
-        this.map = map;
-        this.x = x;
-        this.y = y;
-    }
 
     public abstract void update(float delta);
 

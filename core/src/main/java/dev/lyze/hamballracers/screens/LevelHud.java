@@ -3,11 +3,13 @@ package dev.lyze.hamballracers.screens;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import lombok.Getter;
 import lombok.var;
 
 public class LevelHud extends Stage {
     private final Level level;
 
+    @Getter
     private LevelStartCountdown countdown;
 
     public LevelHud(Level level) {
