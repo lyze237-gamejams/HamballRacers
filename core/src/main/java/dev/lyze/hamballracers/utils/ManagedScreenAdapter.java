@@ -3,10 +3,12 @@ package dev.lyze.hamballracers.utils;
 import com.badlogic.gdx.Gdx;
 import de.eskalon.commons.screen.ManagedScreen;
 import dev.lyze.hamballracers.HamballRacers;
+import lombok.Getter;
 
 public class ManagedScreenAdapter extends ManagedScreen {
     private final Logger<?> logger;
 
+    @Getter
     protected final HamballRacers game;
 
     public ManagedScreenAdapter() {

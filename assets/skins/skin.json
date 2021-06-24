@@ -3,6 +3,9 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	button: {
 		file: button.fnt
 	}
+	countdown: {
+		file: timer.fnt
+	}
 	title: {
 		file: title.fnt
 	}
@@ -25,6 +28,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	title: {
 		font: title
 		fontColor: RGBA_255_255_255_255
+	}
+	countdown: {
+		font: countdown
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {

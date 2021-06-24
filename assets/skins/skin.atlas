@@ -6,14 +6,21 @@ filter: Linear, Linear
 repeat: none
 button
   rotate: false
-  xy: 1, 184
+  xy: 1, 582
   size: 505, 367
   orig: 505, 367
   offset: 0, 0
   index: -1
+timer
+  rotate: false
+  xy: 508, 831
+  size: 443, 118
+  orig: 443, 118
+  offset: 0, 0
+  index: -1
 title
   rotate: false
-  xy: 1, 1
+  xy: 1, 399
   size: 446, 181
   orig: 446, 181
   offset: 0, 0

@@ -41,6 +41,25 @@ atlasData: {
 			type: FONT
 			hidden: false
 		}
+		{
+			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/timer.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: timer
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: FONT
+			hidden: false
+		}
 	]
 }
 jsonData: {
@@ -71,6 +90,11 @@ jsonData: {
 			class: com.ray3k.skincomposer.data.FontData
 			name: button
 			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/button.fnt
+		}
+		{
+			class: com.ray3k.skincomposer.data.FontData
+			name: countdown
+			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/timer.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
@@ -1177,6 +1201,33 @@ jsonData: {
 						name: fontColor
 						optional: true
 						value: RGBA_255_255_255_255
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: null
+					}
+				}
+				deletable: true
+				parent: null
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: countdown
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: countdown
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: null
 					}
 					background: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable

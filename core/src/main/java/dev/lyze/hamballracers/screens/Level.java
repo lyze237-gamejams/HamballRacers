@@ -23,6 +23,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 import java.util.Arrays;
 
 public class Level {
+    @Getter
     private final GameScreen screen;
 
     private final Viewport viewport;
@@ -33,13 +34,13 @@ public class Level {
 
     private final FocusCameraController camera;
 
-    @Getter
-    private boolean started;
+    private LevelHud hud;
 
     public Level(GameScreen screen, GameType type) {
         this.screen = screen;
 
         map = new Map(Constants.Assets.getMap());
+        hud = new LevelHud(this);
 
         hamsterBalls = new HamsterBall[type.getPlayerCount()];
         for (int i = 0; i < hamsterBalls.length; i++)
@@ -55,13 +56,11 @@ public class Level {
                 new MinimumViewportCameraConstraint(240, 135));
     }
 
-    public void start() {
-        started = true;
-    }
-
     public void update(float delta) {
-        if (started)
+        if (!screen.getGame().getScreenManager().inTransition())
             Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.update(delta));
+
+        hud.act();
 
         viewport.apply();
         camera.update(delta);
@@ -80,10 +79,14 @@ public class Level {
         }
 
         batch.end();
+
+        hud.getViewport().apply();
+        hud.draw();
     }
 
     public void resize(int width, int height) {
         viewport.update(width, height);
+        hud.getViewport().update(width, height, true);
     }
 
     public boolean isHamsterBallCollision(int currentPlayerIndex, float x, float y) {
