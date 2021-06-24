@@ -66,6 +66,11 @@
    <property name="speed" type="float" value="0.5"/>
   </properties>
  </tile>
+ <tile id="12">
+  <properties>
+   <property name="chargeNitro" type="bool" value="true"/>
+  </properties>
+ </tile>
  <tile id="17">
   <properties>
    <property name="forceSpeedMultiplierPenalty" type="bool" value="true"/>

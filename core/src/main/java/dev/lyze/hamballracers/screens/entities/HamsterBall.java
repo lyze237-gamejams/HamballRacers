@@ -29,6 +29,7 @@ public class HamsterBall extends Entity {
 
     @Getter
     private final Hitbox hitbox;
+    @Getter
     private final HamsterBallInput input;
     private final HamsterBallAnimations animations;
     @Getter
@@ -46,24 +47,24 @@ public class HamsterBall extends Entity {
 
     @Override
     public void update(float delta) {
-        var inputVelocity = input.readInputVelocity();
+        input.update(delta);
 
         maxSpeed.update(delta);
 
-        calculateVelocity(inputVelocity, delta);
+        calculateVelocity(delta);
         calculateMovement(delta);
 
         animations.update(delta);
     }
 
-    private void calculateVelocity(Vector2 inputVelocity, float delta) {
+    private void calculateVelocity(float delta) {
         var block = level.getMap().getBlock(x, y);
 
         var accelerationDelta = vehicleAcceleration * delta;
         var decelerationDeltaIce = 6.5f * 5f * delta;
 
-        velocity.x = calculateAxisVelocity(velocity.x, inputVelocity.x, block, accelerationDelta, decelerationDeltaIce);
-        velocity.y = calculateAxisVelocity(velocity.y, inputVelocity.y, block, accelerationDelta, decelerationDeltaIce);
+        velocity.x = calculateAxisVelocity(velocity.x, input.getInputVelocity().x, block, accelerationDelta, decelerationDeltaIce);
+        velocity.y = calculateAxisVelocity(velocity.y, input.getInputVelocity().y, block, accelerationDelta, decelerationDeltaIce);
 
         var pythagorasVelocity = ((velocity.x * velocity.x) + (velocity.y * velocity.y));
 

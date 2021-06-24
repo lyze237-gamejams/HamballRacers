@@ -19,6 +19,7 @@ public class Block {
     private float speedMultiplierTime;
     private boolean disappearAfterStart;
     private boolean forceSpeedMultiplierPenalty;
+    private boolean chargeNitro;
 
     private int x, y;
 
@@ -67,5 +68,8 @@ public class Block {
 
         if (cell.getTile().getProperties().get("forceSpeedMultiplierPenalty", false, Boolean.class))
             setForceSpeedMultiplierPenalty(true);
+
+        if (cell.getTile().getProperties().get("chargeNitro", false, Boolean.class))
+            setChargeNitro(true);
     }
 }
