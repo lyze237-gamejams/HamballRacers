@@ -24,6 +24,9 @@
     <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.screens.map.spawners" />
     <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.screens.map.spawners.properties" />
 
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.eventSystem.data" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.eventSystem.events" />
+
     <entry-point class="dev.lyze.hamballracers.gwt.GwtLauncher"/>
     <set-configuration-property name="gdx.assetpath" value="../assets"/>
     <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>

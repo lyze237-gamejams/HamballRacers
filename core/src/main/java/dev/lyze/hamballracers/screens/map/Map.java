@@ -48,7 +48,15 @@ public class Map {
         logger.logInfo("Map size is " + layer.getWidth() + " / " + layer.getHeight());
 
         new MapEntitiesCreation(level, this).initialize();
+        setupLayers();
         setupCollisions();
+    }
+
+    private void setupLayers() {
+        for (MapLayer layer : map.getLayers()) {
+            if (layer.getProperties().get("Hidden", false, Boolean.class))
+                layer.setVisible(false);
+        }
     }
 
     private void setupCollisions() {

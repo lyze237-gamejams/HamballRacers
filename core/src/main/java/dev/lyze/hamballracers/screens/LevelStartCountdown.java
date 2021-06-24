@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import dev.lyze.hamballracers.Constants;
+import dev.lyze.hamballracers.eventSystem.data.CountdownTimerFinishedEventData;
+import dev.lyze.hamballracers.eventSystem.events.CountdownTimerFinishedEvent;
 import dev.lyze.hamballracers.utils.Logger;
 import lombok.Getter;
 
@@ -63,6 +65,7 @@ public class LevelStartCountdown extends Container<Label> {
         }
 
         sequence.addAction(Actions.run(() -> finished = true));
+        sequence.addAction(Actions.run(() -> Constants.eventManager.fire(new CountdownTimerFinishedEvent(new CountdownTimerFinishedEventData()))));
         sequence.addAction(Actions.delay(1f));
         sequence.addAction(Actions.fadeOut(2f));
 

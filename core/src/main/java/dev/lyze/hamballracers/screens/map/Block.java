@@ -2,6 +2,9 @@ package dev.lyze.hamballracers.screens.map;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import dev.lyze.hamballracers.Constants;
+import dev.lyze.hamballracers.eventSystem.EventListener;
+import dev.lyze.hamballracers.eventSystem.events.CountdownTimerFinishedEvent;
 import dev.lyze.hamballracers.screens.Level;
 import lombok.Data;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -23,16 +26,6 @@ public class Block {
         this.y = y;
 
         update(cell);
-    }
-
-    public boolean isCollision() {
-        if (collision)
-            return true;
-
-        if (disappearAfterStart && !level.getHud().getCountdown().isFinished())
-            return true;
-
-        return false;
     }
 
     public void debugRender(ShapeDrawer drawer) {
@@ -57,8 +50,15 @@ public class Block {
         if (cell.getTile().getProperties().get("icy", false, Boolean.class))
             setIcy(true);
 
-        if (cell.getTile().getProperties().get("disappearAfterStart", false, Boolean.class))
-            setDisappearAfterStart(true);
+        if (cell.getTile().getProperties().get("disappearAfterStart", false, Boolean.class)) {
+            Constants.eventManager.addListener(new EventListener<CountdownTimerFinishedEvent>(CountdownTimerFinishedEvent.class) {
+                @Override
+                protected void fire(CountdownTimerFinishedEvent event) {
+                    cell.setTile(null);
+                    collision = false;
+                }
+            });
+        }
 
 
         setSpeedMultiplier(cell.getTile().getProperties().get("speed", 1f, Float.class));
