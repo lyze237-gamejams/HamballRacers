@@ -14,26 +14,30 @@ public class HamsterBallAnimations {
 
     private final HamsterBall hamsterBall;
 
-    private Animation<TextureAtlas.AtlasRegion> playerNormalAnimation, playerBlinkAnimation;
-    private Animation<TextureAtlas.AtlasRegion> currentPlayerAnimation;
-    private Animation<TextureAtlas.AtlasRegion> ballAnimation;
+    private final Animation<TextureAtlas.AtlasRegion> ballAnimation;
+    private final Animation<TextureAtlas.AtlasRegion> playerNormalAnimation, playerBlinkAnimation, playerIdleAnimation;
 
-    private float animationDelta;
+    private Animation<TextureAtlas.AtlasRegion> currentPlayerAnimation;
+
+    private float ballAnimationDelta, playerAnimationDelta;
     private boolean facingRight;
 
     public HamsterBallAnimations(HamsterBall hamsterBall) {
         this.hamsterBall = hamsterBall;
 
-        ballAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getHamsterBall(), Animation.PlayMode.NORMAL);
+        ballAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getHamsterBall(), Animation.PlayMode.LOOP);
 
         if (hamsterBall.getPlayerIndex() == 0) {
-            playerNormalAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getLyzeNormal(), Animation.PlayMode.NORMAL);
-            playerBlinkAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getLyzeBlink(), Animation.PlayMode.NORMAL);
+            playerNormalAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getLyzeNormal(), Animation.PlayMode.NORMAL);
+            playerBlinkAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getLyzeBlink(), Animation.PlayMode.NORMAL);
+            playerIdleAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getLyzeIdle());
         }
         else {
-            playerNormalAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getRenbyNormal(), Animation.PlayMode.NORMAL);
-            playerBlinkAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getRenbyBlink(), Animation.PlayMode.NORMAL);
+            playerNormalAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getRenbyNormal(), Animation.PlayMode.NORMAL);
+            playerBlinkAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getRenbyBlink(), Animation.PlayMode.NORMAL);
+            playerIdleAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getRenbyIdle());
         }
+        playerIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         currentPlayerAnimation = playerNormalAnimation;
     }
@@ -44,22 +48,29 @@ public class HamsterBallAnimations {
         else if (hamsterBall.getVelocity().x < 0)
             facingRight = false;
 
-        if (hamsterBall.getVelocity().x != 0 || hamsterBall.getVelocity().y != 0)
-            animationDelta += delta * Math.max(Math.abs(hamsterBall.getVelocity().x), Math.abs(hamsterBall.getVelocity().y)) / HamsterBall.getVehicleMaxMoveSpeed();
+        if (hamsterBall.getVelocity().x == 0 && hamsterBall.getVelocity().y == 0) {
+            currentPlayerAnimation = playerIdleAnimation;
+            playerAnimationDelta = 0f;
+        } else {
+            float calculatedDelta = delta * Math.max(Math.abs(hamsterBall.getVelocity().x), Math.abs(hamsterBall.getVelocity().y)) / HamsterBall.getVehicleMaxMoveSpeed();
+
+            if (currentPlayerAnimation == playerIdleAnimation)
+                currentPlayerAnimation = playerNormalAnimation;
+
+            playerAnimationDelta += calculatedDelta;
+            ballAnimationDelta += calculatedDelta;
+        }
+
+        if (playerNormalAnimation.isAnimationFinished(playerAnimationDelta)) {
+            playerAnimationDelta = 0;
+
+            currentPlayerAnimation = random.nextFloat() > blinkPercentage ? playerBlinkAnimation : playerNormalAnimation;
+        }
     }
 
     public void render(SpriteBatch batch) {
-        var ballKeyFrame = ballAnimation.getKeyFrame(animationDelta);
-        var playerKeyFrame = currentPlayerAnimation.getKeyFrame(animationDelta);
-
-        if (ballAnimation.isAnimationFinished(animationDelta)) {
-            animationDelta = 0;
-
-            currentPlayerAnimation = random.nextFloat() > blinkPercentage ? playerBlinkAnimation : playerNormalAnimation;
-
-            ballKeyFrame = ballAnimation.getKeyFrame(animationDelta);
-            playerKeyFrame = currentPlayerAnimation.getKeyFrame(animationDelta);
-        }
+        var ballKeyFrame = ballAnimation.getKeyFrame(ballAnimationDelta);
+        var playerKeyFrame = currentPlayerAnimation.getKeyFrame(playerAnimationDelta);
 
         var drawX = hamsterBall.getX() - hamsterBall.getHitbox().getDrawWidth() / 2f;
         var drawY = this.hamsterBall.getY() - hamsterBall.getHitbox().getDrawHeight() / 2f;
