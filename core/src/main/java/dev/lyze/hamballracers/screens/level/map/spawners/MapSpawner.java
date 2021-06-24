@@ -1,9 +1,9 @@
-package dev.lyze.hamballracers.screens.map.spawners;
+package dev.lyze.hamballracers.screens.level.map.spawners;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
-import dev.lyze.hamballracers.screens.Level;
-import dev.lyze.hamballracers.screens.map.Map;
+import dev.lyze.hamballracers.screens.level.Level;
+import dev.lyze.hamballracers.screens.level.map.Map;
 import dev.lyze.hamballracers.utils.Logger;
 import lombok.Getter;
 

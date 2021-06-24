@@ -2,6 +2,7 @@ package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.lyze.hamballracers.Constants;
+import dev.lyze.hamballracers.screens.level.Level;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;

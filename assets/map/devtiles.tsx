@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.4" tiledversion="1.4.3" name="tilemap" tilewidth="16" tileheight="16" tilecount="18" columns="6">
- <image source="tilemap.png" width="96" height="48"/>
+ <image source="devtiles.png" width="96" height="48"/>
  <tile id="0">
   <properties>
-   <property name="speed" type="float" value="1"/>
+   <property name="speed" type="float" value="0.75"/>
   </properties>
  </tile>
  <tile id="1">
@@ -30,7 +30,7 @@
  <tile id="5">
   <properties>
    <property name="speed" type="float" value="2"/>
-   <property name="speedMultiplierTime" type="float" value="5"/>
+   <property name="speedMultiplierTime" type="float" value="3"/>
   </properties>
  </tile>
  <tile id="6">
@@ -69,6 +69,16 @@
  <tile id="12">
   <properties>
    <property name="chargeNitro" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="14">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="15">
+  <properties>
+   <property name="speed" type="float" value="0.35"/>
   </properties>
  </tile>
  <tile id="17">

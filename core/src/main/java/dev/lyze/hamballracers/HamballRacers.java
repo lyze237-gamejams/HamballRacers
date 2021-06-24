@@ -9,10 +9,7 @@ import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.ScreenTransition;
 import de.eskalon.commons.screen.transition.impl.BlendingTransition;
 import de.eskalon.commons.screen.transition.impl.HorizontalSlicingTransition;
-import dev.lyze.hamballracers.screens.GameScreen;
-import dev.lyze.hamballracers.screens.MainMenuScreen;
-import dev.lyze.hamballracers.screens.SplashScreen;
-import dev.lyze.hamballracers.screens.TransitionScreen;
+import dev.lyze.hamballracers.screens.*;
 import dev.lyze.hamballracers.utils.Logger;
 
 import java.util.Arrays;
@@ -36,8 +33,7 @@ public class HamballRacers extends ManagedGame<ManagedScreen, ScreenTransition> 
         this.batch = new SpriteBatch();
 
         logger.logInfo("Loading all assets");
-        Constants.Assets.load();
-        Constants.Assets.finishAndConsume();
+        Constants.initialize();
 
         logger.logInfo("Setting up screens");
         setupScreens();
@@ -55,6 +51,7 @@ public class HamballRacers extends ManagedGame<ManagedScreen, ScreenTransition> 
         this.screenManager.addScreen(MainMenuScreen.class.getName(), new MainMenuScreen());
         this.screenManager.addScreen(GameScreen.class.getName(), new GameScreen());
         this.screenManager.addScreen(TransitionScreen.class.getName(), new TransitionScreen());
+        this.screenManager.addScreen(CharacterSelectMenu.class.getName(), new CharacterSelectMenu());
     }
 
     private void setupTransitions() {

@@ -20,9 +20,9 @@
     <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.audio.Music" />
     <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.audio.Sound" />
 
-    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.screens.map.MapEntitiesCreation" />
-    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.screens.map.spawners" />
-    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.screens.map.spawners.properties" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.screens.level.map.MapEntitiesCreation" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.screens.level.map.spawners" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.screens.level.map.spawners.properties" />
 
     <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.eventSystem.data" />
     <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.eventSystem.events" />

@@ -1,4 +1,4 @@
-package dev.lyze.hamballracers.screens;
+package dev.lyze.hamballracers.screens.level;
 
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;

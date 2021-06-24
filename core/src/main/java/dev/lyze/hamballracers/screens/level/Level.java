@@ -1,4 +1,4 @@
-package dev.lyze.hamballracers.screens;
+package dev.lyze.hamballracers.screens.level;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,8 +13,10 @@ import com.gempukku.libgdx.lib.camera2d.constraint.MinimumViewportCameraConstrai
 import com.gempukku.libgdx.lib.camera2d.focus.EntityFocus;
 import com.gempukku.libgdx.lib.camera2d.focus.FitAllCameraFocus;
 import dev.lyze.hamballracers.Constants;
-import dev.lyze.hamballracers.screens.entities.HamsterBall;
-import dev.lyze.hamballracers.screens.map.Map;
+import dev.lyze.hamballracers.screens.GameScreen;
+import dev.lyze.hamballracers.screens.GameType;
+import dev.lyze.hamballracers.screens.level.entities.HamsterBall;
+import dev.lyze.hamballracers.screens.level.map.Map;
 import dev.lyze.hamballracers.utils.Logger;
 import dev.lyze.hamballracers.utils.camera.EntityPositionProvider;
 import lombok.Getter;

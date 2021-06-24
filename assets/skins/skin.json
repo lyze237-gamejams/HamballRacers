@@ -6,6 +6,12 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	countdown: {
 		file: timer.fnt
 	}
+	label: {
+		file: label.fnt
+	}
+	tinyButton: {
+		file: pixeldroidConsoleRegular.fnt
+	}
 	title: {
 		file: title.fnt
 	}
@@ -25,6 +31,9 @@ com.badlogic.gdx.graphics.Color: {
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: label
+	}
 	title: {
 		font: title
 		fontColor: RGBA_255_255_255_255
@@ -37,6 +46,14 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: button
 		fontColor: RGBA_255_86_0_255
+	}
+	tinyButton: {
+		font: tinyButton
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
 	}
 }
 }

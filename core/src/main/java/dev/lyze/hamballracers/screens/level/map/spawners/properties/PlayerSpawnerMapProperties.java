@@ -1,4 +1,4 @@
-package dev.lyze.hamballracers.screens.map.spawners.properties;
+package dev.lyze.hamballracers.screens.level.map.spawners.properties;
 
 import com.badlogic.gdx.maps.MapProperties;
 import lombok.Data;

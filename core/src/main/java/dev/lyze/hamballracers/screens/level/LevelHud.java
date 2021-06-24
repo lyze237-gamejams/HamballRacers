@@ -1,4 +1,4 @@
-package dev.lyze.hamballracers.screens;
+package dev.lyze.hamballracers.screens.level;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;

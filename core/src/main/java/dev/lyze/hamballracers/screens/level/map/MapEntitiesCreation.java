@@ -1,4 +1,4 @@
-package dev.lyze.hamballracers.screens.map;
+package dev.lyze.hamballracers.screens.level.map;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -7,9 +7,9 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
-import dev.lyze.hamballracers.screens.Level;
-import dev.lyze.hamballracers.screens.map.spawners.MapSpawner;
-import dev.lyze.hamballracers.screens.map.spawners.PlayerSpawner;
+import dev.lyze.hamballracers.screens.level.Level;
+import dev.lyze.hamballracers.screens.level.map.spawners.MapSpawner;
+import dev.lyze.hamballracers.screens.level.map.spawners.PlayerSpawner;
 import dev.lyze.hamballracers.utils.Logger;
 import lombok.var;
 

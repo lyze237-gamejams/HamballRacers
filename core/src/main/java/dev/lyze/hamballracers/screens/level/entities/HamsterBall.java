@@ -1,11 +1,11 @@
-package dev.lyze.hamballracers.screens.entities;
+package dev.lyze.hamballracers.screens.level.entities;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import dev.lyze.hamballracers.screens.Level;
-import dev.lyze.hamballracers.screens.map.Block;
+import dev.lyze.hamballracers.screens.level.Level;
+import dev.lyze.hamballracers.screens.level.map.Block;
 import dev.lyze.hamballracers.utils.Logger;
 import dev.lyze.hamballracers.utils.MathUtils2;
 import lombok.Getter;

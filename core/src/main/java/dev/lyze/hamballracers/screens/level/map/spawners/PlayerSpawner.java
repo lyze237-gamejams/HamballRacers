@@ -1,11 +1,11 @@
-package dev.lyze.hamballracers.screens.map.spawners;
+package dev.lyze.hamballracers.screens.level.map.spawners;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import dev.lyze.hamballracers.screens.Level;
-import dev.lyze.hamballracers.screens.map.Map;
-import dev.lyze.hamballracers.screens.map.spawners.properties.PlayerSpawnerMapProperties;
+import dev.lyze.hamballracers.screens.level.Level;
+import dev.lyze.hamballracers.screens.level.map.Map;
+import dev.lyze.hamballracers.screens.level.map.spawners.properties.PlayerSpawnerMapProperties;
 import lombok.var;
 
 import java.util.HashMap;

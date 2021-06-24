@@ -2,7 +2,7 @@ package dev.lyze.hamballracers.utils.camera;
 
 import com.badlogic.gdx.math.Vector2;
 import com.gempukku.libgdx.lib.camera2d.focus.PositionProvider;
-import dev.lyze.hamballracers.screens.entities.Entity;
+import dev.lyze.hamballracers.screens.level.entities.Entity;
 
 public class EntityPositionProvider implements PositionProvider {
     private final Entity entity;

@@ -1,11 +1,11 @@
-package dev.lyze.hamballracers.screens.map;
+package dev.lyze.hamballracers.screens.level.map;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.eventSystem.EventListener;
 import dev.lyze.hamballracers.eventSystem.events.CountdownTimerFinishedEvent;
-import dev.lyze.hamballracers.screens.Level;
+import dev.lyze.hamballracers.screens.level.Level;
 import lombok.Data;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 

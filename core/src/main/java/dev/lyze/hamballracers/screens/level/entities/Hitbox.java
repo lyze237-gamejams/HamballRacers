@@ -1,4 +1,4 @@
-package dev.lyze.hamballracers.screens.entities;
+package dev.lyze.hamballracers.screens.level.entities;
 
 import com.badlogic.gdx.math.Rectangle;
 import lombok.Data;

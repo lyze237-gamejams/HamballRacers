@@ -1,4 +1,4 @@
-package dev.lyze.hamballracers.screens.map;
+package dev.lyze.hamballracers.screens.level.map;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
@@ -7,8 +7,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import dev.lyze.hamballracers.screens.Level;
-import dev.lyze.hamballracers.screens.entities.Hitbox;
+import dev.lyze.hamballracers.screens.level.Level;
+import dev.lyze.hamballracers.screens.level.entities.Hitbox;
 import dev.lyze.hamballracers.utils.Logger;
 import lombok.Getter;
 import lombok.var;
