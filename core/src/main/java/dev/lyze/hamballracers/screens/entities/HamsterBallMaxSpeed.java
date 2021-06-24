@@ -1,10 +1,12 @@
 package dev.lyze.hamballracers.screens.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import dev.lyze.hamballracers.screens.map.Block;
 import dev.lyze.hamballracers.utils.Logger;
 import lombok.Getter;
 import lombok.var;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class HamsterBallMaxSpeed {
     private static final Logger<HamsterBallMaxSpeed> logger = new Logger<>(HamsterBallMaxSpeed.class);
@@ -63,6 +65,19 @@ public class HamsterBallMaxSpeed {
         usingNitro = hamsterBall.getInput().isUsingNitro() && (nitroTimeLeft -= delta) > 0;
         if (usingNitro)
             logger.logInfo("Nitro: " + nitroTimeLeft);
+    }
+
+    private final Color barRenderColor = new Color();
+    public void render(ShapeDrawer drawer) {
+        var centerY = hamsterBall.getY() + hamsterBall.getHitbox().getDrawHeight() / 2f;
+        var drawWidth = hamsterBall.getHitbox().getDrawWidth();
+
+        float percent = MathUtils.clamp(nitroTimeLeft / maxNitroTime, 0, 1);
+        barRenderColor.set(Color.RED).lerp(Color.CYAN, percent);
+        drawer.setColor(barRenderColor);
+        drawer.filledRectangle(hamsterBall.getX() - drawWidth / 2f,  centerY + 2f, drawWidth * percent, 2f);
+        drawer.setColor(Color.BLACK);
+        drawer.rectangle(hamsterBall.getX() - drawWidth / 2f,  centerY + 2f, drawWidth, 2f);
     }
 
     private void setNewSpeedMulitplier(Block block) {

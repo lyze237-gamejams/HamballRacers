@@ -11,7 +11,7 @@ public abstract class Entity {
 
     public abstract void update(float delta);
 
-    public abstract void render(SpriteBatch batch);
+    public abstract void render(SpriteBatch batch, ShapeDrawer drawer);
 
     public abstract void debugRender(ShapeDrawer drawer);
 }

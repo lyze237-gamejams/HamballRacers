@@ -128,8 +128,9 @@ public class HamsterBall extends Entity {
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, ShapeDrawer drawer) {
         animations.render(batch);
+        maxSpeed.render(drawer);
     }
 
     @Override

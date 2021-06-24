@@ -67,7 +67,7 @@ public class Level {
         batch.begin();
 
         map.render(((OrthographicCamera) viewport.getCamera()));
-        Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.render(batch));
+        Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.render(batch, drawer));
 
         if (Constants.Debug) {
             map.debugRender(drawer);
