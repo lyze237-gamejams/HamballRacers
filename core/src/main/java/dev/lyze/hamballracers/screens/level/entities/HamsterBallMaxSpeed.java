@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import dev.lyze.hamballracers.screens.level.map.Block;
 import dev.lyze.hamballracers.utils.Logger;
+import dev.lyze.hamballracers.utils.MathUtils2;
 import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -47,13 +48,13 @@ public class HamsterBallMaxSpeed {
 
         if (forceSpeedPenalty) {
             if (speedMultiplier != newSpeedMultiplier && speedMultiplierTime < 0) {
-                setNewSpeedMulitplier(block);
+                setNewSpeedMultiplier(block, delta);
             }
         } else {
             if (newSpeedMultiplier > speedMultiplier) {
-                setNewSpeedMulitplier(block);
+                setNewSpeedMultiplier(block, delta);
             } else if (newSpeedMultiplier < speedMultiplier && speedMultiplierTime < 0) {
-                setNewSpeedMulitplier(block);
+                setNewSpeedMultiplier(block, delta);
             }
         }
 
@@ -89,11 +90,20 @@ public class HamsterBallMaxSpeed {
         drawer.rectangle(hamsterBall.getX() - drawWidth / 2f,  centerY + 2f, drawWidth, 2f);
     }
 
-    private void setNewSpeedMulitplier(Block block) {
+    private void setNewSpeedMultiplier(Block block, float delta) {
         speedMultiplierTime = block.getSpeedMultiplierTime();
-        speedMultiplier = block.getSpeedMultiplier();
 
-        logger.logInfo("Changing speed to " + speedMultiplier);
+        var blockSpeedMultiplier = block.getSpeedMultiplier();
+        if (blockSpeedMultiplier < this.speedMultiplier) {
+            this.speedMultiplier = MathUtils2.moveTowards(this.speedMultiplier, blockSpeedMultiplier, 0.5f * delta);
+            logger.logInfo(this.speedMultiplier + " => " + blockSpeedMultiplier);
+        }
+        else {
+            this.speedMultiplier = blockSpeedMultiplier;
+        }
+
+
+        logger.logInfo("Changing speed to " + this.speedMultiplier);
 
         if (block.isForceSpeedMultiplierPenalty())
             forceSpeedPenalty = true;
