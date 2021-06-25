@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.hamballracers.screens.level.Level;
+import dev.lyze.hamballracers.screens.level.Player;
 import dev.lyze.hamballracers.screens.level.map.Block;
 import dev.lyze.hamballracers.utils.Logger;
 import dev.lyze.hamballracers.utils.MathUtils2;
@@ -22,9 +23,6 @@ public class HamsterBall extends Entity {
     private final Level level;
 
     @Getter
-    private final int playerIndex;
-
-    @Getter
     private final Vector2 velocity = new Vector2();
 
     @Getter
@@ -34,14 +32,16 @@ public class HamsterBall extends Entity {
     private final HamsterBallAnimations animations;
     @Getter
     private final HamsterBallMaxSpeed maxSpeed;
+    @Getter
+    private final Player player;
 
-    public HamsterBall(Level level, int playerIndex) {
+    public HamsterBall(Level level, Player player) {
         this.level = level;
-        this.playerIndex = playerIndex;
+        this.player = player;
 
         hitbox = new Hitbox(16, 16, 6, 3.8f, 0, -2f);
-        input = new HamsterBallInput(this);
-        animations = new HamsterBallAnimations(this);
+        input = new HamsterBallInput(this, player);
+        animations = new HamsterBallAnimations(this, player);
         maxSpeed = new HamsterBallMaxSpeed(this);
     }
 
@@ -95,15 +95,15 @@ public class HamsterBall extends Entity {
         var moveAmountY = velocity.y * delta;
 
         float potentialNewPositionX = x + moveAmountX;
-        boolean canMoveX = !(level.getMap().isBlockCollision(potentialNewPositionX, y, hitbox) || level.isHamsterBallCollision(playerIndex, potentialNewPositionX, y));
+        boolean canMoveX = !(level.getMap().isBlockCollision(potentialNewPositionX, y, hitbox) || level.isHamsterBallCollision(this, potentialNewPositionX, y));
 
         float potentialNewPositionY = y + moveAmountY;
-        boolean canMoveY = !(level.getMap().isBlockCollision(x, potentialNewPositionY, hitbox) || level.isHamsterBallCollision(playerIndex, x, potentialNewPositionY));
+        boolean canMoveY = !(level.getMap().isBlockCollision(x, potentialNewPositionY, hitbox) || level.isHamsterBallCollision(this, x, potentialNewPositionY));
 
         if (canMoveX)
             x = potentialNewPositionX;
 
-        var canMoveXAndY = !(level.getMap().isBlockCollision(x, potentialNewPositionY, hitbox) || level.isHamsterBallCollision(playerIndex, x, potentialNewPositionY));
+        var canMoveXAndY = !(level.getMap().isBlockCollision(x, potentialNewPositionY, hitbox) || level.isHamsterBallCollision(this, x, potentialNewPositionY));
         if (canMoveXAndY)
             y = potentialNewPositionY;
 

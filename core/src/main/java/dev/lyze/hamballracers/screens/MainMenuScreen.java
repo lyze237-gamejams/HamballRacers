@@ -17,8 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import de.eskalon.commons.screen.transition.impl.BlendingTransition;
-import de.eskalon.commons.screen.transition.impl.HorizontalSlicingTransition;
+import de.eskalon.commons.screen.transition.impl.PushTransition;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.utils.Logger;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
@@ -81,9 +80,8 @@ public class MainMenuScreen extends ManagedScreenAdapter {
 
         var menuSubTable = new Table();
 
-        addButton(menuSubTable, "Time trial", 5.3f, () -> game.getScreenManager().pushScreen(TransitionScreen.class.getName(), BlendingTransition.class.getName(), GameType.TIME_TRIAL));
-        addButton(menuSubTable, "Local Multiplayer", 6.3f, () -> game.getScreenManager().pushScreen(TransitionScreen.class.getName(), HorizontalSlicingTransition.class.getName(), GameType.PVP));
-        addButton(menuSubTable, "Exit", 6.6f, () -> Gdx.app.exit());
+        addButton(menuSubTable, "Play", 5.3f, () -> game.getScreenManager().pushScreen(CharacterSelectMenu.class.getName(), PushTransition.class.getName()));
+        addButton(menuSubTable, "Exit", 6.3f, () -> Gdx.app.exit());
 
         menuTable.add(menuSubTable).right().padRight(100).padBottom(100).expand();
         text.addActor(menuTable);
@@ -95,7 +93,7 @@ public class MainMenuScreen extends ManagedScreenAdapter {
                 Actions.run(() -> finishable = true)));
     }
 
-    private TextButton addButton(Table table, String name, float delay, Runnable onClick) {
+    private void addButton(Table table, String name, float delay, Runnable onClick) {
         var button = new TextButton(name, Constants.assets.getSkin());
         button.addListener(new ChangeListener() {
             @Override
@@ -119,7 +117,6 @@ public class MainMenuScreen extends ManagedScreenAdapter {
         button.addAction(Actions.sequence(Actions.delay(0.25f), Actions.moveBy(2000, 0, 0)));
         musicActionMapEntries.add(new MusicActionMap.MusicActionEntry(delay, () -> button.addAction(Actions.moveBy(-2000, 0, 0.75f, Interpolation.exp5Out))));
 
-        return button;
     }
 
     @Override

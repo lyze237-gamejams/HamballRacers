@@ -11,6 +11,7 @@ import dev.lyze.hamballracers.assets.MainAssets;
 import dev.lyze.hamballracers.eventSystem.EventManager;
 import dev.lyze.hamballracers.screens.level.characters.Character;
 import dev.lyze.hamballracers.screens.level.characters.CharacterAnimation;
+import dev.lyze.hamballracers.utils.input.PlayersVirtualGamepadMapping;
 import lombok.var;
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class Constants {
     public static MainAssets assets = new MainAssets();
     public static EventManager eventManager = new EventManager();
 
+    public static PlayersVirtualGamepadMapping gamepadMapping;
     public static Character[] characters;
 
     public static final Color[] playerColors = new Color[] { Color.CYAN, Color.ORANGE, Color.GREEN, Color.YELLOW };
@@ -29,6 +31,8 @@ public class Constants {
     public static void initialize() {
         Constants.assets.load();
         Constants.assets.finishAndConsume();
+
+        gamepadMapping = new PlayersVirtualGamepadMapping();
 
         initializeCharacterColors();
         initializeCharacters();
@@ -52,13 +56,18 @@ public class Constants {
     private static void initializeCharacters() {
         HashMap<CharacterAnimation, Array<TextureAtlas.AtlasRegion>> lyzeAnimations = new HashMap<>();
         lyzeAnimations.put(CharacterAnimation.IDLE, assets.getMainTextureAtlas().getLyzeIdle());
-        lyzeAnimations.put(CharacterAnimation.RUN, assets.getMainTextureAtlas().getLyzeNormal());
+        lyzeAnimations.put(CharacterAnimation.NORMAL, assets.getMainTextureAtlas().getLyzeNormal());
         lyzeAnimations.put(CharacterAnimation.BLINK, assets.getMainTextureAtlas().getLyzeBlink());
 
         HashMap<CharacterAnimation, Array<TextureAtlas.AtlasRegion>> renbyAnimations = new HashMap<>();
         renbyAnimations.put(CharacterAnimation.IDLE, assets.getMainTextureAtlas().getRenbyIdle());
-        renbyAnimations.put(CharacterAnimation.RUN, assets.getMainTextureAtlas().getRenbyNormal());
+        renbyAnimations.put(CharacterAnimation.NORMAL, assets.getMainTextureAtlas().getRenbyNormal());
         renbyAnimations.put(CharacterAnimation.BLINK, assets.getMainTextureAtlas().getRenbyBlink());
+
+        HashMap<CharacterAnimation, Array<TextureAtlas.AtlasRegion>> jakeAnimations = new HashMap<>();
+        jakeAnimations.put(CharacterAnimation.IDLE, assets.getMainTextureAtlas().getJakeIdle());
+        jakeAnimations.put(CharacterAnimation.NORMAL, assets.getMainTextureAtlas().getJakeNormal());
+        jakeAnimations.put(CharacterAnimation.BLINK, assets.getMainTextureAtlas().getJakeBlink());
 
         characters = new Character[]{
                 Character.builder()
@@ -74,16 +83,11 @@ public class Constants {
                         .build(),
 
                 Character.builder()
-                        .name("Lyze")
-                        .preview(assets.getMainTextureAtlas().getLyzeIdle().get(0))
-                        .animations(lyzeAnimations)
+                        .name("Jake")
+                        .preview(assets.getMainTextureAtlas().getJakeIdle().get(0))
+                        .animations(jakeAnimations)
                         .build(),
 
-                Character.builder()
-                        .name("Renby")
-                        .preview(assets.getMainTextureAtlas().getRenbyIdle().get(0))
-                        .animations(renbyAnimations)
-                        .build(),
 
                 Character.builder()
                         .name("Lyze")
@@ -96,6 +100,14 @@ public class Constants {
                         .preview(assets.getMainTextureAtlas().getRenbyIdle().get(0))
                         .animations(renbyAnimations)
                         .build(),
+
+                Character.builder()
+                        .name("Jake")
+                        .preview(assets.getMainTextureAtlas().getJakeIdle().get(0))
+                        .animations(jakeAnimations)
+                        .build(),
+
+
                 Character.builder()
                         .name("Lyze")
                         .preview(assets.getMainTextureAtlas().getLyzeIdle().get(0))
@@ -107,6 +119,15 @@ public class Constants {
                         .preview(assets.getMainTextureAtlas().getRenbyIdle().get(0))
                         .animations(renbyAnimations)
                         .build(),
+
+                Character.builder()
+                        .name("Jake")
+                        .preview(assets.getMainTextureAtlas().getJakeIdle().get(0))
+                        .animations(jakeAnimations)
+                        .build(),
+
+
+
                 Character.builder()
                         .name("Lyze")
                         .preview(assets.getMainTextureAtlas().getLyzeIdle().get(0))
@@ -118,10 +139,11 @@ public class Constants {
                         .preview(assets.getMainTextureAtlas().getRenbyIdle().get(0))
                         .animations(renbyAnimations)
                         .build(),
+
                 Character.builder()
-                        .name("Lyze")
-                        .preview(assets.getMainTextureAtlas().getLyzeIdle().get(0))
-                        .animations(lyzeAnimations)
+                        .name("Jake")
+                        .preview(assets.getMainTextureAtlas().getJakeIdle().get(0))
+                        .animations(jakeAnimations)
                         .build()
         };
     }

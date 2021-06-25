@@ -1,44 +1,41 @@
 package dev.lyze.hamballracers.screens.level.entities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import dev.lyze.hamballracers.screens.level.Player;
+import dev.lyze.hamballracers.utils.input.VirtualGamepadButton;
 import lombok.Getter;
 
 public class HamsterBallInput {
-
-    private static final int[][] playerControls = new int[][] {
-            new int[] { Input.Keys.W, Input.Keys.S, Input.Keys.A, Input.Keys.D, Input.Keys.SHIFT_LEFT },
-            new int[] { Input.Keys.UP, Input.Keys.DOWN, Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.SHIFT_RIGHT }
-    };
-
     private final HamsterBall hamsterBall;
 
     @Getter
     private final Vector2 inputVelocity = new Vector2();
-    @Getter
-    private boolean usingNitro;
+    private final Player player;
 
-    public HamsterBallInput(HamsterBall hamsterBall) {
+    public HamsterBallInput(HamsterBall hamsterBall, Player player) {
         this.hamsterBall = hamsterBall;
+        this.player = player;
     }
 
     public void update(float delta) {
         readInputVelocity();
-        usingNitro = Gdx.input.isKeyPressed(playerControls[hamsterBall.getPlayerIndex()][4]);
     }
 
     public void readInputVelocity() {
         inputVelocity.set(0, 0);
 
-        if (Gdx.input.isKeyPressed(playerControls[hamsterBall.getPlayerIndex()][0]))
+        if (player.isButtonPressed(VirtualGamepadButton.UP))
             inputVelocity.y = 1;
-        if (Gdx.input.isKeyPressed(playerControls[hamsterBall.getPlayerIndex()][1]))
+        if (player.isButtonPressed(VirtualGamepadButton.DOWN))
             inputVelocity.y = -1;
 
-        if (Gdx.input.isKeyPressed(playerControls[hamsterBall.getPlayerIndex()][2]))
+        if (player.isButtonPressed(VirtualGamepadButton.LEFT))
             inputVelocity.x = -1;
-        if (Gdx.input.isKeyPressed(playerControls[hamsterBall.getPlayerIndex()][3]))
+        if (player.isButtonPressed(VirtualGamepadButton.RIGHT))
             inputVelocity.x = 1;
+    }
+
+    public boolean isUsingNitro() {
+        return player.isButtonPressed(VirtualGamepadButton.NITRO);
     }
 }

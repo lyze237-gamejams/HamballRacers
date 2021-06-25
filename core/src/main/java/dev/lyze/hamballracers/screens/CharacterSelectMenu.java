@@ -5,34 +5,34 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import de.eskalon.commons.screen.transition.impl.BlendingTransition;
 import dev.lyze.hamballracers.Constants;
+import dev.lyze.hamballracers.screens.level.Player;
+import dev.lyze.hamballracers.screens.transitions.TransitionToGameScreen;
 import dev.lyze.hamballracers.utils.Logger;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
 import dev.lyze.hamballracers.utils.input.PlayerInputListener;
-import dev.lyze.hamballracers.utils.input.PlayersVirtualGamepadMapping;
 import dev.lyze.hamballracers.utils.input.VirtualGamepad;
 import dev.lyze.hamballracers.utils.input.VirtualGamepadButton;
 import lombok.var;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerInputListener {
     private static final Logger<CharacterSelectMenu> logger = new Logger<>(CharacterSelectMenu.class);
 
     private static final int charactersPerRow = 8;
 
-    private GameType gameType;
-
-    private Stage stage;
+    private final Stage stage;
 
     private final ArrayList<CharacterSelectMenuEntry> characters = new ArrayList<>();
     private final CharacterSelectPlayerMenuEntry[] players = new CharacterSelectPlayerMenuEntry[Constants.maxPlayers];
 
-    private final PlayersVirtualGamepadMapping gamepadMapping;
+    private boolean processInput = false;
 
     public CharacterSelectMenu() {
-        gamepadMapping = new PlayersVirtualGamepadMapping();
-        gamepadMapping.addListener(this);
+        Constants.gamepadMapping.addListener(this);
 
         stage = new Stage(new ExtendViewport(640, 360));
 
@@ -79,24 +79,24 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
     public void show() {
         super.show();
 
-        gameType = (GameType) pushParams[0];
+        processInput = true;
 
-        for (var selectedCharacter : players) {
-            if (selectedCharacter == null)
+        for (var player : players) {
+            if (player == null)
                 continue;
 
-            selectedCharacter.unsetPlayer();
+            if (player.isFinished())
+                player.toggleFinishedSelection();
         }
     }
 
     @Override
     public void hide() {
+        processInput = false;
     }
 
     @Override
     public void render(float delta) {
-        gamepadMapping.update(delta);
-
         stage.act();
         stage.draw();
     }
@@ -128,6 +128,9 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
 
     @Override
     public void onButtonDown(VirtualGamepad gamepad, VirtualGamepadButton button, int index) {
+        if (!processInput)
+            return;
+
         var player = players[index];
 
         if (button == VirtualGamepadButton.LEFT)
@@ -138,8 +141,24 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
             changeFocus(player, player.getCharacter().getIndex() + charactersPerRow, gamepad);
         else if (button == VirtualGamepadButton.UP)
             changeFocus(player, player.getCharacter().getIndex() - charactersPerRow, gamepad);
-        else if (button == VirtualGamepadButton.OK)
-            player.toggleFinishedSelection();
+        else if (button == VirtualGamepadButton.OK) {
+            var finished = Arrays.stream(players).filter(p -> p.getGuid() != null).allMatch(CharacterSelectPlayerMenuEntry::isFinished);
+            if (finished) {
+                transitionToGameScreen();
+            } else {
+                player.toggleFinishedSelection();
+            }
+        }
+    }
+
+    private void transitionToGameScreen() {
+        Player[] gamePlayers = new Player[players.length];
+        for (int i = 0; i < players.length; i++) {
+            if (players[i].getGuid() != null) {
+                gamePlayers[i] = new Player(Constants.gamepadMapping.getGamepad(players[i].getGuid()), players[i].getCharacter().getCharacter(), i);
+            }
+        }
+        game.getScreenManager().pushScreen(TransitionToGameScreen.class.getName(), BlendingTransition.class.getName(), (Object[]) gamePlayers);
     }
 
     @Override

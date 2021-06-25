@@ -136,4 +136,12 @@ public class PlayersVirtualGamepadMapping implements VirtualGamepadListener {
             }
         }
     }
+
+    public void removeListener(PlayerInputListener listener) {
+        listeners.remove(listener);
+    }
+
+    public VirtualGamepad getGamepad(String guid) {
+        return connectedGamepads.get(guid);
+    }
 }

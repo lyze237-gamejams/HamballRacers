@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import dev.lyze.hamballracers.Constants;
+import dev.lyze.hamballracers.screens.level.Player;
+import dev.lyze.hamballracers.screens.level.characters.CharacterAnimation;
 import lombok.var;
 
 import java.util.Random;
@@ -24,21 +26,16 @@ public class HamsterBallAnimations {
     private float ballAnimationDelta, playerAnimationDelta;
     private boolean facingRight;
 
-    public HamsterBallAnimations(HamsterBall hamsterBall) {
+    public HamsterBallAnimations(HamsterBall hamsterBall, Player player) {
         this.hamsterBall = hamsterBall;
 
         ballAnimation = new Animation<>(0.08f, Constants.assets.getMainTextureAtlas().getHamsterBall(), Animation.PlayMode.LOOP);
 
-        if (hamsterBall.getPlayerIndex() == 0) {
-            playerNormalAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getLyzeNormal(), Animation.PlayMode.NORMAL);
-            playerBlinkAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getLyzeBlink(), Animation.PlayMode.NORMAL);
-            playerIdleAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getLyzeIdle());
-        }
-        else {
-            playerNormalAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getRenbyNormal(), Animation.PlayMode.NORMAL);
-            playerBlinkAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getRenbyBlink(), Animation.PlayMode.NORMAL);
-            playerIdleAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getRenbyIdle());
-        }
+        var animations = player.getCharacter().getAnimations();
+        playerNormalAnimation = new Animation<>(0.10f, animations.get(CharacterAnimation.NORMAL), Animation.PlayMode.NORMAL);
+        playerBlinkAnimation = new Animation<>(0.10f, animations.get(CharacterAnimation.BLINK), Animation.PlayMode.NORMAL);
+        playerIdleAnimation = new Animation<>(0.10f, animations.get(CharacterAnimation.IDLE));
+
         playerIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         currentPlayerAnimation = playerNormalAnimation;

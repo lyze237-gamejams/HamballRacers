@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gempukku.libgdx.lib.camera2d.FocusCameraController;
@@ -14,7 +15,6 @@ import com.gempukku.libgdx.lib.camera2d.focus.EntityFocus;
 import com.gempukku.libgdx.lib.camera2d.focus.FitAllCameraFocus;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.GameScreen;
-import dev.lyze.hamballracers.screens.GameType;
 import dev.lyze.hamballracers.screens.level.entities.HamsterBall;
 import dev.lyze.hamballracers.screens.level.map.Map;
 import dev.lyze.hamballracers.utils.Logger;
@@ -38,17 +38,32 @@ public class Level {
     @Getter
     private final Map map;
 
-    private FocusCameraController camera;
+    private final FocusCameraController camera;
 
     @Getter
-    private LevelHud hud;
+    private final LevelHud hud;
 
-    public Level(GameScreen screen, GameType type) {
+    public Level(GameScreen screen, Player[] players) {
         this.screen = screen;
 
-        hamsterBalls = new HamsterBall[type.getPlayerCount()];
-
         viewport = new ExtendViewport(240, 135);
+
+        var hamBalls = new Array<HamsterBall>();
+        for (Player player : players)
+            if (player != null)
+                hamBalls.add(new HamsterBall(this, player));
+
+        hamsterBalls = new HamsterBall[hamBalls.size];
+        for (int i = 0; i < hamsterBalls.length; i++)
+            hamsterBalls[i] = hamBalls.get(i);
+
+        var cameraFoci = Arrays.stream(hamsterBalls).map(hamsterBall -> new EntityFocus(new EntityPositionProvider(hamsterBall))).toArray(EntityFocus[]::new);
+        camera = new FocusCameraController(viewport.getCamera(),
+                new FitAllCameraFocus(cameraFoci),
+                new LockedToCameraConstraint(new Vector2(0.5f, 0.5f)),
+                new FitAllCameraConstraint(new Rectangle(0.2f, 0.2f, 0.6f, 0.6f), cameraFoci),
+                new MinimumViewportCameraConstraint(240, 135));
+
         hud = new LevelHud(this);
 
         map = new Map(this, Constants.assets.getMap());
@@ -87,15 +102,14 @@ public class Level {
         hud.getViewport().update(width, height, true);
     }
 
-    public boolean isHamsterBallCollision(int currentPlayerIndex, float x, float y) {
-        var currentPlayerRectangle = hamsterBalls[currentPlayerIndex].getHitbox().generateRectangle(x, y);
+    public boolean isHamsterBallCollision(HamsterBall self, float x, float y) {
+        var currentPlayerRectangle = self.getHitbox().generateRectangle(x, y);
 
-        for (int i = 0; i < hamsterBalls.length; i++) {
-            if (i == currentPlayerIndex)
+        for (HamsterBall other : hamsterBalls) {
+            if (other == self)
                 continue;
 
-            HamsterBall otherPlayer = hamsterBalls[i];
-            var otherPlayerRectangle = otherPlayer.getHitbox().generateRectangle(otherPlayer.getX(), otherPlayer.getY());
+            var otherPlayerRectangle = other.getHitbox().generateRectangle(other.getX(), other.getY());
 
             if (currentPlayerRectangle.overlaps(otherPlayerRectangle))
                 return true;
@@ -105,18 +119,13 @@ public class Level {
     }
 
     public void spawnPlayer(float x, float y, int index) {
-        if (index < hamsterBalls.length) {
-            logger.logInfo("Spawning player " + index + " at " + x + "/" + y);
-            hamsterBalls[index] = new HamsterBall(this, index);
-            hamsterBalls[index].setX(x);
-            hamsterBalls[index].setY(y);
-        }
+        for (HamsterBall hamsterBall : hamsterBalls) {
+            if (hamsterBall.getPlayer().getPlayerIndex() == index) {
+                hamsterBalls[index].setX(x);
+                hamsterBalls[index].setY(y);
 
-        var cameraFoci = Arrays.stream(hamsterBalls).map(hamsterBall -> new EntityFocus(new EntityPositionProvider(hamsterBall))).toArray(EntityFocus[]::new);
-        camera = new FocusCameraController(viewport.getCamera(),
-                new FitAllCameraFocus(cameraFoci),
-                new LockedToCameraConstraint(new Vector2(0.5f, 0.5f)),
-                new FitAllCameraConstraint(new Rectangle(0.2f, 0.2f, 0.6f, 0.6f), cameraFoci),
-                new MinimumViewportCameraConstraint(240, 135));
+                return;
+            }
+        }
     }
 }

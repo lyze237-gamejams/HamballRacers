@@ -9,7 +9,13 @@ import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.ScreenTransition;
 import de.eskalon.commons.screen.transition.impl.BlendingTransition;
 import de.eskalon.commons.screen.transition.impl.HorizontalSlicingTransition;
-import dev.lyze.hamballracers.screens.*;
+import de.eskalon.commons.screen.transition.impl.PushTransition;
+import de.eskalon.commons.screen.transition.impl.SlidingDirection;
+import dev.lyze.hamballracers.screens.CharacterSelectMenu;
+import dev.lyze.hamballracers.screens.GameScreen;
+import dev.lyze.hamballracers.screens.MainMenuScreen;
+import dev.lyze.hamballracers.screens.SplashScreen;
+import dev.lyze.hamballracers.screens.transitions.TransitionToGameScreen;
 import dev.lyze.hamballracers.utils.Logger;
 
 import java.util.Arrays;
@@ -50,17 +56,20 @@ public class HamballRacers extends ManagedGame<ManagedScreen, ScreenTransition> 
         this.screenManager.addScreen(SplashScreen.class.getName(), new SplashScreen());
         this.screenManager.addScreen(MainMenuScreen.class.getName(), new MainMenuScreen());
         this.screenManager.addScreen(GameScreen.class.getName(), new GameScreen());
-        this.screenManager.addScreen(TransitionScreen.class.getName(), new TransitionScreen());
+        this.screenManager.addScreen(TransitionToGameScreen.class.getName(), new TransitionToGameScreen());
         this.screenManager.addScreen(CharacterSelectMenu.class.getName(), new CharacterSelectMenu());
     }
 
     private void setupTransitions() {
         this.screenManager.addScreenTransition(BlendingTransition.class.getName(), new BlendingTransition(batch, 1f));
         this.screenManager.addScreenTransition(HorizontalSlicingTransition.class.getName(), new HorizontalSlicingTransition(batch, 11, 0.75f));
+        this.screenManager.addScreenTransition(PushTransition.class.getName(), new PushTransition(batch, SlidingDirection.DOWN, 1.25f));
     }
 
     @Override
     public void render() {
+        Constants.gamepadMapping.update(Gdx.graphics.getDeltaTime());
+
         super.render();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F9))

@@ -34,6 +34,10 @@ public abstract class VirtualGamepad {
         buttonsPressed.put(button, state);
     }
 
+    public boolean isButtonPressed(VirtualGamepadButton button) {
+        return buttonsPressed.getOrDefault(button, false);
+    }
+
     public boolean anyButtonPressed() {
         return buttonsPressed.values().stream().anyMatch(b -> b);
     }
