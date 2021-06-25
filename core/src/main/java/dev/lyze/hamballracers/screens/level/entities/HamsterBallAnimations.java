@@ -27,17 +27,17 @@ public class HamsterBallAnimations {
     public HamsterBallAnimations(HamsterBall hamsterBall) {
         this.hamsterBall = hamsterBall;
 
-        ballAnimation = new Animation<>(0.08f, Constants.Assets.getMainTextureAtlas().getHamsterBall(), Animation.PlayMode.LOOP);
+        ballAnimation = new Animation<>(0.08f, Constants.assets.getMainTextureAtlas().getHamsterBall(), Animation.PlayMode.LOOP);
 
         if (hamsterBall.getPlayerIndex() == 0) {
-            playerNormalAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getLyzeNormal(), Animation.PlayMode.NORMAL);
-            playerBlinkAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getLyzeBlink(), Animation.PlayMode.NORMAL);
-            playerIdleAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getLyzeIdle());
+            playerNormalAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getLyzeNormal(), Animation.PlayMode.NORMAL);
+            playerBlinkAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getLyzeBlink(), Animation.PlayMode.NORMAL);
+            playerIdleAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getLyzeIdle());
         }
         else {
-            playerNormalAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getRenbyNormal(), Animation.PlayMode.NORMAL);
-            playerBlinkAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getRenbyBlink(), Animation.PlayMode.NORMAL);
-            playerIdleAnimation = new Animation<>(0.10f, Constants.Assets.getMainTextureAtlas().getRenbyIdle());
+            playerNormalAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getRenbyNormal(), Animation.PlayMode.NORMAL);
+            playerBlinkAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getRenbyBlink(), Animation.PlayMode.NORMAL);
+            playerIdleAnimation = new Animation<>(0.10f, Constants.assets.getMainTextureAtlas().getRenbyIdle());
         }
         playerIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 

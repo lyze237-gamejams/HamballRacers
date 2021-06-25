@@ -40,7 +40,7 @@ public class HamballRacers extends ManagedGame<ManagedScreen, ScreenTransition> 
         logger.logInfo("Setting up transitions");
         setupTransitions();
 
-        if (Constants.Debug)
+        if (Constants.debug)
             this.screenManager.pushScreen(GameScreen.class.getName(), BlendingTransition.class.getName());
         else
             this.screenManager.pushScreen(SplashScreen.class.getName(), BlendingTransition.class.getName());
@@ -64,7 +64,7 @@ public class HamballRacers extends ManagedGame<ManagedScreen, ScreenTransition> 
         super.render();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F9))
-            Constants.Debug = !Constants.Debug;
+            Constants.debug = !Constants.debug;
     }
 
     @Override

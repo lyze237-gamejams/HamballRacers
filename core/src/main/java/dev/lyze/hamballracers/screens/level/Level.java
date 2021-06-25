@@ -51,7 +51,7 @@ public class Level {
         viewport = new ExtendViewport(240, 135);
         hud = new LevelHud(this);
 
-        map = new Map(this, Constants.Assets.getMap());
+        map = new Map(this, Constants.assets.getMap());
     }
 
     public void update(float delta) {
@@ -71,7 +71,7 @@ public class Level {
         map.render(((OrthographicCamera) viewport.getCamera()));
         Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.render(batch, drawer));
 
-        if (Constants.Debug) {
+        if (Constants.debug) {
             map.debugRender(drawer);
             Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.debugRender(drawer));
         }

@@ -41,11 +41,11 @@ public class MainMenuScreen extends ManagedScreenAdapter {
         setupBackground();
         setupTitle();
         setupButtons();
-        musicActionMap = new MusicActionMap(Constants.Assets.getThemeSong(), musicActionMapEntries);
+        musicActionMap = new MusicActionMap(Constants.assets.getThemeSong(), musicActionMapEntries);
     }
 
     private void setupBackground() {
-        var layers = Constants.Assets.getMainTextureAtlas().getSky();
+        var layers = Constants.assets.getMainTextureAtlas().getSky();
 
         float[] backgroundTimings = new float[] {1f, 1.78f, 2.29f};
 
@@ -67,7 +67,7 @@ public class MainMenuScreen extends ManagedScreenAdapter {
         var titleTable = new Table();
         titleTable.setFillParent(true);
 
-        titleTable.add(new Label("SUPER HAMSTERBALL RACERS", Constants.Assets.getSkin(), "title"))
+        titleTable.add(new Label("SUPER HAMSTERBALL RACERS", Constants.assets.getSkin(), "title"))
                 .padTop(140).padLeft(140).left().top().expand();
         text.addActor(titleTable);
 
@@ -82,7 +82,7 @@ public class MainMenuScreen extends ManagedScreenAdapter {
         var menuSubTable = new Table();
 
         addButton(menuSubTable, "Time trial", 5.3f, () -> game.getScreenManager().pushScreen(TransitionScreen.class.getName(), BlendingTransition.class.getName(), GameType.TIME_TRIAL));
-        addButton(menuSubTable, "2 Players", 6.3f, () -> game.getScreenManager().pushScreen(TransitionScreen.class.getName(), HorizontalSlicingTransition.class.getName(), GameType.PVP));
+        addButton(menuSubTable, "Local Multiplayer", 6.3f, () -> game.getScreenManager().pushScreen(TransitionScreen.class.getName(), HorizontalSlicingTransition.class.getName(), GameType.PVP));
         addButton(menuSubTable, "Exit", 6.6f, () -> Gdx.app.exit());
 
         menuTable.add(menuSubTable).right().padRight(100).padBottom(100).expand();
@@ -96,7 +96,7 @@ public class MainMenuScreen extends ManagedScreenAdapter {
     }
 
     private TextButton addButton(Table table, String name, float delay, Runnable onClick) {
-        var button = new TextButton(name, Constants.Assets.getSkin());
+        var button = new TextButton(name, Constants.assets.getSkin());
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

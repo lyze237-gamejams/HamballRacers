@@ -34,6 +34,9 @@ public class MainTextureAtlas extends DynamicTextureAtlas {
     @Getter @LoadFromTextureAtlas("other/pixel")
     private TextureAtlas.AtlasRegion pixel;
 
+    @Getter @LoadFromTextureAtlas("other/questionmark")
+    private TextureAtlas.AtlasRegion questionmark;
+
     @Getter @LoadFromTextureAtlas("skies/24_PixelSky")
     private Array<TextureAtlas.AtlasRegion> sky;
 

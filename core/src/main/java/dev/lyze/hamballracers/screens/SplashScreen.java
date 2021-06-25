@@ -35,11 +35,11 @@ public class SplashScreen extends ManagedScreenAdapter {
     }
 
     private void setupStage() {
-        stage.setDebugAll(Constants.Debug);
+        stage.setDebugAll(Constants.debug);
 
         var root = new Table();
         root.setFillParent(true);
-        root.add(new Image(Constants.Assets.getMainTextureAtlas().getLogo())).width(500).height(500);
+        root.add(new Image(Constants.assets.getMainTextureAtlas().getLogo())).width(500).height(500);
 
         stage.addActor(root);
     }

@@ -15,7 +15,7 @@ public class GameScreen extends ManagedScreenAdapter {
 
     public GameScreen() {
         batch = new SpriteBatch();
-        drawer = new ShapeDrawer(batch, Constants.Assets.getMainTextureAtlas().getPixel());
+        drawer = new ShapeDrawer(batch, Constants.assets.getMainTextureAtlas().getPixel());
         drawer.setDefaultLineWidth(0.5f);
     }
 

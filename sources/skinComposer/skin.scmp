@@ -98,6 +98,44 @@ atlasData: {
 			type: FONT
 			hidden: false
 		}
+		{
+			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/tinyLabel.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: tinyLabel
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: FONT
+			hidden: false
+		}
+		{
+			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/characterSelectTitle.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: characterSelectTitle
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: FONT
+			hidden: false
+		}
 	]
 }
 jsonData: {
@@ -131,6 +169,11 @@ jsonData: {
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
+			name: characterSelectTitle
+			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/characterSelectTitle.fnt
+		}
+		{
+			class: com.ray3k.skincomposer.data.FontData
 			name: countdown
 			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/timer.fnt
 		}
@@ -143,6 +186,11 @@ jsonData: {
 			class: com.ray3k.skincomposer.data.FontData
 			name: tinyButton
 			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/pixeldroidConsoleRegular.fnt
+		}
+		{
+			class: com.ray3k.skincomposer.data.FontData
+			name: tinyLabel
+			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/tinyLabel.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
@@ -1429,6 +1477,60 @@ jsonData: {
 						name: font
 						optional: false
 						value: countdown
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: null
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: null
+					}
+				}
+				deletable: true
+				parent: null
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: characterSelectTitle
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: characterSelectTitle
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: null
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: null
+					}
+				}
+				deletable: true
+				parent: null
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: tinyLabel
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: tinyLabel
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color

@@ -1,6 +1,5 @@
 package dev.lyze.hamballracers.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Timer;
 import de.eskalon.commons.screen.transition.impl.BlendingTransition;
@@ -17,7 +16,7 @@ public class TransitionScreen extends ManagedScreenAdapter {
             @Override
             public void run() {
                 //game.getScreenManager().pushScreen(CharacterSelectMenu.class.getName(), BlendingTransition.class.getName(), pushParams);
-                game.getScreenManager().pushScreen(GameScreen.class.getName(), BlendingTransition.class.getName(), pushParams);
+                game.getScreenManager().pushScreen(CharacterSelectMenu.class.getName(), BlendingTransition.class.getName(), pushParams);
             }
         }, 2f);
     }

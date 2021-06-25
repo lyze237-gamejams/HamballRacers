@@ -22,7 +22,7 @@ public class LevelStartCountdown extends Container<Label> {
     private boolean finished;
 
     public LevelStartCountdown(Level level, int countdownTime) {
-        super(new Label("", Constants.Assets.getSkin(), "countdown"));
+        super(new Label("", Constants.assets.getSkin(), "countdown"));
 
         this.level = level;
         this.countdownTime = countdownTime;

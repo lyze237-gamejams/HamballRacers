@@ -2,30 +2,46 @@ package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import dev.lyze.hamballracers.Constants;
+import dev.lyze.hamballracers.utils.Logger;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
+import dev.lyze.hamballracers.utils.input.PlayerInputListener;
+import dev.lyze.hamballracers.utils.input.PlayersVirtualGamepadMapping;
+import dev.lyze.hamballracers.utils.input.VirtualGamepad;
+import dev.lyze.hamballracers.utils.input.VirtualGamepadButton;
 import lombok.var;
 
-public class CharacterSelectMenu extends ManagedScreenAdapter {
+import java.util.ArrayList;
+
+public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerInputListener {
+    private static final Logger<CharacterSelectMenu> logger = new Logger<>(CharacterSelectMenu.class);
+
+    private static final int charactersPerRow = 8;
 
     private GameType gameType;
 
     private Stage stage;
 
+    private final ArrayList<CharacterSelectMenuEntry> characters = new ArrayList<>();
+    private final CharacterSelectPlayerMenuEntry[] players = new CharacterSelectPlayerMenuEntry[Constants.maxPlayers];
+
+    private final PlayersVirtualGamepadMapping gamepadMapping;
+
     public CharacterSelectMenu() {
-        stage = new Stage(new FitViewport(640, 360));
+        gamepadMapping = new PlayersVirtualGamepadMapping();
+        gamepadMapping.addListener(this);
+
+        stage = new Stage(new ExtendViewport(640, 360));
 
         var root = new Table();
         root.setFillParent(true);
 
+        root.add(new Label("Character Selection", Constants.assets.getSkin(), "characterSelectTitle")).pad(12).row();
         root.add(setupCharacterSelection()).grow().row();
-        root.add(setupButtons()).growX();
+        root.add(setupPlayers()).pad(12).growX();
 
         stage.addActor(root);
     }
@@ -37,25 +53,25 @@ public class CharacterSelectMenu extends ManagedScreenAdapter {
         for (int i = 0; i < Constants.characters.length; i++) {
             var character = Constants.characters[i];
 
-            var characterTable = new Table();
-            characterTable.add(new ImageButton(new TextureRegionDrawable(character.getPreview()))).row();
-            characterTable.add(new Label(character.getName(), Constants.Assets.getSkin()));
-            table.add(characterTable);
+            var entry = new CharacterSelectMenuEntry(character, i);
+            characters.add(entry);
+            table.add(entry);
 
-            if (i % 10 == 0 && i > 0)
+            if (i % (charactersPerRow - 1) == 0 && i > 0)
                 table.row();
         }
-        
+
         return table;
     }
 
-    private Table setupButtons() {
+    private Table setupPlayers() {
         var table = new Table();
 
-        table.add(new TextButton("Back", Constants.Assets.getSkin(), "tinyButton"));
-        table.add().growX();
-        table.add(new TextButton("Ok", Constants.Assets.getSkin(), "tinyButton"));
-        
+        for (int i = 0; i < players.length; i++) {
+            players[i] = new CharacterSelectPlayerMenuEntry(null, i);
+            table.add(players[i]);
+        }
+
         return table;
     }
 
@@ -64,21 +80,83 @@ public class CharacterSelectMenu extends ManagedScreenAdapter {
         super.show();
 
         gameType = (GameType) pushParams[0];
+
+        for (var selectedCharacter : players) {
+            if (selectedCharacter == null)
+                continue;
+
+            selectedCharacter.unsetPlayer();
+        }
+    }
+
+    @Override
+    public void hide() {
     }
 
     @Override
     public void render(float delta) {
+        gamepadMapping.update(delta);
+
         stage.act();
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
+        logger.logInfo("RESIZE " + width + " / " + height);
         stage.getViewport().update(width, height, true);
     }
 
     @Override
     public Color getClearColor() {
         return Color.TEAL;
+    }
+
+    @Override
+    public void onDeregistered(VirtualGamepad gamepad, int index) {
+        var player = players[index];
+        player.unsetPlayer();
+    }
+
+    @Override
+    public void onRegistered(VirtualGamepad gamepad, int index) {
+        var player = players[index];
+        player.setGamepad(gamepad.getGuid());
+
+        changeFocus(player, 0, gamepad);
+    }
+
+    @Override
+    public void onButtonDown(VirtualGamepad gamepad, VirtualGamepadButton button, int index) {
+        var player = players[index];
+
+        if (button == VirtualGamepadButton.LEFT)
+            changeFocus(player, player.getCharacter().getIndex() - 1, gamepad);
+        else if (button == VirtualGamepadButton.RIGHT)
+            changeFocus(player, player.getCharacter().getIndex() + 1, gamepad);
+        else if (button == VirtualGamepadButton.DOWN)
+            changeFocus(player, player.getCharacter().getIndex() + charactersPerRow, gamepad);
+        else if (button == VirtualGamepadButton.UP)
+            changeFocus(player, player.getCharacter().getIndex() - charactersPerRow, gamepad);
+        else if (button == VirtualGamepadButton.OK)
+            player.toggleFinishedSelection();
+    }
+
+    @Override
+    public void onButtonUp(VirtualGamepad gamepad, VirtualGamepadButton button, int index) { }
+
+    private void changeFocus(CharacterSelectPlayerMenuEntry player, int newIndex, VirtualGamepad gamepad) {
+        if (player.isFinished())
+            return;
+
+        if (player.getCharacter() != null)
+            characters.get(player.getCharacter().getIndex()).unsetFocus(player);
+
+        if (newIndex < 0)
+            newIndex = 0;
+        else if (newIndex >= characters.size())
+            newIndex = characters.size() - 1;
+
+        player.setPotentialCharacter(characters.get(newIndex), gamepad);
     }
 }
