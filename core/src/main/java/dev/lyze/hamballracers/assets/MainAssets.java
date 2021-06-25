@@ -19,7 +19,7 @@ public class MainAssets extends DynamicAssets {
     @Getter @LoadAssetFromFile("atlases/main.atlas")
     private MainTextureAtlas mainTextureAtlas;
 
-    @Getter @LoadAssetFromFile("map/basicmap.tmx")
+    @Getter @LoadAssetFromFile("map/desert.tmx")
     private TiledMap map;
 
     @Getter @LoadAssetFromFile("skins/skin.json")
