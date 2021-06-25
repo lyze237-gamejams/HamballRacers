@@ -68,7 +68,7 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
 
         for (int i = 0; i < players.length; i++) {
             players[i] = new CharacterSelectPlayerMenuEntry(null, i);
-            table.add(players[i]);
+            table.add(players[i]).growX();
         }
 
         return table;
