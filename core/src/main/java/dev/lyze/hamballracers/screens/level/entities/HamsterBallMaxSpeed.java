@@ -62,9 +62,18 @@ public class HamsterBallMaxSpeed {
             logger.logInfo("Charging nitro " + nitroTimeLeft);
         }
 
-        usingNitro = hamsterBall.getInput().isUsingNitro() && (nitroTimeLeft -= delta) > 0;
-        if (usingNitro)
-            logger.logInfo("Nitro: " + nitroTimeLeft);
+        usingNitro = false;
+        if (hamsterBall.getInput().isUsingNitro()) {
+            var velocity = Math.max(Math.abs(hamsterBall.getVelocity().x), Math.abs(hamsterBall.getVelocity().y));
+
+            if (velocity > getDefaultMaxMoveSpeed() || speedMultiplier < 1f)
+                nitroTimeLeft -= delta;
+
+            if (nitroTimeLeft > 0) {
+                logger.logInfo("Nitro: " + nitroTimeLeft);
+                usingNitro = true;
+            }
+        }
     }
 
     private final Color barRenderColor = new Color();
