@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+import java.util.Arrays;
+
 public class HamsterBallMaxSpeed {
     private static final Logger<HamsterBallMaxSpeed> logger = new Logger<>(HamsterBallMaxSpeed.class);
     private static final float vehicleMaxMoveSpeed = 81f; // 61 default
@@ -78,12 +80,21 @@ public class HamsterBallMaxSpeed {
     }
 
     private final Color barRenderColor = new Color();
+    private final float[] redHsv = new float[3];
+    private final float[] cyanHsv = new float[3];
     public void render(ShapeDrawer drawer) {
         var centerY = hamsterBall.getY() + hamsterBall.getHitbox().getDrawHeight() / 2f;
         var drawWidth = hamsterBall.getHitbox().getDrawWidth();
 
+        Color.RED.toHsv(redHsv);
+        Color.CYAN.toHsv(cyanHsv);
+
         float percent = MathUtils.clamp(nitroTimeLeft / maxNitroTime, 0, 1);
-        barRenderColor.set(Color.RED).lerp(Color.CYAN, percent);
+
+        System.out.println(Arrays.toString(redHsv) + " => " + Arrays.toString(cyanHsv));
+
+        barRenderColor.fromHsv(MathUtils.lerp(redHsv[0], cyanHsv[0], percent), MathUtils.lerp(redHsv[1], cyanHsv[1], percent), MathUtils.lerp(redHsv[2], cyanHsv[2], percent)).lerp(Color.CYAN, percent);
+
         drawer.setColor(barRenderColor);
         drawer.filledRectangle(hamsterBall.getX() - drawWidth / 2f,  centerY + 2f, drawWidth * percent, 2f);
         drawer.setColor(Color.BLACK);
