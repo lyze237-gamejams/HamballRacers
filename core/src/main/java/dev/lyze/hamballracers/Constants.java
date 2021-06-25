@@ -51,9 +51,9 @@ public class Constants {
                         .build(),
 
                 Track.builder()
-                        .name("Desert")
-                        .thumbnail(Constants.assets.getMapTextureAtlas().getDesert())
-                        .map(Constants.assets.getDesertMap())
+                        .name("Basic")
+                        .thumbnail(Constants.assets.getMapTextureAtlas().getBasicmap())
+                        .map(Constants.assets.getBasicMap())
                         .build(),
 
                 Track.builder()
@@ -63,10 +63,10 @@ public class Constants {
                         .build(),
 
                 Track.builder()
-                        .name("Desert")
-                        .thumbnail(Constants.assets.getMapTextureAtlas().getDesert())
-                        .map(Constants.assets.getDesertMap())
-                        .build()
+                        .name("Basic")
+                        .thumbnail(Constants.assets.getMapTextureAtlas().getBasicmap())
+                        .map(Constants.assets.getBasicMap())
+                        .build(),
         };
     }
 

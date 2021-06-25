@@ -1,10 +1,10 @@
 package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.IntArray;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.level.Level;
 import dev.lyze.hamballracers.screens.level.Player;
+import dev.lyze.hamballracers.screens.level.map.Track;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
 import dev.lyze.hamballracers.utils.input.PlayerInputListener;
 import dev.lyze.hamballracers.utils.input.VirtualGamepad;
@@ -13,8 +13,6 @@ import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class GameScreen extends ManagedScreenAdapter implements PlayerInputListener {
     private final SpriteBatch batch;
@@ -33,23 +31,12 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
 
     @Override
     public void show() {
-        players = (Player[]) pushParams;
+        players = (Player[]) pushParams[0];
+        var track = (Track) pushParams[1];
 
         Constants.gamepadMapping.addListener(this);
-        var playerOrder = Arrays.stream(players).filter(Objects::nonNull).mapToInt(Player::getPlayerIndex).toArray();
-        var fullOrder = new IntArray(Constants.maxPlayers);
 
-        for (int o : playerOrder)
-            fullOrder.add(o);
-
-        for (int i = 0; i < Constants.maxPlayers; i++)
-            if (!fullOrder.contains(i))
-                fullOrder.add(i);
-
-        var shrink = fullOrder.shrink();
-
-        Constants.gamepadMapping.setReconnectOrder(shrink);
-        level = new Level(this, players);
+        level = new Level(this, players, track);
 
         super.show();
     }

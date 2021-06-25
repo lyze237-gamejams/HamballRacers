@@ -17,6 +17,7 @@ import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.GameScreen;
 import dev.lyze.hamballracers.screens.level.entities.HamsterBall;
 import dev.lyze.hamballracers.screens.level.map.Map;
+import dev.lyze.hamballracers.screens.level.map.Track;
 import dev.lyze.hamballracers.utils.Logger;
 import dev.lyze.hamballracers.utils.camera.EntityPositionProvider;
 import lombok.Getter;
@@ -43,7 +44,7 @@ public class Level {
     @Getter
     private final LevelHud hud;
 
-    public Level(GameScreen screen, Player[] players) {
+    public Level(GameScreen screen, Player[] players, Track track) {
         this.screen = screen;
 
         viewport = new ExtendViewport(240, 135);
@@ -66,7 +67,7 @@ public class Level {
 
         hud = new LevelHud(this);
 
-        map = new Map(this, Constants.assets.getDesertMap());
+        map = new Map(this, track.getMap());
     }
 
     public void update(float delta) {
