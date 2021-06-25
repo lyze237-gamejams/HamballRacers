@@ -804,7 +804,13 @@
  </tile>
  <tile id="440">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="0" width="16" height="16"/>
+   <object id="2" x="0" y="4" width="1" height="12"/>
+   <object id="3" x="1" y="5" width="15" height="11"/>
+   <object id="4" x="6" y="4" width="10" height="1"/>
+   <object id="5" x="10" y="3" width="6" height="1"/>
+   <object id="6" x="11" y="2" width="5" height="1"/>
+   <object id="7" x="12" y="1" width="4" height="1"/>
+   <object id="8" x="13" y="0" width="3" height="1"/>
   </objectgroup>
  </tile>
  <tile id="441">
@@ -1645,11 +1651,6 @@
    <object id="11" x="10" y="13" width="1" height="3"/>
    <object id="12" x="11" y="14" width="1" height="2"/>
    <object id="13" x="12" y="15" width="1" height="1"/>
-  </objectgroup>
- </tile>
- <tile id="800">
-  <objectgroup draworder="index" id="2">
-   <object id="1" x="1" y="12" width="14" height="2"/>
   </objectgroup>
  </tile>
 </tileset>

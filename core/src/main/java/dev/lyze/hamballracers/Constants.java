@@ -11,6 +11,7 @@ import dev.lyze.hamballracers.assets.MainAssets;
 import dev.lyze.hamballracers.eventSystem.EventManager;
 import dev.lyze.hamballracers.screens.level.characters.Character;
 import dev.lyze.hamballracers.screens.level.characters.CharacterAnimation;
+import dev.lyze.hamballracers.screens.level.map.Track;
 import dev.lyze.hamballracers.utils.input.PlayersVirtualGamepadMapping;
 import lombok.var;
 
@@ -24,6 +25,8 @@ public class Constants {
     public static PlayersVirtualGamepadMapping gamepadMapping;
     public static Character[] characters;
 
+    public static Track[] tracks;
+
     public static final Color[] playerColors = new Color[] { Color.CYAN, Color.ORANGE, Color.GREEN, Color.YELLOW };
     public static final int maxPlayers = playerColors.length;
     public static final TextureRegionDrawable[] playerBackgrounds = new TextureRegionDrawable[Constants.maxPlayers];
@@ -36,6 +39,35 @@ public class Constants {
 
         initializeCharacterColors();
         initializeCharacters();
+        initializeTracks();
+    }
+
+    private static void initializeTracks() {
+        tracks = new Track[] {
+                Track.builder()
+                        .name("Desert")
+                        .thumbnail(Constants.assets.getMapTextureAtlas().getDesert())
+                        .map(Constants.assets.getDesertMap())
+                        .build(),
+
+                Track.builder()
+                        .name("Desert")
+                        .thumbnail(Constants.assets.getMapTextureAtlas().getDesert())
+                        .map(Constants.assets.getDesertMap())
+                        .build(),
+
+                Track.builder()
+                        .name("Desert")
+                        .thumbnail(Constants.assets.getMapTextureAtlas().getDesert())
+                        .map(Constants.assets.getDesertMap())
+                        .build(),
+
+                Track.builder()
+                        .name("Desert")
+                        .thumbnail(Constants.assets.getMapTextureAtlas().getDesert())
+                        .map(Constants.assets.getDesertMap())
+                        .build()
+        };
     }
 
     private static void initializeCharacterColors() {

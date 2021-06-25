@@ -66,7 +66,7 @@ public class Level {
 
         hud = new LevelHud(this);
 
-        map = new Map(this, Constants.assets.getMap());
+        map = new Map(this, Constants.assets.getDesertMap());
     }
 
     public void update(float delta) {

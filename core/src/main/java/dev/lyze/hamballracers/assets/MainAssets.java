@@ -19,8 +19,11 @@ public class MainAssets extends DynamicAssets {
     @Getter @LoadAssetFromFile("atlases/main.atlas")
     private MainTextureAtlas mainTextureAtlas;
 
+    @Getter @LoadAssetFromFile("atlases/map.atlas")
+    private MapTextureAtlas mapTextureAtlas;
+
     @Getter @LoadAssetFromFile("map/desert.tmx")
-    private TiledMap map;
+    private TiledMap desertMap;
 
     @Getter @LoadAssetFromFile("skins/skin.json")
     private Skin skin;
@@ -29,7 +32,7 @@ public class MainAssets extends DynamicAssets {
     protected AssetManager generateAssMan() {
         var assMan = new AssetManager();
         assMan.setLoader(TiledMap.class, new TmxMapLoader(new InternalOrExternalFileHandleResolver()));
-        for (Class<?> textureAtlasClass : new Class<?>[] { MainTextureAtlas.class }) {
+        for (Class<?> textureAtlasClass : new Class<?>[] { MainTextureAtlas.class, MapTextureAtlas.class }) {
             assMan.setLoader(textureAtlasClass, new DynamicTextureAtlasAssetLoader(new InternalOrExternalFileHandleResolver(), textureAtlasClass));
         }
 

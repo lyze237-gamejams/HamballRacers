@@ -5,10 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import de.eskalon.commons.screen.transition.impl.BlendingTransition;
+import de.eskalon.commons.screen.transition.impl.PushTransition;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.level.Player;
-import dev.lyze.hamballracers.screens.transitions.TransitionToGameScreen;
 import dev.lyze.hamballracers.utils.Logger;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
 import dev.lyze.hamballracers.utils.input.PlayerInputListener;
@@ -103,7 +102,6 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
 
     @Override
     public void resize(int width, int height) {
-        logger.logInfo("RESIZE " + width + " / " + height);
         stage.getViewport().update(width, height, true);
     }
 
@@ -158,7 +156,8 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
                 gamePlayers[i] = new Player(Constants.gamepadMapping.getGamepad(players[i].getGuid()), players[i].getCharacter().getCharacter(), i);
             }
         }
-        game.getScreenManager().pushScreen(TransitionToGameScreen.class.getName(), BlendingTransition.class.getName(), (Object[]) gamePlayers);
+
+        game.getScreenManager().pushScreen(MapSelectionMenu.class.getName(), PushTransition.class.getName(), (Object[]) gamePlayers);
     }
 
     @Override
