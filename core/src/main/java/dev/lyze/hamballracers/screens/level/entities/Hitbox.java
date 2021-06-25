@@ -26,8 +26,8 @@ public class Hitbox {
         this.hitboxOffsetY = hitboxOffsetY;
     }
 
-    public Rectangle generateRectangle(float x, float y) {
-        return new Rectangle(x - halfHitboxWidth / 2f + hitboxOffsetX, y - halfHitboxHeight / 2f + hitboxOffsetY, halfHitboxWidth, halfHitboxHeight);
+    public Rectangle generateRectangle(float x, float y, Rectangle rect) {
+        return rect.set(x - halfHitboxWidth / 2f + hitboxOffsetX, y - halfHitboxHeight / 2f + hitboxOffsetY, halfHitboxWidth, halfHitboxHeight);
     }
 
     public void debugDraw(ShapeDrawer drawer, float x, float y) {

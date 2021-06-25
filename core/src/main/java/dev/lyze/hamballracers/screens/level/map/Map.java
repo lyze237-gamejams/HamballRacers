@@ -101,7 +101,7 @@ public class Map {
 
         for (int xCheck = topLeftX; xCheck <= bottomRightX; xCheck++)
             for (int yCheck = topLeftY; yCheck <= bottomRightY; yCheck++)
-                if (blocks[xCheck][yCheck].isCollision())
+                if (blocks[xCheck][yCheck].isCollisionTile() && blocks[xCheck][yCheck].isCollision(x, y, hitbox))
                     return true;
 
         return false;

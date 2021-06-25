@@ -102,14 +102,16 @@ public class Level {
         hud.getViewport().update(width, height, true);
     }
 
+    private final  Rectangle currentPlayerRectangle = new Rectangle();
+    private final  Rectangle otherPlayerRectangle = new Rectangle();
     public boolean isHamsterBallCollision(HamsterBall self, float x, float y) {
-        var currentPlayerRectangle = self.getHitbox().generateRectangle(x, y);
+        self.getHitbox().generateRectangle(x, y, currentPlayerRectangle);
 
         for (HamsterBall other : hamsterBalls) {
             if (other == self)
                 continue;
 
-            var otherPlayerRectangle = other.getHitbox().generateRectangle(other.getX(), other.getY());
+            other.getHitbox().generateRectangle(other.getX(), other.getY(), otherPlayerRectangle);
 
             if (currentPlayerRectangle.overlaps(otherPlayerRectangle))
                 return true;

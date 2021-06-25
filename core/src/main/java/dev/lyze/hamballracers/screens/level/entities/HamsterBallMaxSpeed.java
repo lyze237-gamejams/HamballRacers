@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-import java.util.Arrays;
-
 public class HamsterBallMaxSpeed {
     private static final Logger<HamsterBallMaxSpeed> logger = new Logger<>(HamsterBallMaxSpeed.class);
     private static final float vehicleMaxMoveSpeed = 81f; // 61 default
@@ -72,10 +70,8 @@ public class HamsterBallMaxSpeed {
             if (velocity > getDefaultMaxMoveSpeed() || speedMultiplier < 1f)
                 nitroTimeLeft -= delta;
 
-            if (nitroTimeLeft > 0) {
-                logger.logInfo("Nitro: " + nitroTimeLeft);
+            if (nitroTimeLeft > 0)
                 usingNitro = true;
-            }
         }
     }
 
@@ -91,8 +87,6 @@ public class HamsterBallMaxSpeed {
 
         float percent = MathUtils.clamp(nitroTimeLeft / maxNitroTime, 0, 1);
 
-        System.out.println(Arrays.toString(redHsv) + " => " + Arrays.toString(cyanHsv));
-
         barRenderColor.fromHsv(MathUtils.lerp(redHsv[0], cyanHsv[0], percent), MathUtils.lerp(redHsv[1], cyanHsv[1], percent), MathUtils.lerp(redHsv[2], cyanHsv[2], percent)).lerp(Color.CYAN, percent);
 
         drawer.setColor(barRenderColor);
@@ -105,16 +99,10 @@ public class HamsterBallMaxSpeed {
         speedMultiplierTime = block.getSpeedMultiplierTime();
 
         var blockSpeedMultiplier = block.getSpeedMultiplier();
-        if (blockSpeedMultiplier < this.speedMultiplier) {
+        if (blockSpeedMultiplier < this.speedMultiplier)
             this.speedMultiplier = MathUtils2.moveTowards(this.speedMultiplier, blockSpeedMultiplier, 0.5f * delta);
-            logger.logInfo(this.speedMultiplier + " => " + blockSpeedMultiplier);
-        }
-        else {
+        else
             this.speedMultiplier = blockSpeedMultiplier;
-        }
-
-
-        logger.logInfo("Changing speed to " + this.speedMultiplier);
 
         if (block.isForceSpeedMultiplierPenalty())
             forceSpeedPenalty = true;
