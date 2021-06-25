@@ -8,6 +8,7 @@ import dev.lyze.hamballracers.utils.Logger;
 import lombok.var;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class PlayersVirtualGamepadMapping implements VirtualGamepadListener {
@@ -20,14 +21,10 @@ public class PlayersVirtualGamepadMapping implements VirtualGamepadListener {
     private final VirtualGamepad[] playerGamepads = new VirtualGamepad[Constants.maxPlayers];
 
     private final ArrayList<PlayerInputListener> listeners = new ArrayList<>();
+    private int[] connectionOrder;
 
     public PlayersVirtualGamepadMapping() {
-        connectVirtualGamepad(wasd.guid);
-        connectVirtualGamepad(arrows.guid);
-
-        for (int i = 0; i < Controllers.getControllers().size; i++) {
-            connectVirtualGamepad(Controllers.getControllers().get(i));
-        }
+        reset();
 
         Controllers.addListener(new ControllerAdapter() {
             @Override
@@ -40,6 +37,25 @@ public class PlayersVirtualGamepadMapping implements VirtualGamepadListener {
                 disconnectVirtualGamepad(controller.getUniqueId());
             }
         });
+    }
+
+    public void reset() {
+        connectionOrder = new int[Constants.maxPlayers];
+        for (int i = 0; i < connectionOrder.length; i++)
+            connectionOrder[i] = i;
+
+        connectedGamepads.clear();
+
+        for (VirtualGamepad playerGamepad : playerGamepads)
+            if (playerGamepad != null)
+                disconnectVirtualGamepad(playerGamepad.getGuid());
+
+        connectVirtualGamepad(wasd.guid);
+        connectVirtualGamepad(arrows.guid);
+
+        for (int i = 0; i < Controllers.getControllers().size; i++) {
+            connectVirtualGamepad(Controllers.getControllers().get(i));
+        }
     }
 
     public void update(float delta) {
@@ -99,12 +115,14 @@ public class PlayersVirtualGamepadMapping implements VirtualGamepadListener {
     @Override
     public void onRegistered(VirtualGamepad gamepad) {
         for (int i = 0; i < playerGamepads.length; i++) {
-            if (playerGamepads[i] == null) {
-                logger.logInfo("Assigning player " + i + " gamepad " + gamepad);
+            var index = connectionOrder[i];
+            if (playerGamepads[index] == null) {
+                logger.logInfo("Assigning player " + index + " gamepad " + gamepad);
 
                 for (PlayerInputListener l : listeners)
-                    l.onRegistered(gamepad, i);
-                playerGamepads[i] = gamepad;
+                    l.onRegistered(gamepad, index);
+
+                playerGamepads[index] = gamepad;
 
                 return;
             }
@@ -143,5 +161,14 @@ public class PlayersVirtualGamepadMapping implements VirtualGamepadListener {
 
     public VirtualGamepad getGamepad(String guid) {
         return connectedGamepads.get(guid);
+    }
+
+    public void setReconnectOrder(int[] order) {
+        logger.logInfo("New player order: " + Arrays.toString(order));
+
+        if (order.length != playerGamepads.length)
+            throw new IllegalArgumentException("order.length != max players.length");
+
+        connectionOrder = order;
     }
 }
