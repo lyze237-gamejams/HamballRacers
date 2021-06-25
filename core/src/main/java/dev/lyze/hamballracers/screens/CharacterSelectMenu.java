@@ -113,7 +113,7 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
     }
 
     @Override
-    public void onDeregistered(VirtualGamepad gamepad, int index) {
+    public void onDeregistered(VirtualGamepad gamepad, int index, boolean disconnected) {
         var player = players[index];
         player.unsetPlayer();
     }

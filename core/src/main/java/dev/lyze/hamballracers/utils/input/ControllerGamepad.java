@@ -42,7 +42,7 @@ public class ControllerGamepad extends VirtualGamepad {
         }
 
         if ((controller.getButton(mapping.buttonBack) || !controller.isConnected()) && registered) {
-            listener.onDeregistered(this);
+            listener.onDeregistered(this, !controller.isConnected());
             registered = false;
         }
     }

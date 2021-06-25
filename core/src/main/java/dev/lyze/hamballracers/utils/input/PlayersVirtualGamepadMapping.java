@@ -78,17 +78,17 @@ public class PlayersVirtualGamepadMapping implements VirtualGamepadListener {
     private void disconnectVirtualGamepad(String guid) {
         logger.logInfo("Controller disconnected, removing instance " + guid);
         var removedGamepad = connectedGamepads.remove(guid);
-        onDeregistered(removedGamepad);
+        onDeregistered(removedGamepad, true);
     }
 
     @Override
-    public void onDeregistered(VirtualGamepad gamepad) {
+    public void onDeregistered(VirtualGamepad gamepad, boolean disconnected) {
         for (int i = 0; i < playerGamepads.length; i++) {
             if (playerGamepads[i] != null && playerGamepads[i].getGuid().equals(gamepad.getGuid())) {
                 logger.logInfo("Removing player " + i + " gamepad " + gamepad);
 
                 for (PlayerInputListener l : listeners)
-                    l.onDeregistered(gamepad, i);
+                    l.onDeregistered(gamepad, i, disconnected);
 
                 playerGamepads[i] = null;
                 return;

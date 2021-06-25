@@ -69,6 +69,16 @@ public class Constants {
         jakeAnimations.put(CharacterAnimation.NORMAL, assets.getMainTextureAtlas().getJakeNormal());
         jakeAnimations.put(CharacterAnimation.BLINK, assets.getMainTextureAtlas().getJakeBlink());
 
+        HashMap<CharacterAnimation, Array<TextureAtlas.AtlasRegion>> zootyAnimations = new HashMap<>();
+        zootyAnimations.put(CharacterAnimation.IDLE, assets.getMainTextureAtlas().getZootyIdle());
+        zootyAnimations.put(CharacterAnimation.NORMAL, assets.getMainTextureAtlas().getZootyNormal());
+        zootyAnimations.put(CharacterAnimation.BLINK, assets.getMainTextureAtlas().getZootyBlink());
+
+        HashMap<CharacterAnimation, Array<TextureAtlas.AtlasRegion>> breeAnimations = new HashMap<>();
+        breeAnimations.put(CharacterAnimation.IDLE, assets.getMainTextureAtlas().getBreeIdle());
+        breeAnimations.put(CharacterAnimation.NORMAL, assets.getMainTextureAtlas().getBreeNormal());
+        breeAnimations.put(CharacterAnimation.BLINK, assets.getMainTextureAtlas().getBreeBlink());
+
         characters = new Character[]{
                 Character.builder()
                         .name("Lyze")
@@ -88,62 +98,16 @@ public class Constants {
                         .animations(jakeAnimations)
                         .build(),
 
-
                 Character.builder()
-                        .name("Lyze")
-                        .preview(assets.getMainTextureAtlas().getLyzeIdle().get(0))
-                        .animations(lyzeAnimations)
+                        .name("Zooty")
+                        .preview(assets.getMainTextureAtlas().getZootyIdle().get(0))
+                        .animations(zootyAnimations)
                         .build(),
 
                 Character.builder()
-                        .name("Renby")
-                        .preview(assets.getMainTextureAtlas().getRenbyIdle().get(0))
-                        .animations(renbyAnimations)
-                        .build(),
-
-                Character.builder()
-                        .name("Jake")
-                        .preview(assets.getMainTextureAtlas().getJakeIdle().get(0))
-                        .animations(jakeAnimations)
-                        .build(),
-
-
-                Character.builder()
-                        .name("Lyze")
-                        .preview(assets.getMainTextureAtlas().getLyzeIdle().get(0))
-                        .animations(lyzeAnimations)
-                        .build(),
-
-                Character.builder()
-                        .name("Renby")
-                        .preview(assets.getMainTextureAtlas().getRenbyIdle().get(0))
-                        .animations(renbyAnimations)
-                        .build(),
-
-                Character.builder()
-                        .name("Jake")
-                        .preview(assets.getMainTextureAtlas().getJakeIdle().get(0))
-                        .animations(jakeAnimations)
-                        .build(),
-
-
-
-                Character.builder()
-                        .name("Lyze")
-                        .preview(assets.getMainTextureAtlas().getLyzeIdle().get(0))
-                        .animations(lyzeAnimations)
-                        .build(),
-
-                Character.builder()
-                        .name("Renby")
-                        .preview(assets.getMainTextureAtlas().getRenbyIdle().get(0))
-                        .animations(renbyAnimations)
-                        .build(),
-
-                Character.builder()
-                        .name("Jake")
-                        .preview(assets.getMainTextureAtlas().getJakeIdle().get(0))
-                        .animations(jakeAnimations)
+                        .name("Bree")
+                        .preview(assets.getMainTextureAtlas().getBreeIdle().get(0))
+                        .animations(breeAnimations)
                         .build()
         };
     }

@@ -121,8 +121,8 @@ public class Level {
     public void spawnPlayer(float x, float y, int index) {
         for (HamsterBall hamsterBall : hamsterBalls) {
             if (hamsterBall.getPlayer().getPlayerIndex() == index) {
-                hamsterBalls[index].setX(x);
-                hamsterBalls[index].setY(y);
+                hamsterBall.setX(x);
+                hamsterBall.setY(y);
 
                 return;
             }

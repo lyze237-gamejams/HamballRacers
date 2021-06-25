@@ -32,7 +32,7 @@ public class KeyboardGamepad extends VirtualGamepad {
         }
 
         if (Gdx.input.isKeyJustPressed(useArrowKeys ? Input.Keys.ENTER: Input.Keys.ESCAPE) && registered) {
-            listener.onDeregistered(this);
+            listener.onDeregistered(this, false);
             registered = false;
         }
     }
