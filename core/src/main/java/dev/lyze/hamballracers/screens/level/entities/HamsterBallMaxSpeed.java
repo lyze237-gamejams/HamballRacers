@@ -17,6 +17,7 @@ public class HamsterBallMaxSpeed {
     private static final float vehicleMaxMoveSpeed = 81f; // 61 default
 
     private final Music slowSpeed = Gdx.audio.newMusic(Gdx.files.internal("sounds/BallRollslow_LOOP.ogg"));
+    private final Music nitroSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/Nitro.ogg"));
     private final Music fastSpeed = Gdx.audio.newMusic(Gdx.files.internal("sounds/BallRollFast_LOOP.ogg"));
 
     @Getter
@@ -95,6 +96,11 @@ public class HamsterBallMaxSpeed {
             if (nitroTimeLeft > 0)
                 usingNitro = true;
         }
+
+        if (usingNitro && !nitroSound.isPlaying())
+            nitroSound.play();
+        else if (!usingNitro && nitroSound.isPlaying())
+            nitroSound.stop();
     }
 
     private final Color barRenderColor = new Color();
