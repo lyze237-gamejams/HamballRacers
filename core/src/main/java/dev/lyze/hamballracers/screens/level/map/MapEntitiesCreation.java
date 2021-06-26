@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import dev.lyze.hamballracers.screens.level.Level;
+import dev.lyze.hamballracers.screens.level.map.spawners.CheckpointSpawner;
 import dev.lyze.hamballracers.screens.level.map.spawners.MapSpawner;
 import dev.lyze.hamballracers.screens.level.map.spawners.PlayerSpawner;
 import dev.lyze.hamballracers.utils.Logger;
@@ -32,6 +33,7 @@ public class MapEntitiesCreation {
         this.map = map;
 
         mapSpawners.add(new PlayerSpawner(level, map));
+        mapSpawners.add(new CheckpointSpawner(level, map));
     }
 
     public void initialize() {

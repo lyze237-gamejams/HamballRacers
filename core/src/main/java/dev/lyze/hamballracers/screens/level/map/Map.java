@@ -5,16 +5,12 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import dev.lyze.hamballracers.screens.level.Level;
 import dev.lyze.hamballracers.screens.level.entities.Hitbox;
 import dev.lyze.hamballracers.utils.Logger;
 import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
-
-import java.util.ArrayList;
 
 public class Map {
     private static final Logger<Map> logger = new Logger<>(Map.class);
@@ -27,11 +23,6 @@ public class Map {
     private final OrthogonalTiledMapRendererBleeding renderer;
 
     private final Block[][] blocks;
-
-    @Getter
-    private Rectangle spawn;
-    @Getter
-    private ArrayList<Vector2> playerSpawns = new ArrayList<>();
 
     public Map(Level level, String file) {
         this(level, new TmxMapLoader().load(file));

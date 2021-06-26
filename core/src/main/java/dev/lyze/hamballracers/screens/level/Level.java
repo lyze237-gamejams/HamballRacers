@@ -1,5 +1,6 @@
 package dev.lyze.hamballracers.screens.level;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -14,6 +15,8 @@ import com.gempukku.libgdx.lib.camera2d.constraint.MinimumViewportCameraConstrai
 import com.gempukku.libgdx.lib.camera2d.focus.EntityFocus;
 import com.gempukku.libgdx.lib.camera2d.focus.FitAllCameraFocus;
 import dev.lyze.hamballracers.Constants;
+import dev.lyze.hamballracers.eventSystem.EventListener;
+import dev.lyze.hamballracers.eventSystem.events.CountdownTimerFinishedEvent;
 import dev.lyze.hamballracers.screens.GameScreen;
 import dev.lyze.hamballracers.screens.level.entities.HamsterBall;
 import dev.lyze.hamballracers.screens.level.map.Map;
@@ -25,6 +28,7 @@ import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Level {
     private static final Logger<Level> logger = new Logger<>(Level.class);
@@ -37,12 +41,18 @@ public class Level {
     private final HamsterBall[] hamsterBalls;
 
     @Getter
+    private final HashMap<Integer, Rectangle> checkpoints = new HashMap<>();
+
+    @Getter
     private final Map map;
 
     private final FocusCameraController camera;
 
     @Getter
     private final LevelHud hud;
+
+    @Getter
+    private long levelStartTime = 0;
 
     public Level(GameScreen screen, Player[] players, Track track) {
         this.screen = screen;
@@ -65,9 +75,16 @@ public class Level {
                 new FitAllCameraConstraint(new Rectangle(0.2f, 0.2f, 0.6f, 0.6f), cameraFoci),
                 new MinimumViewportCameraConstraint(240, 135));
 
-        hud = new LevelHud(this);
+        hud = new LevelHud(this, hamsterBalls);
 
         map = new Map(this, track.getMap());
+
+        Constants.eventManager.addListener(new EventListener<CountdownTimerFinishedEvent>(CountdownTimerFinishedEvent.class) {
+            @Override
+            protected void fire(CountdownTimerFinishedEvent event) {
+                levelStartTime = System.currentTimeMillis();
+            }
+        });
     }
 
     public void update(float delta) {
@@ -89,6 +106,8 @@ public class Level {
 
         if (Constants.debug) {
             map.debugRender(drawer);
+            drawer.setColor(Color.BLUE);
+            checkpoints.values().forEach(drawer::rectangle);
             Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.debugRender(drawer));
         }
 
@@ -130,5 +149,17 @@ public class Level {
                 return;
             }
         }
+    }
+
+    public void addCheckpoint(float x, float y, float width, float height, int index) {
+        var rect = new Rectangle(x, y, width, height);
+        logger.logInfo("Adding checkpoint: " + rect);
+        checkpoints.put(index, rect);
+
+        hud.getTimer().updateCheckpoints();
+    }
+
+    public float getLevelElapsedTime() {
+        return (System.currentTimeMillis() - levelStartTime) / 1000f;
     }
 }

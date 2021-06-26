@@ -65,8 +65,12 @@ public class MainTextureAtlas extends DynamicTextureAtlas {
     @Getter @LoadFromTextureAtlas("other/questionmark")
     private TextureAtlas.AtlasRegion questionmark;
 
+    @Getter @LoadFromTextureAtlas("other/transparentBackground")
+    private TextureAtlas.AtlasRegion transparentBackground;
+
     @Getter @LoadFromTextureAtlas("skies/24_PixelSky")
     private Array<TextureAtlas.AtlasRegion> sky;
+
 
     public MainTextureAtlas(TextureAtlas atlas) {
         super(atlas);

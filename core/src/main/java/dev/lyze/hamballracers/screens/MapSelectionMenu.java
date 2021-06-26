@@ -127,6 +127,9 @@ public class MapSelectionMenu extends ManagedScreenAdapter implements PlayerInpu
         else if (button == VirtualGamepadButton.UP)
             changeFocus(selectedIndex - mapsPerRow, index);
         else if (button == VirtualGamepadButton.OK) {
+            if (game.getScreenManager().inTransition())
+                return;
+
             game.getScreenManager().pushScreen(TransitionToGameScreen.class.getName(), BlendingTransition.class.getName(), players, tracks[selectedIndex].getTrack());
         }
     }

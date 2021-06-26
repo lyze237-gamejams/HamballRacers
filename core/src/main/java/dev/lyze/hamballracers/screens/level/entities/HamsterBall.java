@@ -3,6 +3,7 @@ package dev.lyze.hamballracers.screens.level.entities;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.hamballracers.screens.level.Level;
 import dev.lyze.hamballracers.screens.level.Player;
@@ -12,6 +13,8 @@ import dev.lyze.hamballracers.utils.MathUtils2;
 import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
+
+import java.util.HashMap;
 
 public class HamsterBall extends Entity {
     private static final Logger<HamsterBall> logger = new Logger<>(HamsterBall.class);
@@ -35,6 +38,12 @@ public class HamsterBall extends Entity {
     @Getter
     private final Player player;
 
+    @Getter
+    private int currentCheckpointNeeded = 0;
+
+    @Getter
+    private final HashMap<Integer, Long> checkpointTimes = new HashMap<>();
+
     public HamsterBall(Level level, Player player) {
         this.level = level;
         this.player = player;
@@ -55,6 +64,22 @@ public class HamsterBall extends Entity {
         calculateMovement(delta);
 
         animations.update(delta);
+
+        updateCheckpoints();
+    }
+
+    private final Rectangle tempRectangle = new Rectangle();
+    private void updateCheckpoints() {
+        hitbox.generateRectangle(x, y, tempRectangle);
+
+        var neededCheckpoint = level.getCheckpoints().get(currentCheckpointNeeded);
+
+        if (tempRectangle.overlaps(neededCheckpoint)) {
+            checkpointTimes.put(currentCheckpointNeeded++, System.currentTimeMillis());
+
+            if (currentCheckpointNeeded >= level.getCheckpoints().size())
+                currentCheckpointNeeded = 0;
+        }
     }
 
     private void calculateVelocity(float delta) {

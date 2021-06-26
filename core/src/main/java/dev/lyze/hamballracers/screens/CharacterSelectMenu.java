@@ -148,6 +148,9 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
     }
 
     private void transitionToGameScreen() {
+        if (game.getScreenManager().inTransition())
+            return;
+
         Player[] gamePlayers = new Player[players.length];
         for (int i = 0; i < players.length; i++) {
             if (players[i].getGuid() != null) {
