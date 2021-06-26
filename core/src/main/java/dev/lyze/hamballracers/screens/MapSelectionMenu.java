@@ -142,6 +142,8 @@ public class MapSelectionMenu extends ManagedScreenAdapter implements PlayerInpu
             if (game.getScreenManager().inTransition())
                 return;
 
+            Constants.sounds.getUiClick().play();
+
             game.getScreenManager().pushScreen(TransitionToGameScreen.class.getName(), BlendingTransition.class.getName(), players, tracks[selectedIndex].getTrack());
         }
     }
@@ -157,12 +159,13 @@ public class MapSelectionMenu extends ManagedScreenAdapter implements PlayerInpu
         tracks[selectedIndex = newIndex].setFocus(playerIndex);
 
         selectedMapLabel.setText(tracks[selectedIndex].getTrack().getName());
-
         selectedMap.addAction(Actions.sequence(
                 Actions.fadeOut(0.1f),
                 Actions.run(() -> selectedMap.setDrawable(new TextureRegionDrawable(tracks[selectedIndex].getTrack().getThumbnail()))),
                 Actions.fadeIn(0.1f)
         ));
+
+        Constants.sounds.getUiClick().play();
     }
 
     @Override

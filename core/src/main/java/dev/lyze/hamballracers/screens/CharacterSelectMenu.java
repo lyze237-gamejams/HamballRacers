@@ -184,6 +184,8 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
 
         Constants.gamepadMapping.setReconnectOrder(shrink);
 
+        Constants.sounds.getUiClick().play();
+
         game.getScreenManager().pushScreen(MapSelectionMenu.class.getName(), PushTransition.class.getName(), (Object[]) gamePlayers);
     }
 
@@ -203,5 +205,7 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
             newIndex = characters.size() - 1;
 
         player.setPotentialCharacter(characters.get(newIndex), gamepad);
+
+        Constants.sounds.getUiClick().play();
     }
 }

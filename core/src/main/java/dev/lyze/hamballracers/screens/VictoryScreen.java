@@ -61,6 +61,8 @@ public class VictoryScreen extends ManagedScreenAdapter implements PlayerInputLi
     @Override
     public void hide() {
         Constants.gamepadMapping.removeListener(this);
+
+        Constants.sounds.getUiClick().play();
     }
 
     private Table setupVictoryTable() {
