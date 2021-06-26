@@ -15,16 +15,13 @@ public class CharacterSelectPlayerMenuEntry extends Table {
     private final Image thumbnail;
 
     @Getter
-    private String guid;
-    @Getter
     private CharacterSelectMenuEntry character;
     @Getter
     private int playerIndex;
     @Getter
     private boolean finished;
 
-    public CharacterSelectPlayerMenuEntry(String guid, int playerIndex) {
-        this.guid = guid;
+    public CharacterSelectPlayerMenuEntry(int playerIndex) {
         this.playerIndex = playerIndex;
 
         playerName = new Label("Player " + (playerIndex + 1), Constants.assets.getSkin());
@@ -40,13 +37,7 @@ public class CharacterSelectPlayerMenuEntry extends Table {
         add(thumbnail).size(96, 96);
     }
 
-    public void setGamepad(String guid) {
-        this.guid = guid;
-    }
-
     public void unsetPlayer() {
-        guid = null;
-
         if (character != null)
             character.unsetFocus(this);
 

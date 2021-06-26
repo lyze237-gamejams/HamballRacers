@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import de.eskalon.commons.screen.transition.impl.PushTransition;
 import dev.lyze.hamballracers.Constants;
@@ -17,6 +18,7 @@ import lombok.var;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerInputListener {
     private static final Logger<CharacterSelectMenu> logger = new Logger<>(CharacterSelectMenu.class);
@@ -67,7 +69,7 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
         var table = new Table();
 
         for (int i = 0; i < players.length; i++) {
-            players[i] = new CharacterSelectPlayerMenuEntry(null, i);
+            players[i] = new CharacterSelectPlayerMenuEntry(i);
             table.add(players[i]).growX();
         }
 
@@ -81,11 +83,10 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
         processInput = true;
 
         for (var player : players) {
-            if (player == null)
-                continue;
-
-            if (player.isFinished())
+            if (player.isFinished()) {
                 player.toggleFinishedSelection();
+                player.unsetPlayer();
+            }
         }
     }
 
@@ -119,8 +120,6 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
     @Override
     public void onRegistered(VirtualGamepad gamepad, int index) {
         var player = players[index];
-        player.setGamepad(gamepad.getGuid());
-
         changeFocus(player, 0, gamepad);
     }
 
@@ -145,7 +144,17 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
 
             player.toggleFinishedSelection();
 
-            if (Arrays.stream(players).filter(p -> p.getGuid() != null).allMatch(CharacterSelectPlayerMenuEntry::isFinished))
+            var ok = true;
+            var playerGamepads = Constants.gamepadMapping.getPlayerGamepads();
+            for (int i = 0; i < playerGamepads.length; i++) {
+                if (playerGamepads[i] == null)
+                    continue;
+
+                if (!players[i].isFinished())
+                    ok = false;
+            }
+
+            if (ok)
                 transitionToGameScreen();
         }
     }
@@ -153,10 +162,24 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
     private void transitionToGameScreen() {
         Player[] gamePlayers = new Player[players.length];
         for (int i = 0; i < players.length; i++) {
-            if (players[i].getGuid() != null) {
-                gamePlayers[i] = new Player(Constants.gamepadMapping.getGamepad(players[i].getGuid()), players[i].getCharacter().getCharacter(), i);
+            if (Constants.gamepadMapping.isAssigned(i)) {
+                gamePlayers[i] = new Player(players[i].getCharacter().getCharacter(), i);
             }
         }
+
+        var playerOrder = Arrays.stream(gamePlayers).filter(Objects::nonNull).mapToInt(Player::getPlayerIndex).toArray();
+        var fullOrder = new IntArray(Constants.maxPlayers);
+
+        for (int o : playerOrder)
+            fullOrder.add(o);
+
+        for (int i = 0; i < Constants.maxPlayers; i++)
+            if (!fullOrder.contains(i))
+                fullOrder.add(i);
+
+        var shrink = fullOrder.shrink();
+
+        Constants.gamepadMapping.setReconnectOrder(shrink);
 
         game.getScreenManager().pushScreen(MapSelectionMenu.class.getName(), PushTransition.class.getName(), (Object[]) gamePlayers);
     }

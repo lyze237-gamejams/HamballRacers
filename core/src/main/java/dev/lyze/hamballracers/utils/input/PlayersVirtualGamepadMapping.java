@@ -5,6 +5,7 @@ import com.badlogic.gdx.controllers.ControllerAdapter;
 import com.badlogic.gdx.controllers.Controllers;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.utils.Logger;
+import lombok.Getter;
 import lombok.var;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class PlayersVirtualGamepadMapping implements VirtualGamepadListener {
     private final KeyboardGamepad arrows = new KeyboardGamepad("keyboard1", this, true);
 
     private final HashMap<String, VirtualGamepad> connectedGamepads = new HashMap<>();
+    @Getter
     private final VirtualGamepad[] playerGamepads = new VirtualGamepad[Constants.maxPlayers];
 
     private final ArrayList<PlayerInputListener> listeners = new ArrayList<>();
@@ -159,8 +161,8 @@ public class PlayersVirtualGamepadMapping implements VirtualGamepadListener {
         listeners.remove(listener);
     }
 
-    public VirtualGamepad getGamepad(String guid) {
-        return connectedGamepads.get(guid);
+    public VirtualGamepad getGamepad(int playerIndex) {
+        return playerGamepads[playerIndex];
     }
 
     public void setReconnectOrder(int[] order) {
@@ -170,5 +172,9 @@ public class PlayersVirtualGamepadMapping implements VirtualGamepadListener {
             throw new IllegalArgumentException("order.length != max players.length");
 
         connectionOrder = order;
+    }
+
+    public boolean isAssigned(int playerIndex) {
+        return playerGamepads[playerIndex] != null;
     }
 }

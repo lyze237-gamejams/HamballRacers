@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import de.eskalon.commons.screen.transition.impl.BlendingTransition;
 import dev.lyze.hamballracers.Constants;
@@ -17,9 +16,6 @@ import dev.lyze.hamballracers.utils.input.PlayerInputListener;
 import dev.lyze.hamballracers.utils.input.VirtualGamepad;
 import dev.lyze.hamballracers.utils.input.VirtualGamepadButton;
 import lombok.var;
-
-import java.util.Arrays;
-import java.util.Objects;
 
 public class MapSelectionMenu extends ManagedScreenAdapter implements PlayerInputListener {
     private static final Logger<MapSelectionMenu> logger = new Logger<>(MapSelectionMenu.class);
@@ -71,20 +67,6 @@ public class MapSelectionMenu extends ManagedScreenAdapter implements PlayerInpu
         super.show();
 
         players = (Player[]) pushParams;
-
-        var playerOrder = Arrays.stream(players).filter(Objects::nonNull).mapToInt(Player::getPlayerIndex).toArray();
-        var fullOrder = new IntArray(Constants.maxPlayers);
-
-        for (int o : playerOrder)
-            fullOrder.add(o);
-
-        for (int i = 0; i < Constants.maxPlayers; i++)
-            if (!fullOrder.contains(i))
-                fullOrder.add(i);
-
-        var shrink = fullOrder.shrink();
-
-        Constants.gamepadMapping.setReconnectOrder(shrink);
 
         Constants.gamepadMapping.addListener(this);
     }

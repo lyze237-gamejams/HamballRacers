@@ -86,8 +86,6 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
     public void onDeregistered(VirtualGamepad gamepad, int index, boolean disconnected) {
         for (Player player : players) {
             if (player != null && player.getPlayerIndex() == index) {
-                player.setGamepad(null);
-
                 if (disconnected)
                     playersDisconnected.add(player);
 
@@ -100,8 +98,6 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
     public void onRegistered(VirtualGamepad gamepad, int index) {
         for (Player player : players) {
             if (player != null && player.getPlayerIndex() == index) {
-                player.setGamepad(gamepad);
-
                 playersDisconnected.remove(player);
             }
         }
