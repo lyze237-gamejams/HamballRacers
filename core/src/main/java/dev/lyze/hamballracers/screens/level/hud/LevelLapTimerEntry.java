@@ -23,7 +23,7 @@ public class LevelLapTimerEntry extends Table {
         this.timer = timer;
         this.hamsterBall = hamsterBall;
 
-        name = new Label("Player " + hamsterBall.getPlayer().getPlayerIndex() + 1, Constants.assets.getSkin(), "characterSelectTitle");
+        name = new Label("Player " + (hamsterBall.getPlayer().getPlayerIndex() + 1), Constants.assets.getSkin(), "characterSelectTitle");
         name.setColor(Constants.playerColors[hamsterBall.getPlayer().getPlayerIndex()]);
 
         setupLaps();
