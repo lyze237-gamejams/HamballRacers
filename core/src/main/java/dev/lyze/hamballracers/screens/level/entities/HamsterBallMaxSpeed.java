@@ -56,10 +56,7 @@ public class HamsterBallMaxSpeed {
 
         var velocity = Math.max(Math.abs(hamsterBall.getVelocity().x), Math.abs(hamsterBall.getVelocity().y));
 
-        var lerped = velocity / getDefaultMaxMoveSpeed();
-        System.out.println(lerped);
-
-        slowSpeed.setVolume(lerped);
+        slowSpeed.setVolume(velocity / getDefaultMaxMoveSpeed());
 
         if (velocity > getDefaultMaxMoveSpeed()) {
             if (slowSpeed.isPlaying()) slowSpeed.stop();

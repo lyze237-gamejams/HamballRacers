@@ -24,6 +24,9 @@ public class HamsterBallInput {
     public void readInputVelocity() {
         inputVelocity.set(0, 0);
 
+        if (hamsterBall.getCurrentLap() >= hamsterBall.getLaps().length)
+            return;
+
         if (player.isButtonPressed(VirtualGamepadButton.UP))
             inputVelocity.y = 1;
         if (player.isButtonPressed(VirtualGamepadButton.DOWN))
