@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import dev.lyze.hamballracers.screens.level.Level;
 import dev.lyze.hamballracers.screens.level.entities.Hitbox;
 import dev.lyze.hamballracers.utils.Logger;
+import dev.lyze.hamballracers.utils.camera.OrthogonalTiledMapRendererBleeding;
 import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -96,5 +97,9 @@ public class Map {
                     return true;
 
         return false;
+    }
+
+    public void dispose() {
+        map.dispose();
     }
 }

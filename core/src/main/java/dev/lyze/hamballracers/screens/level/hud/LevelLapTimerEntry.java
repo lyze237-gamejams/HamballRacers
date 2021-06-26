@@ -41,7 +41,7 @@ public class LevelLapTimerEntry extends Table {
     }
 
     private void setupEventListeners() {
-        Constants.eventManager.addListener(new EventListener<LapFinishedEvent>(LapFinishedEvent.class) {
+        Constants.eventManager.addListener(new EventListener<LapFinishedEvent>(LapFinishedEvent.class, timer.getLevel()) {
             @Override
             protected void fire(LapFinishedEvent event) {
                 lapTimers.forEach((index, label) -> {
@@ -61,7 +61,7 @@ public class LevelLapTimerEntry extends Table {
             }
         });
 
-        Constants.eventManager.addListener(new EventListener<LapStartedEvent>(LapStartedEvent.class) {
+        Constants.eventManager.addListener(new EventListener<LapStartedEvent>(LapStartedEvent.class, timer.getLevel()) {
             @Override
             protected void fire(LapStartedEvent event) {
                 lapTimers.forEach((index, label) -> {

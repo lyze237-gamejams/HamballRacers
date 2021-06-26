@@ -1,5 +1,6 @@
 package dev.lyze.hamballracers.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.level.Level;
@@ -21,7 +22,7 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
     private Player[] players;
     private Level level;
 
-    private final ArrayList<Player> playersDiconnected = new ArrayList<>();
+    private final ArrayList<Player> playersDisconnected = new ArrayList<>();
 
     public GameScreen() {
         batch = new SpriteBatch();
@@ -36,7 +37,8 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
 
         Constants.gamepadMapping.addListener(this);
 
-        level = new Level(this, players, track, 3);
+        level = new Level(this, players, track, 2);
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         super.show();
     }
@@ -44,6 +46,10 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
     @Override
     public void hide() {
         Constants.gamepadMapping.removeListener(this);
+
+        Constants.eventManager.removeListenersOfBind(level);
+
+        level.dispose();
     }
 
     private float actualDeltaTime = 0.0f;
@@ -53,7 +59,7 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
 
     @Override
     public void render(float delta) {
-        if (!playersDiconnected.isEmpty())
+        if (!playersDisconnected.isEmpty())
             return;
 
         var newTime = System.currentTimeMillis();
@@ -83,7 +89,7 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
                 player.setGamepad(null);
 
                 if (disconnected)
-                    playersDiconnected.add(player);
+                    playersDisconnected.add(player);
 
                 return;
             }
@@ -96,7 +102,7 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
             if (player != null && player.getPlayerIndex() == index) {
                 player.setGamepad(gamepad);
 
-                playersDiconnected.remove(player);
+                playersDisconnected.remove(player);
             }
         }
     }

@@ -1,4 +1,4 @@
-package dev.lyze.hamballracers.screens.level.map;
+package dev.lyze.hamballracers.utils.camera;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

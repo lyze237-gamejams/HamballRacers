@@ -2,9 +2,11 @@ package dev.lyze.hamballracers.eventSystem;
 
 import dev.lyze.hamballracers.eventSystem.events.Event;
 import dev.lyze.hamballracers.utils.Logger;
+import lombok.var;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class EventManager
 {
@@ -36,6 +38,10 @@ public class EventManager
 
     public void removeListenersOfBind(Object bind)
     {
-        events.forEach((clazz, listeners) -> listeners.removeIf(l -> bind.equals(l.getBind())));
+        var removed = 0;
+        for (Map.Entry<Class<? extends Event<?>>, ArrayList<EventListener<?>>> entry : events.entrySet())
+            removed += entry.getValue().removeIf(l -> bind.equals(l.getBind())) ? 1 : 0;
+
+        logger.logInfo("Removed " + removed + " listeners for bind " + bind);
     }
 }

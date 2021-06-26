@@ -56,6 +56,7 @@ public class HamballRacers extends ManagedGame<ManagedScreen, ScreenTransition> 
         this.screenManager.addScreen(TransitionToGameScreen.class.getName(), new TransitionToGameScreen());
         this.screenManager.addScreen(CharacterSelectMenu.class.getName(), new CharacterSelectMenu());
         this.screenManager.addScreen(MapSelectionMenu.class.getName(), new MapSelectionMenu());
+        this.screenManager.addScreen(VictoryScreen.class.getName(), new VictoryScreen());
     }
 
     private void setupTransitions() {

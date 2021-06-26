@@ -86,7 +86,7 @@ public class Block {
             setIcy(true);
 
         if (cell.getTile().getProperties().get("disappearAfterStart", false, Boolean.class)) {
-            Constants.eventManager.addListener(new EventListener<CountdownTimerFinishedEvent>(CountdownTimerFinishedEvent.class) {
+            Constants.eventManager.addListener(new EventListener<CountdownTimerFinishedEvent>(CountdownTimerFinishedEvent.class, level) {
                 @Override
                 protected void fire(CountdownTimerFinishedEvent event) {
                     cell.setTile(null);

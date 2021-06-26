@@ -14,10 +14,12 @@ import com.gempukku.libgdx.lib.camera2d.constraint.LockedToCameraConstraint;
 import com.gempukku.libgdx.lib.camera2d.constraint.MinimumViewportCameraConstraint;
 import com.gempukku.libgdx.lib.camera2d.focus.EntityFocus;
 import com.gempukku.libgdx.lib.camera2d.focus.FitAllCameraFocus;
+import de.eskalon.commons.screen.transition.impl.BlendingTransition;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.eventSystem.EventListener;
 import dev.lyze.hamballracers.eventSystem.events.CountdownTimerFinishedEvent;
 import dev.lyze.hamballracers.screens.GameScreen;
+import dev.lyze.hamballracers.screens.VictoryScreen;
 import dev.lyze.hamballracers.screens.level.entities.HamsterBall;
 import dev.lyze.hamballracers.screens.level.hud.LevelHud;
 import dev.lyze.hamballracers.screens.level.map.Map;
@@ -53,6 +55,7 @@ public class Level {
     private final LevelHud hud;
     @Getter
     private final int lapCount;
+    private final Track track;
 
     @Getter
     private long levelStartTime = 0;
@@ -60,6 +63,7 @@ public class Level {
     public Level(GameScreen screen, Player[] players, Track track, int lapCount) {
         this.screen = screen;
         this.lapCount = lapCount;
+        this.track = track;
 
         viewport = new ExtendViewport(240, 135);
 
@@ -83,7 +87,7 @@ public class Level {
 
         map = new Map(this, track.getMap());
 
-        Constants.eventManager.addListener(new EventListener<CountdownTimerFinishedEvent>(CountdownTimerFinishedEvent.class) {
+        Constants.eventManager.addListener(new EventListener<CountdownTimerFinishedEvent>(CountdownTimerFinishedEvent.class, this) {
             @Override
             protected void fire(CountdownTimerFinishedEvent event) {
                 levelStartTime = System.currentTimeMillis();
@@ -94,6 +98,10 @@ public class Level {
     public void update(float delta) {
         if (!screen.getGame().getScreenManager().inTransition())
             Arrays.stream(hamsterBalls).forEach(hamsterBall -> hamsterBall.update(delta));
+
+        var finished = Arrays.stream(hamsterBalls).allMatch(h -> h.getCurrentLap() >= h.getLaps().length && h.getVelocity().x < 1 && h.getVelocity().y < 1);
+        if (finished && !screen.getGame().getScreenManager().inTransition())
+            screen.getGame().getScreenManager().pushScreen(VictoryScreen.class.getName(), BlendingTransition.class.getName(), hamsterBalls, track, levelStartTime);
 
         hud.act();
 
@@ -145,8 +153,10 @@ public class Level {
     }
 
     public void spawnPlayer(float x, float y, int index) {
+        logger.logInfo("Spawn player called with parameters " + x + "/" + y + ": " + index);
         for (HamsterBall hamsterBall : hamsterBalls) {
             if (hamsterBall.getPlayer().getPlayerIndex() == index) {
+                logger.logInfo("Setting hamball player index " + index + " to " + x + "/" + y);
                 hamsterBall.setX(x);
                 hamsterBall.setY(y);
 
@@ -165,5 +175,9 @@ public class Level {
 
     public float getLevelElapsedTime() {
         return (System.currentTimeMillis() - levelStartTime) / 1000f;
+    }
+
+    public void dispose() {
+        map.dispose();
     }
 }
