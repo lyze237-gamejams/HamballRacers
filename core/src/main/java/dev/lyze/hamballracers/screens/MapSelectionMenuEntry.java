@@ -1,6 +1,7 @@
 package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
@@ -48,6 +49,11 @@ public class MapSelectionMenuEntry extends Table {
 
         for (Image image : imagesToColor)
             image.setColor(playerColor);
+
+        addAction(Actions.sequence(
+                Actions.moveBy(0, 8, 0.1f),
+                Actions.moveBy(0, -8, 0.1f))
+        );
     }
 
     public void unsetFocus() {

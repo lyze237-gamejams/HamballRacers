@@ -45,7 +45,7 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
         var root = new Table();
         root.setFillParent(true);
 
-        root.add(new Label("Character Selection", Constants.assets.getSkin(), "characterSelectTitle")).pad(12).row();
+        root.add(new Label("Select your hero", Constants.assets.getSkin(), "characterSelectTitle")).pad(12).row();
         root.add(setupCharacterSelection()).grow().row();
         root.add(setupPlayers()).pad(12).growX();
 

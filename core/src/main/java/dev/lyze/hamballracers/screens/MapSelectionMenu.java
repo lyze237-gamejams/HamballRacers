@@ -1,6 +1,7 @@
 package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
@@ -46,7 +47,7 @@ public class MapSelectionMenu extends ManagedScreenAdapter implements PlayerInpu
         var root = new Table();
         root.setFillParent(true);
 
-        root.add(new Label("Map Selection", Constants.assets.getSkin(), "characterSelectTitle")).pad(12).row();
+        root.add(new Label("Pick the map", Constants.assets.getSkin(), "characterSelectTitle")).pad(12).row();
         root.add(setupMapStuff()).grow().row();
         stage.addActor(root);
     }
@@ -155,8 +156,13 @@ public class MapSelectionMenu extends ManagedScreenAdapter implements PlayerInpu
 
         tracks[selectedIndex = newIndex].setFocus(playerIndex);
 
-        selectedMap.setDrawable(new TextureRegionDrawable(tracks[selectedIndex].getTrack().getThumbnail()));
         selectedMapLabel.setText(tracks[selectedIndex].getTrack().getName());
+
+        selectedMap.addAction(Actions.sequence(
+                Actions.fadeOut(0.1f),
+                Actions.run(() -> selectedMap.setDrawable(new TextureRegionDrawable(tracks[selectedIndex].getTrack().getThumbnail()))),
+                Actions.fadeIn(0.1f)
+        ));
     }
 
     @Override

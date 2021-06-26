@@ -1,7 +1,7 @@
 package dev.lyze.hamballracers.screens;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
@@ -40,12 +40,12 @@ public class CharacterSelectPlayerMenuEntry extends Table {
         table.add(playerName).padBottom(1).row();
         table.add(controllerName).padBottom(1).row();
 
-        thumbnail = setupImage(Constants.assets.getMainTextureAtlas().getQuestionmark());
         var thumbnailBackground = setupImage(Constants.assets.getMainTextureAtlas().getFramePlayer());
         var thumbnailForeground = setupImage(Constants.assets.getMainTextureAtlas().getPlatePlayer());
 
         stack.add(thumbnailBackground);
-        stack.add(thumbnail);
+        stack.add(thumbnail = new Image(Constants.assets.getMainTextureAtlas().getQuestionmark()));
+        thumbnail.getColor().a = 0.2f;
         stack.add(thumbnailForeground);
 
         stack.add(table);
@@ -64,7 +64,6 @@ public class CharacterSelectPlayerMenuEntry extends Table {
             character.unsetFocus(this);
 
         controllerName.setText("???");
-        thumbnail.setColor(Constants.playerColors[playerIndex]);
         thumbnail.setDrawable(new TextureRegionDrawable(Constants.assets.getMainTextureAtlas().getQuestionmark()));
     }
 
@@ -75,12 +74,15 @@ public class CharacterSelectPlayerMenuEntry extends Table {
 
         controllerName.setText(gamepad.getName().length() > 10 ? gamepad.getName().substring(0, 10) : gamepad.getName());
 
-        thumbnail.setColor(Color.WHITE);
-        thumbnail.setDrawable(new TextureRegionDrawable(character.getCharacter().getPreview()));
+        thumbnail.addAction(Actions.sequence(
+                Actions.fadeOut( 0.1f),
+                Actions.run(() -> thumbnail.setDrawable(new TextureRegionDrawable(character.getCharacter().getPreview()))),
+                Actions.alpha(0.2f, 0.1f)
+        ));
     }
 
     public void toggleFinishedSelection() {
         finished = !finished;
-        thumbnail.setColor(finished ? Constants.playerColors[playerIndex] : Color.WHITE);
+        thumbnail.addAction(Actions.alpha(finished ? 1 : 0.2f, 0.15f));
     }
 }
