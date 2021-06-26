@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.MathUtils;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.level.Player;
 import dev.lyze.hamballracers.screens.level.characters.CharacterAnimation;
@@ -75,7 +74,6 @@ public class HamsterBallAnimations {
         var drawX = hamsterBall.getX() - hamsterBall.getHitbox().getDrawWidth() / 2f;
         var drawY = this.hamsterBall.getY() - hamsterBall.getHitbox().getDrawHeight() / 2f;
 
-
         // player
         if (facingRight)
             batch.draw(playerKeyFrame, drawX, drawY, hamsterBall.getHitbox().getDrawWidth(), hamsterBall.getHitbox().getDrawHeight());
@@ -83,11 +81,13 @@ public class HamsterBallAnimations {
             batch.draw(playerKeyFrame, drawX + hamsterBall.getHitbox().getDrawWidth(), drawY, -hamsterBall.getHitbox().getDrawWidth(), hamsterBall.getHitbox().getDrawHeight());
 
         // hamball
+        /*
         var currentVelocity = Math.max(Math.abs(hamsterBall.getVelocity().x), Math.abs(hamsterBall.getVelocity().y));
         var subtractedCurrentVelocity = MathUtils.clamp(currentVelocity - hamsterBall.getMaxSpeed().getDefaultMaxMoveSpeed(), 0, hamsterBall.getMaxSpeed().getMaxMoveSpeed());
         var dividedVelocity = subtractedCurrentVelocity / (hamsterBall.getMaxSpeed().getDefaultMaxMoveSpeed() * HamsterBallMaxSpeed.getVehicleMaxSpeedMultiplier());
         hamsterBallColor.set(1, 1f - dividedVelocity, 1f - dividedVelocity, 1);
-        batch.setColor(hamsterBallColor);
+         */
+        batch.setColor(Constants.playerColors[hamsterBall.getPlayer().getPlayerIndex()]);
         if (facingRight)
             batch.draw(ballKeyFrame, drawX, drawY, hamsterBall.getHitbox().getDrawWidth(), hamsterBall.getHitbox().getDrawHeight());
         else

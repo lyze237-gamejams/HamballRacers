@@ -2,6 +2,7 @@ package dev.lyze.hamballracers.screens.level.entities;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
+import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.level.map.Block;
 import dev.lyze.hamballracers.utils.Logger;
 import dev.lyze.hamballracers.utils.MathUtils2;
@@ -82,11 +83,12 @@ public class HamsterBallMaxSpeed {
         var drawWidth = hamsterBall.getHitbox().getDrawWidth();
 
         Color.RED.toHsv(redHsv);
-        Color.CYAN.toHsv(cyanHsv);
+        Constants.playerColors[hamsterBall.getPlayer().getPlayerIndex()].toHsv(cyanHsv);
 
         float percent = MathUtils.clamp(nitroTimeLeft / maxNitroTime, 0, 1);
 
-        barRenderColor.fromHsv(MathUtils.lerp(redHsv[0], cyanHsv[0], percent), MathUtils.lerp(redHsv[1], cyanHsv[1], percent), MathUtils.lerp(redHsv[2], cyanHsv[2], percent)).lerp(Color.CYAN, percent);
+        barRenderColor.fromHsv(MathUtils.lerp(redHsv[0], cyanHsv[0], percent), MathUtils.lerp(redHsv[1], cyanHsv[1], percent), MathUtils.lerp(redHsv[2], cyanHsv[2], percent));
+        barRenderColor.a = 1f;
 
         drawer.setColor(barRenderColor);
         drawer.filledRectangle(hamsterBall.getX() - drawWidth / 2f,  centerY + 2f, drawWidth * percent, 2f);
