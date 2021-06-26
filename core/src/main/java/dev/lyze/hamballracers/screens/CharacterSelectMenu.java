@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.IntArray;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import de.eskalon.commons.screen.transition.impl.PushTransition;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.level.Player;
@@ -35,7 +35,7 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
     public CharacterSelectMenu() {
         Constants.gamepadMapping.addListener(this);
 
-        stage = new Stage(new FitViewport(640, 360));
+        stage = new Stage(new ExtendViewport(640, 360));
 
         var bgTable = new Table();
         bgTable.setFillParent(true);
@@ -103,6 +103,8 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
 
     @Override
     public void render(float delta) {
+        stage.getViewport().apply();
+
         stage.act();
         stage.draw();
     }

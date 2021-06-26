@@ -99,6 +99,8 @@ public class VictoryScreen extends ManagedScreenAdapter implements PlayerInputLi
 
     @Override
     public void render(float delta) {
+        stage.getViewport().apply();
+
         stage.act();
         stage.draw();
     }

@@ -1,9 +1,11 @@
 package dev.lyze.hamballracers.screens;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import de.eskalon.commons.screen.transition.impl.BlendingTransition;
 import dev.lyze.hamballracers.Constants;
@@ -30,15 +32,45 @@ public class MapSelectionMenu extends ManagedScreenAdapter implements PlayerInpu
 
     private int selectedIndex;
 
+    private Image selectedMap;
+    private Label selectedMapLabel;
+
     public MapSelectionMenu() {
         stage = new Stage(new ExtendViewport(640, 360));
+
+        var bgTable = new Table();
+        bgTable.setFillParent(true);
+        bgTable.add(new Image(Constants.assets.getMainTextureAtlas().getMapSelectBg())).grow();
+        stage.addActor(bgTable);
 
         var root = new Table();
         root.setFillParent(true);
 
         root.add(new Label("Map Selection", Constants.assets.getSkin(), "characterSelectTitle")).pad(12).row();
-        root.add(setupMapSelection()).grow().row();
+        root.add(setupMapStuff()).grow().row();
         stage.addActor(root);
+    }
+
+    private Table setupMapStuff() {
+        var table = new Table();
+
+        var bigMapStack = new Stack();
+        var bigMapTable = new Table();
+
+        bigMapStack.add(new Image(Constants.assets.getMainTextureAtlas().getFrameMapBig()));
+        bigMapStack.add(selectedMap = new Image(Constants.tracks[0].getThumbnail()));
+        bigMapStack.add(new Image(Constants.assets.getMainTextureAtlas().getPlateMapBig()));
+
+        bigMapTable.add().growY().row();
+        bigMapTable.add(selectedMapLabel = new Label("Desert", Constants.assets.getSkin(), "characterSelectTitle")).padBottom(17);
+
+        bigMapStack.add(bigMapTable);
+
+        table.add(bigMapStack).size(256, 256).left().padLeft(24).expand();
+
+        table.add(setupMapSelection()).right().padRight(24).expand();
+
+        return table;
     }
 
     private Table setupMapSelection() {
@@ -78,13 +110,10 @@ public class MapSelectionMenu extends ManagedScreenAdapter implements PlayerInpu
 
     @Override
     public void render(float delta) {
+        stage.getViewport().apply();
+
         stage.act();
         stage.draw();
-    }
-
-    @Override
-    public Color getClearColor() {
-        return Color.TEAL;
     }
 
     @Override
@@ -125,6 +154,9 @@ public class MapSelectionMenu extends ManagedScreenAdapter implements PlayerInpu
             newIndex = tracks.length - 1;
 
         tracks[selectedIndex = newIndex].setFocus(playerIndex);
+
+        selectedMap.setDrawable(new TextureRegionDrawable(tracks[selectedIndex].getTrack().getThumbnail()));
+        selectedMapLabel.setText(tracks[selectedIndex].getTrack().getName());
     }
 
     @Override
