@@ -62,17 +62,26 @@ public class MainTextureAtlas extends DynamicTextureAtlas {
     @Getter @LoadFromTextureAtlas("other/pixel")
     private TextureAtlas.AtlasRegion pixel;
 
-    @Getter @LoadFromTextureAtlas("other/questionmark")
-    private TextureAtlas.AtlasRegion questionmark;
-
     @Getter @LoadFromTextureAtlas("other/transparentBackground")
     private TextureAtlas.AtlasRegion transparentBackground;
 
-    @Getter @LoadFromTextureAtlas("other/frame")
-    private TextureAtlas.AtlasRegion frame;
+    @Getter @LoadFromTextureAtlas("characterSelect/questionmark")
+    private TextureAtlas.AtlasRegion questionmark;
 
-    @Getter @LoadFromTextureAtlas("other/plate")
-    private TextureAtlas.AtlasRegion plate;
+    @Getter @LoadFromTextureAtlas("characterSelect/framePlayer")
+    private TextureAtlas.AtlasRegion framePlayer;
+
+    @Getter @LoadFromTextureAtlas("characterSelect/platePlayer")
+    private TextureAtlas.AtlasRegion platePlayer;
+
+    @Getter @LoadFromTextureAtlas("characterSelect/frameCharacter")
+    private TextureAtlas.AtlasRegion frameCharacter;
+
+    @Getter @LoadFromTextureAtlas("characterSelect/plateCharacter")
+    private TextureAtlas.AtlasRegion plateCharacter;
+
+    @Getter @LoadFromTextureAtlas("characterSelect/bg")
+    private TextureAtlas.AtlasRegion characterSelectBg;
 
     @Getter @LoadFromTextureAtlas("skies/24_PixelSky")
     private Array<TextureAtlas.AtlasRegion> sky;

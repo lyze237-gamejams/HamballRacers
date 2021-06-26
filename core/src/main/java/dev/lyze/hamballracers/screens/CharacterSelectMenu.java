@@ -1,11 +1,11 @@
 package dev.lyze.hamballracers.screens;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.IntArray;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import de.eskalon.commons.screen.transition.impl.PushTransition;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.level.Player;
@@ -35,7 +35,12 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
     public CharacterSelectMenu() {
         Constants.gamepadMapping.addListener(this);
 
-        stage = new Stage(new ExtendViewport(640, 360));
+        stage = new Stage(new FitViewport(640, 360));
+
+        var bgTable = new Table();
+        bgTable.setFillParent(true);
+        bgTable.add(new Image(Constants.assets.getMainTextureAtlas().getCharacterSelectBg())).grow();
+        stage.addActor(bgTable);
 
         var root = new Table();
         root.setFillParent(true);
@@ -67,6 +72,7 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
 
     private Table setupPlayers() {
         var table = new Table();
+        table.defaults().pad(2);
 
         for (int i = 0; i < players.length; i++) {
             players[i] = new CharacterSelectPlayerMenuEntry(i);
@@ -104,11 +110,6 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-    }
-
-    @Override
-    public Color getClearColor() {
-        return Color.TEAL;
     }
 
     @Override

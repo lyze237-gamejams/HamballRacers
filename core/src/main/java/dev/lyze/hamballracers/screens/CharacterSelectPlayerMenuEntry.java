@@ -27,8 +27,6 @@ public class CharacterSelectPlayerMenuEntry extends Table {
     public CharacterSelectPlayerMenuEntry(int playerIndex) {
         this.playerIndex = playerIndex;
 
-        setDebug(true);
-
         var stack = new Stack();
 
         var table = new Table();
@@ -43,8 +41,8 @@ public class CharacterSelectPlayerMenuEntry extends Table {
         table.add(controllerName).padBottom(1).row();
 
         thumbnail = setupImage(Constants.assets.getMainTextureAtlas().getQuestionmark());
-        var thumbnailBackground = setupImage(Constants.assets.getMainTextureAtlas().getFrame());
-        var thumbnailForeground = setupImage(Constants.assets.getMainTextureAtlas().getPlate());
+        var thumbnailBackground = setupImage(Constants.assets.getMainTextureAtlas().getFramePlayer());
+        var thumbnailForeground = setupImage(Constants.assets.getMainTextureAtlas().getPlatePlayer());
 
         stack.add(thumbnailBackground);
         stack.add(thumbnail);
