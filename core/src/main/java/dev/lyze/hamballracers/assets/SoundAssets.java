@@ -14,29 +14,11 @@ public class SoundAssets extends DynamicAssets {
     @Getter @LoadAssetFromFile("sounds/BallBump.ogg")
     private Sound ballbump;
 
-    @Getter @LoadAssetFromFile("sounds/BallRollFast_LOOP.ogg")
-    private Music ballRollFastLoop;
-
-    @Getter @LoadAssetFromFile("sounds/BallRollslow_LOOP.ogg")
-    private Music ballRollSlowLoop;
-
     @Getter @LoadAssetFromFile("sounds/CompleteLap.ogg")
     private Sound completeLap;
 
     @Getter @LoadAssetFromFile("sounds/CompleteRace.ogg")
     private Sound completeRace;
-
-    @Getter @LoadAssetFromFile("sounds/Nitro.ogg")
-    private Sound nitro;
-
-    @Getter @LoadAssetFromFile("sounds/PadFast_LOOP.ogg")
-    private Music padFast;
-
-    @Getter @LoadAssetFromFile("sounds/PadRefillNitro_LOOP.ogg")
-    private Music padRefillNitro;
-
-    @Getter @LoadAssetFromFile("sounds/PadSlow_LOOP.ogg")
-    private Music padSlow;
 
     @Getter @LoadAssetFromFile("sounds/UI_1.ogg")
     private Sound ui1;

@@ -29,6 +29,7 @@
  </tile>
  <tile id="5">
   <properties>
+   <property name="music" value="fastPad"/>
    <property name="speed" type="float" value="2"/>
    <property name="speedMultiplierTime" type="float" value="3"/>
   </properties>
@@ -48,27 +49,32 @@
  </tile>
  <tile id="8">
   <properties>
+   <property name="music" value="fastPad"/>
    <property name="speed" type="float" value="2"/>
   </properties>
  </tile>
  <tile id="9">
   <properties>
+   <property name="music" value="fastPad"/>
    <property name="speed" type="float" value="2"/>
   </properties>
  </tile>
  <tile id="10">
   <properties>
+   <property name="music" value="slowPad"/>
    <property name="speed" type="float" value="0.5"/>
   </properties>
  </tile>
  <tile id="11">
   <properties>
+   <property name="music" value="slowPad"/>
    <property name="speed" type="float" value="0.5"/>
   </properties>
  </tile>
  <tile id="12">
   <properties>
    <property name="chargeNitro" type="bool" value="true"/>
+   <property name="music" value="chargePad"/>
   </properties>
  </tile>
  <tile id="14">
@@ -84,6 +90,7 @@
  <tile id="17">
   <properties>
    <property name="forceSpeedMultiplierPenalty" type="bool" value="true"/>
+   <property name="music" value="slowPad"/>
    <property name="speed" type="float" value="0.5"/>
    <property name="speedMultiplierTime" type="float" value="5"/>
   </properties>

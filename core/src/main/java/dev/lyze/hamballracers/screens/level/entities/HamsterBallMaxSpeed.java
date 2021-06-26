@@ -12,10 +12,13 @@ import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+import java.util.HashMap;
+
 public class HamsterBallMaxSpeed {
     private static final Logger<HamsterBallMaxSpeed> logger = new Logger<>(HamsterBallMaxSpeed.class);
     private static final float vehicleMaxMoveSpeed = 81f; // 61 default
 
+    private HashMap<String, Music> blockSounds = new HashMap<>();
     private final Music slowSpeed = Gdx.audio.newMusic(Gdx.files.internal("sounds/BallRollslow_LOOP.ogg"));
     private final Music nitroSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/Nitro.ogg"));
     private final Music fastSpeed = Gdx.audio.newMusic(Gdx.files.internal("sounds/BallRollFast_LOOP.ogg"));
@@ -41,6 +44,10 @@ public class HamsterBallMaxSpeed {
 
         slowSpeed.setLooping(true);
         fastSpeed.setLooping(true);
+
+        blockSounds.put("chargePad", Gdx.audio.newMusic(Gdx.files.internal("sounds/PadRefillNitro_LOOP.ogg")));
+        blockSounds.put("fastPad", Gdx.audio.newMusic(Gdx.files.internal("sounds/PadFast_LOOP.ogg")));
+        blockSounds.put("slowPad", Gdx.audio.newMusic(Gdx.files.internal("sounds/PadSlow_LOOP.ogg")));
     }
 
     public float getMaxMoveSpeed() {
@@ -53,6 +60,7 @@ public class HamsterBallMaxSpeed {
 
     public void update(float delta) {
         var block = hamsterBall.getLevel().getMap().getBlock(hamsterBall.getX(), hamsterBall.getY());
+        var blockMusic = block.getMusic();
         var newSpeedMultiplier = block.getSpeedMultiplier();
 
         var velocity = Math.max(Math.abs(hamsterBall.getVelocity().x), Math.abs(hamsterBall.getVelocity().y));
@@ -84,9 +92,19 @@ public class HamsterBallMaxSpeed {
             }
         }
 
-        if (block.isChargeNitro()) {
-            nitroTimeLeft = MathUtils.clamp(nitroTimeLeft += delta, 0, maxNitroTime);
+        if (blockMusic != null && blockSounds.containsKey(blockMusic)) {
+            blockSounds.forEach((s, music) -> {
+                if (blockMusic.equals(s)) {
+                    if (!music.isPlaying()) {
+                        logger.logInfo("Playing " + s);
+                        music.play();
+                    }
+                }
+            });
         }
+
+        if (block.isChargeNitro())
+            nitroTimeLeft = MathUtils.clamp(nitroTimeLeft += delta, 0, maxNitroTime);
 
         usingNitro = false;
         if (hamsterBall.getInput().isUsingNitro()) {

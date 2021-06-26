@@ -27,6 +27,8 @@ public class Block {
     private boolean forceSpeedMultiplierPenalty;
     private boolean chargeNitro;
 
+    private String music;
+
     private boolean disableCollision;
 
     private int x, y;
@@ -103,6 +105,10 @@ public class Block {
 
         if (cell.getTile().getProperties().get("chargeNitro", false, Boolean.class))
             setChargeNitro(true);
+
+        var music = cell.getTile().getProperties().get("music", null, String.class);
+        if (music != null)
+            setMusic(music);
     }
 
     public boolean isCollisionTile() {
