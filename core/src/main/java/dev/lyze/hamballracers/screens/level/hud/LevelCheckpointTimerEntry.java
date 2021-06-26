@@ -43,7 +43,7 @@ public class LevelCheckpointTimerEntry extends Table {
 
         checkpointTimers.forEach((integer, label) -> label.setColor(Color.WHITE));
 
-        if (hamsterBall.getCurrentLap() <= 0 || hamsterBall.getCurrentLap() >= hamsterBall.getLaps().length)
+        if (hamsterBall.getCurrentLap() < 0 || hamsterBall.getCurrentLap() >= hamsterBall.getLaps().length)
             return;
 
         checkpointTimers.get(hamsterBall.getCurrentCheckpointNeeded()).setColor(Constants.playerColors[hamsterBall.getPlayer().getPlayerIndex()]);
