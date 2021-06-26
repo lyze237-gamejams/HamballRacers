@@ -14,6 +14,8 @@
 
     <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.MainAssets" />
     <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.MainTextureAtlas" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.MapTextureAtlas" />
+    <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets" />
     <extend-configuration-property name="gdx.reflect.include" value="dev.lyze.hamballracers.assets.utils" />
     <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.graphics.g2d.TextureAtlas" />
     <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.maps.tiled.TiledMap" />
