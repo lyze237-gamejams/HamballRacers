@@ -5,6 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import dev.lyze.hamballracers.Constants;
+import dev.lyze.hamballracers.eventSystem.data.LapFinishedEventData;
+import dev.lyze.hamballracers.eventSystem.data.LapStartedEventData;
+import dev.lyze.hamballracers.eventSystem.events.LapFinishedEvent;
+import dev.lyze.hamballracers.eventSystem.events.LapStartedEvent;
+import dev.lyze.hamballracers.screens.level.Lap;
 import dev.lyze.hamballracers.screens.level.Level;
 import dev.lyze.hamballracers.screens.level.Player;
 import dev.lyze.hamballracers.screens.level.map.Block;
@@ -13,8 +19,6 @@ import dev.lyze.hamballracers.utils.MathUtils2;
 import lombok.Getter;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
-
-import java.util.HashMap;
 
 public class HamsterBall extends Entity {
     private static final Logger<HamsterBall> logger = new Logger<>(HamsterBall.class);
@@ -40,13 +44,17 @@ public class HamsterBall extends Entity {
 
     @Getter
     private int currentCheckpointNeeded = 0;
+    @Getter
+    private int currentLap = -1;
 
     @Getter
-    private final HashMap<Integer, Long> checkpointTimes = new HashMap<>();
+    private Lap[] laps;
 
     public HamsterBall(Level level, Player player) {
         this.level = level;
         this.player = player;
+
+        this.laps = new Lap[level.getLapCount()];
 
         hitbox = new Hitbox(16, 16, 6, 3.8f, 0, -2f);
         input = new HamsterBallInput(this, player);
@@ -75,7 +83,36 @@ public class HamsterBall extends Entity {
         var neededCheckpoint = level.getCheckpoints().get(currentCheckpointNeeded);
 
         if (tempRectangle.overlaps(neededCheckpoint)) {
-            checkpointTimes.put(currentCheckpointNeeded++, System.currentTimeMillis());
+            logger.logInfo("CHECKPOINT " + currentCheckpointNeeded);
+            if (currentCheckpointNeeded == 0) {
+                logger.logInfo("0 passed");
+                if (currentLap >= laps.length) {
+                    logger.logInfo("We're done, no new lap");
+                    return;
+                }
+
+                if (currentLap >= 0) {
+                    logger.logInfo("Finished a proper lap, setting finished time for lap " + currentLap);
+                    laps[currentLap].setFinishTime(System.currentTimeMillis());
+                    Constants.eventManager.fire(new LapFinishedEvent(new LapFinishedEventData(currentLap, this)));
+                }
+
+                currentLap++;
+
+                if (currentLap >= laps.length) {
+                    logger.logInfo("Just finished the last lap, we're done " + currentLap);
+                    return;
+                }
+
+                logger.logInfo("Starting new lap " + currentLap);
+
+                laps[currentLap] = new Lap(currentLap);
+                laps[currentLap].setStartTime(System.currentTimeMillis());
+
+                Constants.eventManager.fire(new LapStartedEvent(new LapStartedEventData(currentLap, this)));
+            }
+
+            laps[currentLap].getCheckpoints().put(currentCheckpointNeeded++, System.currentTimeMillis());
 
             if (currentCheckpointNeeded >= level.getCheckpoints().size())
                 currentCheckpointNeeded = 0;

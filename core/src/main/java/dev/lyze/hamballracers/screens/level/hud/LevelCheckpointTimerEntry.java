@@ -1,4 +1,4 @@
-package dev.lyze.hamballracers.screens.level;
+package dev.lyze.hamballracers.screens.level.hud;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -9,16 +9,16 @@ import lombok.var;
 
 import java.util.HashMap;
 
-public class LevelTimerEntry extends Table {
-    private final LevelTimer levelTimer;
+public class LevelCheckpointTimerEntry extends Table {
+    private final LevelCheckpointTimer levelCheckpointTimer;
     private HamsterBall hamsterBall;
 
     private final Label name;
 
     private final HashMap<Integer, Label> checkpointTimers = new HashMap<>();
 
-    public LevelTimerEntry(LevelTimer levelTimer, HamsterBall hamsterBall) {
-        this.levelTimer = levelTimer;
+    public LevelCheckpointTimerEntry(LevelCheckpointTimer levelCheckpointTimer, HamsterBall hamsterBall) {
+        this.levelCheckpointTimer = levelCheckpointTimer;
         this.hamsterBall = hamsterBall;
 
         name = new Label("Player " + hamsterBall.getPlayer().getPlayerIndex() + 1, Constants.assets.getSkin(), "characterSelectTitle");
@@ -29,7 +29,7 @@ public class LevelTimerEntry extends Table {
         clearChildren();
 
         add(name).row();
-        levelTimer.getLevel().getCheckpoints().keySet().stream().sorted().forEach(index -> {
+        levelCheckpointTimer.getLevel().getCheckpoints().keySet().stream().sorted().forEach(index -> {
             var cpLabel = new Label("???", Constants.assets.getSkin(), "characterSelectTitle");
             add(cpLabel).row();
 
@@ -42,11 +42,19 @@ public class LevelTimerEntry extends Table {
         super.act(delta);
 
         checkpointTimers.forEach((integer, label) -> label.setColor(Color.WHITE));
+
+        if (hamsterBall.getCurrentLap() <= 0 || hamsterBall.getCurrentLap() >= hamsterBall.getLaps().length)
+            return;
+
         checkpointTimers.get(hamsterBall.getCurrentCheckpointNeeded()).setColor(Constants.playerColors[hamsterBall.getPlayer().getPlayerIndex()]);
 
-        hamsterBall.getCheckpointTimes().forEach((index, time) ->
+        var lap = hamsterBall.getLaps()[hamsterBall.getCurrentLap()];
+        if (lap == null)
+            return;
+
+        lap.getCheckpoints().forEach((index, time) ->
         {
-            var elapsed = (time - levelTimer.getLevel().getLevelStartTime()) / 1000f;
+            var elapsed = (time - levelCheckpointTimer.getLevel().getLevelStartTime()) / 1000f;
             var seconds = ((int) (elapsed * 1000)) / 1000f;
 
             checkpointTimers.get(index).setText(String.valueOf(seconds));

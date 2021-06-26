@@ -19,6 +19,7 @@ import dev.lyze.hamballracers.eventSystem.EventListener;
 import dev.lyze.hamballracers.eventSystem.events.CountdownTimerFinishedEvent;
 import dev.lyze.hamballracers.screens.GameScreen;
 import dev.lyze.hamballracers.screens.level.entities.HamsterBall;
+import dev.lyze.hamballracers.screens.level.hud.LevelHud;
 import dev.lyze.hamballracers.screens.level.map.Map;
 import dev.lyze.hamballracers.screens.level.map.Track;
 import dev.lyze.hamballracers.utils.Logger;
@@ -50,12 +51,15 @@ public class Level {
 
     @Getter
     private final LevelHud hud;
+    @Getter
+    private final int lapCount;
 
     @Getter
     private long levelStartTime = 0;
 
-    public Level(GameScreen screen, Player[] players, Track track) {
+    public Level(GameScreen screen, Player[] players, Track track, int lapCount) {
         this.screen = screen;
+        this.lapCount = lapCount;
 
         viewport = new ExtendViewport(240, 135);
 
@@ -156,7 +160,7 @@ public class Level {
         logger.logInfo("Adding checkpoint: " + rect);
         checkpoints.put(index, rect);
 
-        hud.getTimer().updateCheckpoints();
+        hud.getCheckpointTimer().updateCheckpoints();
     }
 
     public float getLevelElapsedTime() {

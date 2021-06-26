@@ -140,6 +140,9 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
         else if (button == VirtualGamepadButton.UP)
             changeFocus(player, player.getCharacter().getIndex() - charactersPerRow, gamepad);
         else if (button == VirtualGamepadButton.OK) {
+            if (game.getScreenManager().inTransition())
+                return;
+
             player.toggleFinishedSelection();
 
             if (Arrays.stream(players).filter(p -> p.getGuid() != null).allMatch(CharacterSelectPlayerMenuEntry::isFinished))
@@ -148,9 +151,6 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
     }
 
     private void transitionToGameScreen() {
-        if (game.getScreenManager().inTransition())
-            return;
-
         Player[] gamePlayers = new Player[players.length];
         for (int i = 0; i < players.length; i++) {
             if (players[i].getGuid() != null) {

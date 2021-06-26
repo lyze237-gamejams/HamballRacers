@@ -1,30 +1,31 @@
-package dev.lyze.hamballracers.screens.level;
+package dev.lyze.hamballracers.screens.level.hud;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import dev.lyze.hamballracers.Constants;
+import dev.lyze.hamballracers.screens.level.Level;
 import dev.lyze.hamballracers.screens.level.entities.HamsterBall;
 import lombok.Getter;
 
 import java.util.Arrays;
 
-public class LevelTimer extends Table {
+public class LevelCheckpointTimer extends Table {
     @Getter
     private final Level level;
     private final HamsterBall[] hamsterBalls;
 
-    private final LevelTimerEntry[] levelTimers;
+    private final LevelCheckpointTimerEntry[] levelTimers;
 
     private final Table checkpointNamesTable = new Table();
 
     private final Label timerLabel;
 
-    public LevelTimer(Level level, HamsterBall[] hamsterBalls) {
+    public LevelCheckpointTimer(Level level, HamsterBall[] hamsterBalls) {
         this.level = level;
         this.hamsterBalls = hamsterBalls;
 
-        this.levelTimers = new LevelTimerEntry[hamsterBalls.length];
+        this.levelTimers = new LevelCheckpointTimerEntry[hamsterBalls.length];
 
         timerLabel = new Label("0 seconds", Constants.assets.getSkin(), "characterSelectTitle");
         add(timerLabel).colspan(hamsterBalls.length + 1).padTop(12).row();
@@ -37,7 +38,7 @@ public class LevelTimer extends Table {
         add(checkpointNamesTable);
 
         for (int i = 0; i < hamsterBalls.length; i++) {
-            levelTimers[i] = new LevelTimerEntry(this, hamsterBalls[i]);
+            levelTimers[i] = new LevelCheckpointTimerEntry(this, hamsterBalls[i]);
             add(levelTimers[i]);
         }
     }
@@ -61,6 +62,6 @@ public class LevelTimer extends Table {
 
     public void updateCheckpoints() {
         setupCheckpointTable();
-        Arrays.stream(levelTimers).forEach(LevelTimerEntry::updateCheckpoints);
+        Arrays.stream(levelTimers).forEach(LevelCheckpointTimerEntry::updateCheckpoints);
     }
 }

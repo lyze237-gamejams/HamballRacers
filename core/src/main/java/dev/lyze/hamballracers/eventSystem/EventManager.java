@@ -1,12 +1,15 @@
 package dev.lyze.hamballracers.eventSystem;
 
 import dev.lyze.hamballracers.eventSystem.events.Event;
+import dev.lyze.hamballracers.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EventManager
 {
+    private static final Logger<EventManager> logger = new Logger<>(EventManager.class);
+
     private final HashMap<Class<? extends Event<?>>, ArrayList<EventListener<?>>> events = new HashMap<>();
 
     public <TEvent extends Event<?>> void addListener(EventListener<TEvent> listener)
@@ -21,6 +24,8 @@ public class EventManager
     {
         if (!events.containsKey(event.getClass()))
             return;
+
+        logger.logInfo("Firing event " + event);
 
         for (EventListener<?> eventListener : events.get(event.getClass()))
         {

@@ -60,7 +60,6 @@ public class HamsterBallMaxSpeed {
 
         if (block.isChargeNitro()) {
             nitroTimeLeft = MathUtils.clamp(nitroTimeLeft += delta, 0, maxNitroTime);
-            logger.logInfo("Charging nitro " + nitroTimeLeft);
         }
 
         usingNitro = false;

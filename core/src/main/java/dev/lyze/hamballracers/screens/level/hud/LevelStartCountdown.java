@@ -1,4 +1,4 @@
-package dev.lyze.hamballracers.screens.level;
+package dev.lyze.hamballracers.screens.level.hud;
 
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.eventSystem.data.CountdownTimerFinishedEventData;
 import dev.lyze.hamballracers.eventSystem.events.CountdownTimerFinishedEvent;
+import dev.lyze.hamballracers.screens.level.Level;
 import dev.lyze.hamballracers.utils.Logger;
 import lombok.Getter;
 
