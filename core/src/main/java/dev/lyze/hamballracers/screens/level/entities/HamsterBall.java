@@ -95,12 +95,16 @@ public class HamsterBall extends Entity {
                     logger.logInfo("Finished a proper lap, setting finished time for lap " + currentLap);
                     laps[currentLap].setFinishTime(System.currentTimeMillis());
                     Constants.eventManager.fire(new LapFinishedEvent(new LapFinishedEventData(currentLap, this)));
+
+                    if (currentLap + 1 < laps.length) // don't play complete lap sound when we finish the last one
+                        Constants.sounds.getCompleteLap().play();
                 }
 
                 currentLap++;
 
                 if (currentLap >= laps.length) {
                     logger.logInfo("Just finished the last lap, we're done " + currentLap);
+                    Constants.sounds.getCompleteRace().play();
                     return;
                 }
 
@@ -152,6 +156,7 @@ public class HamsterBall extends Entity {
         return MathUtils.clamp(velocity, -vehicleMaxMoveSpeed, vehicleMaxMoveSpeed);
     }
 
+    private boolean wasCollision;
     private void calculateMovement(float delta) {
         var moveAmountX = velocity.x * delta;
         var moveAmountY = velocity.y * delta;
@@ -177,16 +182,29 @@ public class HamsterBall extends Entity {
                 collidedFromHighSpeed = true;
         }
 
-        if (!canMoveX)
-            this.velocity.x *= collidedFromHighSpeed ? -0.7f : 0.7f;
+        var collision = false;
+        if (!canMoveX) {
+            if (collidedFromHighSpeed) {
+                collision = true;
+                this.velocity.x *= -0.7f;
+            } else {
+                this.velocity.x *= 0.7f;
+            }
+        }
 
         if (!canMoveY) {
             if (collidedFromHighSpeed) {
+                collision = true;
                 this.velocity.y *= -0.7f;
             } else {
                 this.velocity.y *= 0.7f;
             }
         }
+
+        if (collision && !wasCollision)
+            Constants.sounds.getBallbump().play();
+
+        wasCollision = collision;
     }
 
     @Override

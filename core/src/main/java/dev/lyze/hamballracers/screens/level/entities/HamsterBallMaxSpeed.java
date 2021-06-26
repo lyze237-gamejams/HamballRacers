@@ -1,5 +1,7 @@
 package dev.lyze.hamballracers.screens.level.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import dev.lyze.hamballracers.Constants;
@@ -13,6 +15,10 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 public class HamsterBallMaxSpeed {
     private static final Logger<HamsterBallMaxSpeed> logger = new Logger<>(HamsterBallMaxSpeed.class);
     private static final float vehicleMaxMoveSpeed = 81f; // 61 default
+
+    private final Music slowSpeed = Gdx.audio.newMusic(Gdx.files.internal("sounds/BallRollslow_LOOP.ogg"));
+    private final Music fastSpeed = Gdx.audio.newMusic(Gdx.files.internal("sounds/BallRollFast_LOOP.ogg"));
+
     @Getter
     private static final float vehicleMaxSpeedMultiplier = 3f;
     private static final float maxNitroTime = 2f;
@@ -31,6 +37,9 @@ public class HamsterBallMaxSpeed {
 
     public HamsterBallMaxSpeed(HamsterBall hamsterBall) {
         this.hamsterBall = hamsterBall;
+
+        slowSpeed.setLooping(true);
+        fastSpeed.setLooping(true);
     }
 
     public float getMaxMoveSpeed() {
@@ -44,6 +53,24 @@ public class HamsterBallMaxSpeed {
     public void update(float delta) {
         var block = hamsterBall.getLevel().getMap().getBlock(hamsterBall.getX(), hamsterBall.getY());
         var newSpeedMultiplier = block.getSpeedMultiplier();
+
+        var velocity = Math.max(Math.abs(hamsterBall.getVelocity().x), Math.abs(hamsterBall.getVelocity().y));
+
+        var lerped = velocity / getDefaultMaxMoveSpeed();
+        System.out.println(lerped);
+
+        slowSpeed.setVolume(lerped);
+
+        if (velocity > getDefaultMaxMoveSpeed()) {
+            if (slowSpeed.isPlaying()) slowSpeed.stop();
+            if (!fastSpeed.isPlaying()) fastSpeed.play();
+        } else if (velocity > 0) {
+            if (fastSpeed.isPlaying()) fastSpeed.stop();
+            if (!slowSpeed.isPlaying()) slowSpeed.play();
+        } else {
+            if (fastSpeed.isPlaying()) fastSpeed.stop();
+            if (slowSpeed.isPlaying()) slowSpeed.stop();
+        }
 
         speedMultiplierTime -= delta;
 
@@ -65,8 +92,6 @@ public class HamsterBallMaxSpeed {
 
         usingNitro = false;
         if (hamsterBall.getInput().isUsingNitro()) {
-            var velocity = Math.max(Math.abs(hamsterBall.getVelocity().x), Math.abs(hamsterBall.getVelocity().y));
-
             if (velocity > getDefaultMaxMoveSpeed() || speedMultiplier < 1f)
                 nitroTimeLeft -= delta;
 

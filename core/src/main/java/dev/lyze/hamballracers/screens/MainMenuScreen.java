@@ -40,7 +40,7 @@ public class MainMenuScreen extends ManagedScreenAdapter {
         setupBackground();
         setupTitle();
         setupButtons();
-        musicActionMap = new MusicActionMap(Constants.assets.getThemeSong(), musicActionMapEntries);
+        musicActionMap = new MusicActionMap(Constants.sounds.getThemeSong(), musicActionMapEntries);
     }
 
     private void setupBackground() {
@@ -123,7 +123,7 @@ public class MainMenuScreen extends ManagedScreenAdapter {
     public void show() {
         super.show();
 
-        musicActionMap.start(0.5f);
+        musicActionMap.start();
 
         addInputProcessor(text);
     }

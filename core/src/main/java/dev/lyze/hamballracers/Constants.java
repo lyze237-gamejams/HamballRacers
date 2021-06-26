@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import dev.lyze.hamballracers.assets.MainAssets;
+import dev.lyze.hamballracers.assets.SoundAssets;
 import dev.lyze.hamballracers.eventSystem.EventManager;
 import dev.lyze.hamballracers.screens.level.characters.Character;
 import dev.lyze.hamballracers.screens.level.characters.CharacterAnimation;
@@ -20,6 +21,8 @@ import java.util.HashMap;
 public class Constants {
     public static boolean debug = false;
     public static MainAssets assets = new MainAssets();
+    public static SoundAssets sounds = new SoundAssets();
+
     public static EventManager eventManager = new EventManager();
 
     public static PlayersVirtualGamepadMapping gamepadMapping;
@@ -34,6 +37,9 @@ public class Constants {
     public static void initialize() {
         Constants.assets.load();
         Constants.assets.finishAndConsume();
+
+        Constants.sounds.load();
+        Constants.sounds.finishAndConsume();
 
         gamepadMapping = new PlayersVirtualGamepadMapping();
 

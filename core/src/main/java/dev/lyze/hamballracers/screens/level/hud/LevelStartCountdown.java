@@ -1,5 +1,6 @@
 package dev.lyze.hamballracers.screens.level.hud;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
@@ -14,6 +15,8 @@ import lombok.Getter;
 
 public class LevelStartCountdown extends Container<Label> {
     private final static Logger<LevelStartCountdown> logger = new Logger<>(LevelStartCountdown.class);
+
+    private Sound[] sounds = new Sound[] { Constants.sounds.getUiGo(), Constants.sounds.getUi1(), Constants.sounds.getUi2(), Constants.sounds.getUi3() };
 
     private final Level level;
     private final int countdownTime;
@@ -57,6 +60,8 @@ public class LevelStartCountdown extends Container<Label> {
                 sequence.addAction(Actions.run(() -> getActor().setText(String.valueOf(index))));
             else
                 sequence.addAction(Actions.run(() -> getActor().setText("GO")));
+
+            sequence.addAction(Actions.run(() -> sounds[index].play()));
 
             sequence.addAction(Actions.run(() -> setOrigin(Align.center)));
             sequence.addAction(Actions.scaleTo(1.25f, 1.25f, 0.1f));

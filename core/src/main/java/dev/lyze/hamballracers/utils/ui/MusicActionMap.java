@@ -20,12 +20,13 @@ public class MusicActionMap {
         this.music = music;
         this.entries = entries;
 
+        this.music.setLooping(true);
+
         this.entries.sort((o1, o2) -> Float.compare(o1.getTime(), o2.getTime()));
     }
 
-    public void start(float volume) {
-        logger.logInfo("Starting action map with volume " + volume);
-        music.setVolume(volume);
+    public void start() {
+        logger.logInfo("Starting action map");
         music.play();
     }
 

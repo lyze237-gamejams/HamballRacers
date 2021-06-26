@@ -1,7 +1,6 @@
 package dev.lyze.hamballracers.assets;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -13,9 +12,6 @@ import lombok.Getter;
 import lombok.var;
 
 public class MainAssets extends DynamicAssets {
-    @Getter @LoadAssetFromFile("music/Kouzerumatsu-SAR-Theme.mp3")
-    private Music themeSong;
-
     @Getter @LoadAssetFromFile("atlases/main.atlas")
     private MainTextureAtlas mainTextureAtlas;
 
