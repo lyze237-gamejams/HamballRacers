@@ -49,6 +49,11 @@ public class CharacterSelectMenu extends ManagedScreenAdapter implements PlayerI
         root.add(setupCharacterSelection()).grow().row();
         root.add(setupPlayers()).pad(12).growX();
 
+        var buttons = new Table();
+        buttons.setFillParent(true);
+        buttons.add(new Image(Constants.assets.getMainTextureAtlas().getButtonsSelectOnly())).expand().right().bottom().pad(2);
+        stage.addActor(buttons);
+
         stage.addActor(root);
     }
 

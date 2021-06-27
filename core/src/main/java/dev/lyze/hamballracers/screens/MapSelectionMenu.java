@@ -50,6 +50,11 @@ public class MapSelectionMenu extends ManagedScreenAdapter implements PlayerInpu
         root.add(new Label("Pick the map", Constants.assets.getSkin(), "characterSelectTitle")).pad(12).row();
         root.add(setupMapStuff()).grow().row();
         stage.addActor(root);
+
+        var buttons = new Table();
+        buttons.setFillParent(true);
+        buttons.add(new Image(Constants.assets.getMainTextureAtlas().getButtonsSelectOnly())).expand().right().bottom().pad(2);
+        stage.addActor(buttons);
     }
 
     private Table setupMapStuff() {

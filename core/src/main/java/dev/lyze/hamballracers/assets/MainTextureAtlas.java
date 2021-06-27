@@ -68,6 +68,9 @@ public class MainTextureAtlas extends DynamicTextureAtlas {
     @Getter @LoadFromTextureAtlas("characterSelect/questionmark")
     private TextureAtlas.AtlasRegion questionmark;
 
+    @Getter @LoadFromTextureAtlas("characterSelect/buttonsSelectOnly")
+    private TextureAtlas.AtlasRegion buttonsSelectOnly;
+
     @Getter @LoadFromTextureAtlas("characterSelect/framePlayer")
     private TextureAtlas.AtlasRegion framePlayer;
 
