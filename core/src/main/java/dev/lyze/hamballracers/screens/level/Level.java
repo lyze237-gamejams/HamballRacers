@@ -179,5 +179,8 @@ public class Level {
 
     public void dispose() {
         map.dispose();
+
+        for (HamsterBall hamsterBall : hamsterBalls)
+            hamsterBall.dispose();
     }
 }

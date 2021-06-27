@@ -236,4 +236,8 @@ public class HamsterBall extends Entity {
 
         drawer.circle(x, y, 1f);
     }
+
+    public void dispose() {
+        maxSpeed.dispose();
+    }
 }

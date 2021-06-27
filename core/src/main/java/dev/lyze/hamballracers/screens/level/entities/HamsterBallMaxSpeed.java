@@ -161,4 +161,11 @@ public class HamsterBallMaxSpeed {
     public void resetNitro() {
         nitroTimeLeft = maxNitroTime;
     }
+
+    public void dispose() {
+        blockSounds.forEach((s, music) -> {music.stop(); music.dispose();});
+        slowSpeed.stop(); slowSpeed.dispose();
+        nitroSound.stop(); nitroSound.dispose();
+        fastSpeed.stop(); fastSpeed.stop();
+    }
 }
