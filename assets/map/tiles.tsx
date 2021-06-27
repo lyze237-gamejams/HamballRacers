@@ -1652,6 +1652,11 @@
    <object id="2" x="7" y="10" width="2" height="3"/>
   </objectgroup>
  </tile>
+ <tile id="604">
+  <properties>
+   <property name="speed" type="float" value="0.3"/>
+  </properties>
+ </tile>
  <tile id="607">
   <objectgroup draworder="index" id="2">
    <object id="1" x="13" y="10" width="1" height="6"/>
@@ -1987,91 +1992,109 @@
  <tile id="704">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="705">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="706">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="707">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="708">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="709">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="736">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="737">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="738">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="739">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="740">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="741">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="768">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="769">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="770">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="771">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="772">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="773">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="774">
@@ -2092,36 +2115,43 @@
  <tile id="777">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="800">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="801">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="802">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="803">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="804">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="805">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="806">
@@ -2137,41 +2167,49 @@
  <tile id="808">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="809">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="832">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="833">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="834">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="835">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="836">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="837">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="838">
@@ -2182,66 +2220,79 @@
  <tile id="839">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="840">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="841">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="864">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="865">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="866">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="867">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="868">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="869">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="870">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="871">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="872">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="873">
   <properties>
    <property name="icy" type="bool" value="true"/>
+   <property name="speed" type="float" value="1.5"/>
   </properties>
  </tile>
  <tile id="941">
