@@ -25,10 +25,10 @@ public class ControllerGamepad extends VirtualGamepad {
 
     @Override
     public void update(float delta) {
-        updateButton(VirtualGamepadButton.LEFT, controller.getButton(mapping.buttonDpadLeft));
-        updateButton(VirtualGamepadButton.RIGHT, controller.getButton(mapping.buttonDpadRight));
-        updateButton(VirtualGamepadButton.UP, controller.getButton(mapping.buttonDpadUp));
-        updateButton(VirtualGamepadButton.DOWN, controller.getButton(mapping.buttonDpadDown));
+        updateButton(VirtualGamepadButton.LEFT, controller.getButton(mapping.buttonDpadLeft) || controller.getAxis(mapping.axisLeftX) < -0.35f);
+        updateButton(VirtualGamepadButton.RIGHT, controller.getButton(mapping.buttonDpadRight) || controller.getAxis(mapping.axisLeftX) > 0.35f);
+        updateButton(VirtualGamepadButton.UP, controller.getButton(mapping.buttonDpadUp) || controller.getAxis(mapping.axisLeftY) < -0.35f);
+        updateButton(VirtualGamepadButton.DOWN, controller.getButton(mapping.buttonDpadDown) || controller.getAxis(mapping.axisLeftY) > 0.35f);
 
         updateButton(VirtualGamepadButton.NITRO, controller.getButton(mapping.buttonX));
         updateButton(VirtualGamepadButton.OK, controller.getButton(mapping.buttonA));
