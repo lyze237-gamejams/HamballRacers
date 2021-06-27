@@ -124,7 +124,9 @@ public class HamsterBall extends Entity {
                 logger.logInfo("Starting new lap " + currentLap);
 
                 laps[currentLap] = new Lap(currentLap);
-                laps[currentLap].setStartTime(System.currentTimeMillis());
+                laps[currentLap].setStartTime(currentLap == 0 ? level.getLevelStartTime() : System.currentTimeMillis());
+
+                logger.logInfo(getPlayer().getPlayerIndex() + ": " + laps[currentLap].getStartTime());
 
                 Constants.eventManager.fire(new LapStartedEvent(new LapStartedEventData(currentLap, this)));
             }
