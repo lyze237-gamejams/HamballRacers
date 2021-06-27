@@ -105,6 +105,22 @@ public class MainTextureAtlas extends DynamicTextureAtlas {
     private TextureAtlas.AtlasRegion mainMenuButtons;
 
 
+    @Getter @LoadFromTextureAtlas("victoryScreen/bg")
+    private TextureAtlas.AtlasRegion victoryScreenBb;
+
+    @Getter @LoadFromTextureAtlas("victoryScreen/victoryFrameBg")
+    private TextureAtlas.AtlasRegion victoryFrameBg;
+
+    @Getter @LoadFromTextureAtlas("victoryScreen/victoryFrame")
+    private TextureAtlas.AtlasRegion victoryFrame;
+
+    @Getter @LoadFromTextureAtlas("victoryScreen/font")
+    private Array<TextureAtlas.AtlasRegion> victoryFont;
+
+    @Getter @LoadFromTextureAtlas("victoryScreen/victoryFramePlate")
+    private TextureAtlas.AtlasRegion victoryFramePlate;
+
+
     @Getter @LoadFromTextureAtlas("skies/24_PixelSky")
     private Array<TextureAtlas.AtlasRegion> sky;
 

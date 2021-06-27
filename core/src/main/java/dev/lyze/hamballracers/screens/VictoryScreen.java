@@ -2,9 +2,7 @@ package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import de.eskalon.commons.screen.transition.impl.BlendingTransition;
 import dev.lyze.hamballracers.Constants;
@@ -29,8 +27,117 @@ public class VictoryScreen extends ManagedScreenAdapter implements PlayerInputLi
     private Track track;
     private long levelStartTime;
 
+    private final Table victoryTable;
+    private final Table losersTable;
+    private final Table timesTable;
+
     public VictoryScreen() {
         stage = new Stage(new ExtendViewport(640, 360));
+
+        var bgTable = new Table();
+        bgTable.setFillParent(true);
+        bgTable.add(new Image(Constants.assets.getMainTextureAtlas().getVictoryScreenBb())).grow();
+        stage.addActor(bgTable);
+
+
+        var titleTable = new Table();
+        titleTable.setFillParent(true);
+
+        titleTable.add(new Label("Victory!", Constants.assets.getSkin(), "characterSelectTitle")).pad(12).top().expand().row();
+
+
+        timesTable = new Table();
+        timesTable.setFillParent(true);
+        victoryTable = new Table();
+        victoryTable.setFillParent(true);
+        losersTable = new Table();
+        losersTable.setFillParent(true);
+
+        stage.addActor(titleTable);
+        stage.addActor(timesTable);
+        stage.addActor(victoryTable);
+        stage.addActor(losersTable);
+    }
+
+    private void setupTimesTable() {
+        var table = new Table();
+        table.defaults().pad(4);
+
+        var laps = sortedHamsterBalls.get(0).getLaps();
+        var lapsTable = new Table();
+        lapsTable.add(new Label("Lap", Constants.assets.getSkin())).row();
+        for (int i = 0; i < laps.length; i++)
+            lapsTable.add(new Label(String.valueOf(i + 1), Constants.assets.getSkin())).row();
+        lapsTable.add(new Label("Total", Constants.assets.getSkin())).row();
+
+        table.add(lapsTable);
+
+        for (var hamball : sortedHamsterBalls) {
+            var hamballTable = new Table();
+
+            var name = new Label("Player " + (hamball.getPlayer().getPlayerIndex() + 1), Constants.assets.getSkin());
+            name.setColor(Constants.playerColors[hamball.getPlayer().getPlayerIndex()]);
+            hamballTable.add(name).row();
+
+            var sum = 0L;
+            for (var lap : hamball.getLaps()) {
+                sum += lap.getFinishTime() - lap.getStartTime();
+                var elapsed = (lap.getFinishTime() - lap.getStartTime()) / 1000f;
+                var seconds = ((int) (elapsed * 1000)) / 1000f;
+
+                hamballTable.add(new Label(String.valueOf(seconds), Constants.assets.getSkin())).row();
+            }
+
+            var elapsed = (sum) / 1000f;
+            var seconds = ((int) (elapsed * 1000)) / 1000f;
+
+            var total = new Label(String.valueOf(seconds), Constants.assets.getSkin());
+            total.setColor(Constants.playerColors[hamball.getPlayer().getPlayerIndex()]);
+            hamballTable.add(total).row();
+
+            table.add(hamballTable);
+        }
+
+        timesTable.add(table).expand().left().padLeft(24);
+    }
+
+    private void setupVictoryTable() {
+        victoryTable.add(setupCard(sortedHamsterBalls.get(0), false, 0)).size(192, 192).right().padTop(-32).padRight(24).expand();
+    }
+
+    private void setupLosersTable() {
+        var subTable = new Table();
+
+        subTable.add().padLeft(24);
+        for (int i = 1; i < sortedHamsterBalls.size(); i++)
+            subTable.add(setupCard(sortedHamsterBalls.get(i), true, i)).padTop(i * 24).padLeft(4).padRight(4);
+
+        losersTable.add(subTable).expand().bottom().left().padBottom(4);
+    }
+
+    private Stack setupCard(HamsterBall winner, boolean tiny, int fontNumber) {
+        var stack = new Stack();
+
+        Image bg = new Image(Constants.assets.getMainTextureAtlas().getVictoryFrameBg());
+        bg.setColor(Constants.playerColors[winner.getPlayer().getPlayerIndex()]);
+        stack.add(bg);
+        stack.add(new Image(winner.getPlayer().getCharacter().getPreview()));
+        stack.add(new Image(Constants.assets.getMainTextureAtlas().getVictoryFrame()));
+        stack.add(new Image(Constants.assets.getMainTextureAtlas().getVictoryFramePlate()));
+
+        var numberTable = new Table();
+        numberTable.setFillParent(true);
+        Cell<Image> imageCell = numberTable.add(new Image(Constants.assets.getMainTextureAtlas().getVictoryFont().get(fontNumber))).padLeft(tiny ? 6 : 12).padTop(tiny ? -6 : -12).top().left().expand();
+        if (!tiny)
+            imageCell.size(25 * 2f, 34 * 2f);
+        stack.add(numberTable);
+
+        var nameTable = new Table();
+        nameTable.add().grow().row();
+        nameTable.add(new Label("Player " + (winner.getPlayer().getPlayerIndex() + 1), Constants.assets.getSkin(), tiny ? "default" : "characterSelectTitle")).padBottom(tiny ? 2 : 8).row();
+
+        stack.add(nameTable);
+        return stack;
     }
 
     @Override
@@ -45,15 +152,13 @@ public class VictoryScreen extends ManagedScreenAdapter implements PlayerInputLi
                 (int) (Arrays.stream(o1.getLaps()).mapToLong(Lap::getFinishTime).sum() - Arrays.stream(o2.getLaps()).mapToLong(Lap::getFinishTime).sum()))
         .collect(Collectors.toList());
 
-        var root = new Table();
-        root.setFillParent(true);
+        timesTable.clearChildren();
+        victoryTable.clearChildren();
+        losersTable.clearChildren();
 
-        root.add(new Label("Victory", Constants.assets.getSkin(), "characterSelectTitle")).pad(12).row();
-        root.add(new Image(track.getThumbnail())).size(128, 128).row();
-        root.add(setupVictoryTable()).grow().row();
-
-        stage.clear();
-        stage.addActor(root);
+        setupTimesTable();
+        setupVictoryTable();
+        setupLosersTable();
 
         Constants.gamepadMapping.addListener(this);
     }
@@ -65,6 +170,7 @@ public class VictoryScreen extends ManagedScreenAdapter implements PlayerInputLi
         Constants.sounds.getUiClick().play();
     }
 
+    /*
     private Table setupVictoryTable() {
         var table = new Table();
 
@@ -98,6 +204,7 @@ public class VictoryScreen extends ManagedScreenAdapter implements PlayerInputLi
 
         return table;
     }
+     */
 
     @Override
     public void render(float delta) {
