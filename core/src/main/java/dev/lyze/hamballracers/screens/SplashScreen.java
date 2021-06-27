@@ -39,7 +39,7 @@ public class SplashScreen extends ManagedScreenAdapter {
 
         var root = new Table();
         root.setFillParent(true);
-        root.add(new Image(Constants.assets.getMainTextureAtlas().getLogo())).width(500).height(500);
+        root.add(new Image(Constants.assets.getMainTextureAtlas().getLogo()));
 
         stage.addActor(root);
     }
