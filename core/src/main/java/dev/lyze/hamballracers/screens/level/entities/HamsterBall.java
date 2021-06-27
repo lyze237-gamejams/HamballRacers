@@ -85,6 +85,8 @@ public class HamsterBall extends Entity {
         if (tempRectangle.overlaps(neededCheckpoint)) {
             logger.logInfo("CHECKPOINT " + currentCheckpointNeeded);
             if (currentCheckpointNeeded == 0) {
+                maxSpeed.resetNitro();
+
                 logger.logInfo("0 passed");
                 if (currentLap >= laps.length) {
                     logger.logInfo("We're done, no new lap");

@@ -154,4 +154,8 @@ public class HamsterBallMaxSpeed {
         if (block.isForceSpeedMultiplierPenalty())
             forceSpeedPenalty = true;
     }
+
+    public void resetNitro() {
+        nitroTimeLeft = maxNitroTime;
+    }
 }

@@ -37,7 +37,7 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
 
         Constants.gamepadMapping.addListener(this);
 
-        level = new Level(this, players, track, 2);
+        level = new Level(this, players, track, 3);
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         super.show();
