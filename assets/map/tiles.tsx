@@ -146,6 +146,12 @@
    <property name="icy" type="bool" value="true"/>
   </properties>
  </tile>
+ <tile id="89">
+  <properties>
+   <property name="fullChargeNitro" type="bool" value="true"/>
+   <property name="music" value="chargePad"/>
+  </properties>
+ </tile>
  <tile id="90">
   <properties>
    <property name="chargeNitro" type="bool" value="true"/>
@@ -195,6 +201,42 @@
    <property name="icy" type="bool" value="true"/>
   </properties>
  </tile>
+ <tile id="122">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="123">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="124">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="125">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="126">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="127">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
  <tile id="134">
   <properties>
    <property name="icy" type="bool" value="true"/>
@@ -223,6 +265,42 @@
  <tile id="139">
   <properties>
    <property name="icy" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="154">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="155">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="156">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="157">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="158">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
+  </properties>
+ </tile>
+ <tile id="159">
+  <properties>
+   <property name="music" value="fastPad"/>
+   <property name="speed" type="float" value="2"/>
   </properties>
  </tile>
  <tile id="166">

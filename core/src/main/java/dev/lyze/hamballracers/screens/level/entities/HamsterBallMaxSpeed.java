@@ -106,6 +106,9 @@ public class HamsterBallMaxSpeed {
         if (block.isChargeNitro())
             nitroTimeLeft = MathUtils.clamp(nitroTimeLeft += delta, 0, maxNitroTime);
 
+        if (block.isFullChargeNitro())
+            nitroTimeLeft = maxNitroTime;
+
         usingNitro = false;
         if (hamsterBall.getInput().isUsingNitro()) {
             if (velocity > getDefaultMaxMoveSpeed() || speedMultiplier < 1f)

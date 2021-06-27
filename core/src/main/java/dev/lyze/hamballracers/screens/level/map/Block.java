@@ -25,7 +25,7 @@ public class Block {
     private float speedMultiplierTime;
     private boolean disappearAfterStart;
     private boolean forceSpeedMultiplierPenalty;
-    private boolean chargeNitro;
+    private boolean chargeNitro, fullChargeNitro;
 
     private String music;
 
@@ -105,6 +105,9 @@ public class Block {
 
         if (cell.getTile().getProperties().get("chargeNitro", false, Boolean.class))
             setChargeNitro(true);
+
+        if (cell.getTile().getProperties().get("fullChargeNitro", false, Boolean.class))
+            setFullChargeNitro(true);
 
         var music = cell.getTile().getProperties().get("music", null, String.class);
         if (music != null)
