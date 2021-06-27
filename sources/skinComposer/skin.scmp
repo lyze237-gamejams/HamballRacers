@@ -23,25 +23,6 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/title.png
-			bgColor: {
-				r: 0
-				g: 0
-				b: 0
-				a: 1
-			}
-			tint: null
-			tintName: null
-			name: title
-			tiled: false
-			minWidth: -1
-			minHeight: -1
-			customized: false
-			tenPatchData: null
-			type: FONT
-			hidden: false
-		}
-		{
 			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/timer.png
 			bgColor: {
 				r: 0
@@ -128,6 +109,25 @@ atlasData: {
 			tint: null
 			tintName: null
 			name: characterSelectTitle
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: FONT
+			hidden: false
+		}
+		{
+			file: C:/Users/lyze/Documents/Workspace/java/HamballRacers/sources/skinComposer/fonts/title.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: title
 			tiled: false
 			minWidth: -1
 			minHeight: -1

@@ -6,7 +6,7 @@ filter: Nearest, Nearest
 repeat: none
 button
   rotate: false
-  xy: 1, 484
+  xy: 1, 305
   size: 505, 367
   orig: 505, 367
   offset: 0, 0
@@ -34,22 +34,22 @@ pixeldroidConsoleRegular
   index: -1
 timer
   rotate: false
-  xy: 1, 150
+  xy: 509, 815
   size: 443, 118
   orig: 443, 118
   offset: 0, 0
   index: -1
 tinyLabel
   rotate: false
-  xy: 1, 453
+  xy: 1, 274
   size: 504, 29
   orig: 504, 29
   offset: 0, 0
   index: -1
 title
   rotate: false
-  xy: 1, 270
-  size: 446, 181
-  orig: 446, 181
+  xy: 1, 674
+  size: 506, 177
+  orig: 506, 177
   offset: 0, 0
   index: -1

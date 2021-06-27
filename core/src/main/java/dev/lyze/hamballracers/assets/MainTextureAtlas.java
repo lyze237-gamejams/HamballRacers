@@ -98,6 +98,12 @@ public class MainTextureAtlas extends DynamicTextureAtlas {
     @Getter @LoadFromTextureAtlas("mapSelect/plateMapBig")
     private TextureAtlas.AtlasRegion plateMapBig;
 
+    @Getter @LoadFromTextureAtlas("mainMenu/bg")
+    private Array<TextureAtlas.AtlasRegion> mainMenuBg;
+
+    @Getter @LoadFromTextureAtlas("mainMenu/buttons")
+    private TextureAtlas.AtlasRegion mainMenuButtons;
+
 
     @Getter @LoadFromTextureAtlas("skies/24_PixelSky")
     private Array<TextureAtlas.AtlasRegion> sky;

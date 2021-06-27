@@ -48,6 +48,10 @@ public class MusicActionMap {
             entries.get(currentIndex++).getAction().run();
     }
 
+    public boolean isFinished() {
+        return currentIndex >= entries.size();
+    }
+
     @Data
     @AllArgsConstructor
     public static class MusicActionEntry {
