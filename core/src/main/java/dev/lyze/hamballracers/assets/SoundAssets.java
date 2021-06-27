@@ -29,7 +29,7 @@ public class SoundAssets extends DynamicAssets {
     @Getter @LoadAssetFromFile("sounds/UI_3.ogg")
     private Sound ui3;
 
-    @Getter @LoadAssetFromFile("sounds/UI_GO.ogg")
+    @Getter @LoadAssetFromFile("sounds/UI_Go.ogg")
     private Sound uiGo;
 
     @Getter @LoadAssetFromFile("sounds/UIClick.ogg")
