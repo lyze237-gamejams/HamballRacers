@@ -41,6 +41,9 @@
    <property name="icy" type="bool" value="true"/>
    <property name="speed" type="float" value="1"/>
   </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
  </tile>
  <tile id="31">
   <properties>
