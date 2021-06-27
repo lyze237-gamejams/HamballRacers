@@ -70,12 +70,22 @@ public class MainMenuScreen extends ManagedScreenAdapter {
 
         var innerTable = new Table();
         innerTable.setFillParent(true);
-        var title = new Label("Super Hamsterball Racers", Constants.assets.getSkin(), "title");
-        innerTable.add(title).top().padTop(4).expand();
-        title.addAction(Actions.fadeOut(0));
-        musicActionMapEntries.add(new MusicActionMap.MusicActionEntry(4.4f, () -> title.addAction(Actions.fadeIn(0.4f))));
-        stack.add(innerTable);
 
+        var title = new Label("Super Hamsterball Racers", Constants.assets.getSkin(), "title");
+        var subTitle = new Label("Made by @Lyze237 @RegaloRenby @jakebutineau @Borazilla", Constants.assets.getSkin());
+
+        innerTable.add(title).top().padTop(4).expand().row();
+        innerTable.add(subTitle).bottom().padBottom(2).expand().row();
+
+        title.addAction(Actions.fadeOut(0));
+        subTitle.addAction(Actions.fadeOut(0));
+
+        musicActionMapEntries.add(new MusicActionMap.MusicActionEntry(4.4f, () -> {
+            title.addAction(Actions.fadeIn(0.4f));
+            subTitle.addAction(Actions.fadeIn(0.4f));
+        }));
+
+        stack.add(innerTable);
         table.add(stack).grow();
 
         stage.addActor(table);
