@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import de.eskalon.commons.screen.transition.impl.PushTransition;
 import dev.lyze.hamballracers.Constants;
@@ -40,7 +37,7 @@ public class MainMenuScreen extends ManagedScreenAdapter {
         table.setFillParent(true);
 
         Image buttons = new Image(Constants.assets.getMainTextureAtlas().getMainMenuButtons());
-        table.add(buttons).left().bottom().padLeft(24).padBottom(60).expand();
+        table.add(buttons);
 
         buttons.addAction(Actions.fadeOut(0));
         musicActionMapEntries.add(new MusicActionMap.MusicActionEntry(5.9f, () -> buttons.addAction(Actions.fadeIn(0.4f))));
