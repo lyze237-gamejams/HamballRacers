@@ -57,15 +57,15 @@ public class Constants {
                         .build(),
 
                 Track.builder()
-                        .name("Basic")
-                        .thumbnail(Constants.assets.getMapTextureAtlas().getBasicmap())
-                        .map("map/basicmap.tmx")
-                        .build(),
-
-                Track.builder()
                         .name("Ice")
                         .thumbnail(Constants.assets.getMapTextureAtlas().getIce())
                         .map("map/ice.tmx")
+                        .build(),
+
+                Track.builder()
+                        .name("Basic")
+                        .thumbnail(Constants.assets.getMapTextureAtlas().getBasicmap())
+                        .map("map/basicmap.tmx")
                         .build()
         };
     }
