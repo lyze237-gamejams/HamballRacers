@@ -1,5 +1,7 @@
 package dev.lyze.hamballracers.screens.level.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -74,6 +76,15 @@ public class HamsterBall extends Entity {
         animations.update(delta);
 
         updateCheckpoints();
+
+        if (Constants.debug && Gdx.input.isKeyJustPressed(Input.Keys.F8)) {
+            var checkpoint = level.getCheckpoints().get(currentCheckpointNeeded);
+
+            var centerVec = new Vector2();
+            checkpoint.getCenter(centerVec);
+            setX(centerVec.x);
+            setY(centerVec.y);
+        }
     }
 
     private final Rectangle tempRectangle = new Rectangle();
