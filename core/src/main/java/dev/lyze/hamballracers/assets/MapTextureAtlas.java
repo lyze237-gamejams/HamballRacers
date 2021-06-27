@@ -12,6 +12,9 @@ public class MapTextureAtlas extends DynamicTextureAtlas {
     @Getter @LoadFromTextureAtlas("basicmap")
     private TextureAtlas.AtlasRegion basicmap;
 
+    @Getter @LoadFromTextureAtlas("ice")
+    private TextureAtlas.AtlasRegion ice;
+
     public MapTextureAtlas(TextureAtlas atlas) {
         super(atlas);
     }
