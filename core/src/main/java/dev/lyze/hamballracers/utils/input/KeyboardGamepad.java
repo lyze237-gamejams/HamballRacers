@@ -21,7 +21,10 @@ public class KeyboardGamepad extends VirtualGamepad {
 
         updateButton(VirtualGamepadButton.NITRO, Gdx.input.isKeyPressed(useArrowKeys ? Input.Keys.SHIFT_RIGHT: Input.Keys.SHIFT_LEFT));
 
-        updateButton(VirtualGamepadButton.OK, Gdx.input.isKeyPressed(useArrowKeys ? Input.Keys.CONTROL_RIGHT: Input.Keys.CONTROL_LEFT));
+        if (useArrowKeys)
+            updateButton(VirtualGamepadButton.OK, Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.ALT_RIGHT));
+        else
+            updateButton(VirtualGamepadButton.OK, Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT));
     }
 
     @Override
