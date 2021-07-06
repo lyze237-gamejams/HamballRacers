@@ -1,7 +1,5 @@
 package dev.lyze.hamballracers.screens.level.entities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -77,6 +75,7 @@ public class HamsterBall extends Entity {
 
         updateCheckpoints();
 
+        /*
         if (Constants.debug && Gdx.input.isKeyJustPressed(Input.Keys.F8)) {
             var checkpoint = level.getCheckpoints().get(currentCheckpointNeeded);
 
@@ -85,6 +84,7 @@ public class HamsterBall extends Entity {
             setX(centerVec.x);
             setY(centerVec.y);
         }
+         */
     }
 
     private final Rectangle tempRectangle = new Rectangle();
@@ -129,6 +129,8 @@ public class HamsterBall extends Entity {
                 logger.logInfo(getPlayer().getPlayerIndex() + ": " + laps[currentLap].getStartTime());
 
                 Constants.eventManager.fire(new LapStartedEvent(new LapStartedEventData(currentLap, this)));
+            } else {
+                Constants.sounds.getCompleteLap().play(); // play on checkpoint
             }
 
             laps[currentLap].getCheckpoints().put(currentCheckpointNeeded++, System.currentTimeMillis());
