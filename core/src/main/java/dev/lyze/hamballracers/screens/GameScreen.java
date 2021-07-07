@@ -1,11 +1,14 @@
 package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import de.eskalon.commons.screen.transition.impl.HorizontalSlicingTransition;
 import dev.lyze.hamballracers.Constants;
 import dev.lyze.hamballracers.screens.level.Level;
 import dev.lyze.hamballracers.screens.level.Player;
 import dev.lyze.hamballracers.screens.level.map.Track;
+import dev.lyze.hamballracers.screens.transitions.TransitionToGameScreen;
 import dev.lyze.hamballracers.utils.ManagedScreenAdapter;
 import dev.lyze.hamballracers.utils.input.PlayerInputListener;
 import dev.lyze.hamballracers.utils.input.VirtualGamepad;
@@ -61,6 +64,9 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
     public void render(float delta) {
         if (!playersDisconnected.isEmpty())
             return;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F1) && !game.getScreenManager().inTransition())
+            game.getScreenManager().pushScreen(TransitionToGameScreen.class.getName(), HorizontalSlicingTransition.class.getName(), pushParams);
 
         var newTime = System.currentTimeMillis();
         var frameTime = (newTime - currentTime) / 1000f;
