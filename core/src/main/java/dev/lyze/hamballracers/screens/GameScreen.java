@@ -2,6 +2,7 @@ package dev.lyze.hamballracers.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.eskalon.commons.screen.transition.impl.HorizontalSlicingTransition;
 import dev.lyze.hamballracers.Constants;
@@ -25,12 +26,16 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
     private Player[] players;
     private Level level;
 
+    private BitmapFont font;
+
     private final ArrayList<Player> playersDisconnected = new ArrayList<>();
 
     public GameScreen() {
         batch = new SpriteBatch();
         drawer = new ShapeDrawer(batch, Constants.assets.getMainTextureAtlas().getPixel());
         drawer.setDefaultLineWidth(0.5f);
+
+        font = new BitmapFont();
     }
 
     @Override
@@ -62,8 +67,12 @@ public class GameScreen extends ManagedScreenAdapter implements PlayerInputListe
 
     @Override
     public void render(float delta) {
-        if (!playersDisconnected.isEmpty())
+        if (!playersDisconnected.isEmpty()) {
+            batch.begin();
+            font.draw(batch, playersDisconnected.size() + " controller(s) disconnected. Please reconnect all controllers and press a direction button on every controller.", 100,  100);
+            batch.end();
             return;
+        }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1) && !game.getScreenManager().inTransition())
             game.getScreenManager().pushScreen(TransitionToGameScreen.class.getName(), HorizontalSlicingTransition.class.getName(), pushParams);
